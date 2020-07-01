@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div>
+    <h1>Talleres</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus in vel asperiores tenetur, quisquam ullam blanditiis magni aperiam soluta dolores facere mollitia quam facilis cumque distinctio earum ratione harum veniam.</p>
+  </div>
+  <ion-list *ngIf="workshops.length">
+    <ion-item *ngFor="let workshop of workshops">
+      <span>lecciones
+        <ion-icon name="add-circle-outline" color="secondary" slot="end" (click)="alertConf()"></ion-icon>
+      </span>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-nav-bar>
+    <ion-row>
+      <ion-col>
+        <ion-icon name="home-outline" color="secondary"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="radio-button-on-outline" color="danger"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="book-outline" color="secondary"></ion-icon>
+      </ion-col> 
+    </ion-row>
+  </ion-nav-bar>
+</ion-footer>
