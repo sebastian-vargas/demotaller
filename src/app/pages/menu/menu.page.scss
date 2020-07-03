@@ -1,4 +1,54 @@
-.menu-footer {
-    display: flex;
-    justify-content: space-around;
+ion-menu {
+    --background: rgba(0, 0, 0, .8);
 }
+
+ion-content,  ion-item , ion-list{
+
+    --background: transparent;
+    --border-style: none;
+    color: var(--ion-color-light);
+    background-color: transparent;
+}
+
+ion-item {
+    --background:  linear-gradient(
+        to right,
+        rgba(32, 179, 105, .2),
+        rgba(21, 87, 153, .2)
+      );
+    border-radius: 5px;
+
+
+    ion-icon {
+        margin-right: 10px;
+    }
+}
+
+ion-avatar {
+
+    margin: 50px auto var(--ion-margin, 16px);
+
+    width: 100px;
+    height: 100px;
+}
+
+.username {
+    text-align: center;
+    font-weight: 500;
+    color: var(--ion-color-light);
+}
+
+
+ion-footer {
+
+    text-align: center;
+    font-weight: 300;
+    
+    .menu-footer {
+        margin-top: var(--ion-margin, 16px);
+        display: flex;
+        justify-content: space-around;
+    
+    }
+}
+

@@ -9,29 +9,13 @@ ion-content {
      
   }
 
-  ion-item {
-    --background: transparent;
-    --border-style: none;
-
-    --padding-end: 0px;
-  --inner-padding-end: 0px;
-
-  }
-
-  ion-toolbar {
+  .transparent-toolbar {
     --background: rgba(0, 0, 0, .7);
     --ion-color-base: rgba(0, 0, 0, .7) !important;
-}
+  }
 
+  
 ion-title, .list-title {
     font-weight: 400;
     font-size: 18px;
   }
-
-  .titleinput{
-
-    font-weight: bolder;
-    color:lightcyan;
-    text-align: start;
-  }
-  

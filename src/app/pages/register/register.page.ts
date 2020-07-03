@@ -51,6 +51,7 @@ export class RegisterPage{
         Validators.compose([
         Validators.required,
         Validators.minLength(5)
+        
       ])
       ),
       

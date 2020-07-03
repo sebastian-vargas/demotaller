@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workshops.page.scss'],
 })
 export class WorkshopsPage implements OnInit {
-
+  workshops = [{}, {}, {},{},{},{},{}];
   constructor() { }
 
   ngOnInit() {

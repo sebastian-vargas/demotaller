@@ -1,12 +1,26 @@
-<ion-header >
-  <ion-toolbar color="primary">
-    <ion-title>Mis talleres</ion-title>
-    <ion-buttons slot="end">
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="transparent-toolbar">
+    <ion-title class="ion-no-padding">Mis talleres</ion-title>
+    <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <div class="container"></div>
+  <ion-list class="ion-no-padding">
+    <ion-card *ngFor="let a of workshops" class="ion-activatable ripple-parent" (click)="alertConf()">
+      <ion-card-content>
+        <ion-item class="ion-float-right ion-no-padding">
+          <ion-icon name="chevron-forward" color="light"></ion-icon>
+        </ion-item>
+        <div class="list-title">
+          El camino a la prosperidad
+        </div>
+        <ion-progress-bar value="0.25"></ion-progress-bar>
+        <ion-card-subtitle>15 Lecciones.</ion-card-subtitle>
+      </ion-card-content>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-card>
+  </ion-list>
 </ion-content>

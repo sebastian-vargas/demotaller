@@ -1,23 +1,36 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    
-    <ion-title>Magia de amor </ion-title>
-    <ion-buttons slot="end">
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="transparent-toolbar">
+    <ion-title class="ion-no-padding">Magia de amor</ion-title>
+    <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding ">
-  <div >
-    <h1>Talleres</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus in vel asperiores tenetur, quisquam ullam blanditiis magni aperiam soluta dolores facere mollitia quam facilis cumque distinctio earum ratione harum veniam.</p>
-  </div>
-  <ion-list *ngIf="workshops.length">
-    <ion-item *ngFor="let workshop of workshops">
-      <span>lecciones
-        <ion-icon name="add-circle-outline" color="secondary" slot="end" (click)="alertConf()"></ion-icon>
-      </span>
-    </ion-item>
+<ion-content [fullscreen]="true" class="has-footer bg-image">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="light">Talleres</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Keep close to Nature's heart... and break clear away, once in awhile, and
+      climb a mountain or spend a week in the woods. Wash your spirit clean.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list class="ion-no-padding">
+    <ion-card *ngFor="let a of array" class="ion-activatable ripple-parent" (click)="alertConf()">
+      <ion-card-content>
+        <ion-item class="ion-float-right ion-no-padding">
+          <ion-icon name="chevron-forward" color="light"></ion-icon>
+        </ion-item>
+        <div class="list-title">
+          El camino a la prosperidad
+        </div>
+        <ion-card-subtitle>15 Lecciones.</ion-card-subtitle>
+      </ion-card-content>
+
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-card>
   </ion-list>
 </ion-content>
