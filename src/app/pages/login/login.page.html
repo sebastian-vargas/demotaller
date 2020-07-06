@@ -1,36 +1,67 @@
-<ion-content fullscreen="true" >
-  <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)" class="login">
-    <h1 class="titlelogin">ACCESO</h1>
-    <ion-item>
-      <ion-label class="titleinput">Email</ion-label>
-      <ion-input formControlName="email"></ion-input>
-    </ion-item>
-    <div class="validation-error">
+<ion-content fullscreen="true">
+
+  <h1 class="app-title  ion-padding">MAGIA DE AMOR</h1>
+
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="loginUser(loginForm.value)"
+    class="login ion-margin"
+  >
+    <h2 class="titlelogin ion-margin-bottom">ACCESO</h2>
+
+    <ng-container >
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating" class="titleinput" >Email</ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+
       <ng-container *ngFor="let validation of validation_messages.email">
-        <div *ngIf="loginForm.get('email').hasError(validation.type) && 
+        <div class="validation"
+          *ngIf="loginForm.get('email').hasError(validation.type) && 
                     (loginForm.get('email').dirty ||
-                    loginForm.get('email').touched)">
+                    loginForm.get('email').touched)"
+        >
           {{ validation.message}}
         </div>
       </ng-container>
-    </div>
-    <ion-item>
-      <ion-label class="titleinput">Constraseña</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
-    <div class="validation-error">
+
+      <ion-item class="ion-no-padding">
+        <ion-label position="floating" class="titleinput">Constraseña</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+
       <ng-container *ngFor="let validation of validation_messages.password">
-        <div *ngIf="loginForm.get('password').hasError(validation.type) && 
+        <div class="validation" *ngIf="loginForm.get('password').hasError(validation.type) && 
                     (loginForm.get('password').dirty ||
-                    loginForm.get('password').touched)">
+                    loginForm.get('password').touched)"
+        >
           {{ validation.message}}
         </div>
       </ng-container>
+    </ng-container>
+
+    <div class="line"></div>
+    
+    <div class="buttons">
+      <ion-button
+      class="ion-margin-top"
+      color="dark"
+      expand="full"
+      shape="round"
+      [disabled]="!loginForm.valid"
+      type="submit"
+      >Iniciar Sesión
+    </ion-button>
+    <ion-button
+      class="ion-margin-top"
+      color="light"
+      (click)="goToRegister()"
+      expand="full"
+      fill="outline"
+      shape="round"
+      >Registrarme
+    </ion-button>
     </div>
-    {{errorMessage}}
-    <ion-button color="dark" expand="full" shape="round" [disabled]="!loginForm.valid" type="submit">Iniciar Sesión
-    </ion-button>
-    <ion-button color="light"(click)="goToRegister()" expand="full" fill="outline" shape="round">Registrarme
-    </ion-button>
+   
   </form>
 </ion-content>

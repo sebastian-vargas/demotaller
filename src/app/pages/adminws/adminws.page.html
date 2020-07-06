@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>adminws</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form
+    class="agregar ion-margin"
+    [formGroup]="registerForm"
+    (ngSubmit)="agregar(registerForm.value)"
+  >
+  <h2>Agregar Taller</h2>
+    <ion-item class="ion-no-padding">
+      <ion-label position="floating" class="titleinput">Nombre del taller</ion-label>
+      <ion-input formControlName="taller"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validation_messages.taller">
+      <div class="validation"
+        *ngIf="registerForm.get('taller').hasError(validation.type) && 
+                   (registerForm.get('taller').dirty ||
+                   registerForm.get('taller').touched)"
+      >
+        {{ validation.message}}
+      </div>
+    </ng-container>
+    <ion-item class="ion-no-padding">
+      <ion-label position="floating" class="titleinput">Descripcion del taller</ion-label>
+      <ion-input formControlName="descripcion"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validation_messages.taller">
+      <div class="validation"
+        *ngIf="registerForm.get('descripcion').hasError(validation.type) && 
+                   (registerForm.get('descripcion').dirty ||
+                   registerForm.get('descripcion').touched)"
+      >
+        {{ validation.message}}
+      </div>
+    </ng-container>
+    <ion-item>
+      <ion-button expand="full">
+        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+        <ion-label slot="end">Cargar Imagen</ion-label>
+        <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+          accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          <ion-input formControlName="blobURL"></ion-input>
+      </ion-button>
+    </ion-item>
+
+    <ion-button
+      class="btn-submit"
+      expand="full"
+      shape="round"
+      color="dark"
+      [disabled]="!registerForm.valid"
+      type="submit"
+      >Crear Taller
+    </ion-button>
+  </form>
+</ion-content>

@@ -9,7 +9,7 @@
 
 <ion-content fullscreen="true">
   <ion-list class="ion-no-padding">
-    <ion-card *ngFor="let a of workshops" class="ion-activatable ripple-parent" (click)="alertConf()">
+    <ion-card *ngFor="let a of workshops" class="ion-activatable ripple-parent" (click)="goToWorkship('list-workshop')">
       <ion-card-content>
         <ion-item class="ion-float-right ion-no-padding">
           <ion-icon name="chevron-forward" color="light"></ion-icon>
@@ -17,8 +17,9 @@
         <div class="list-title">
           El camino a la prosperidad
         </div>
-        <ion-progress-bar value="0.25"></ion-progress-bar>
-        <ion-card-subtitle>15 Lecciones.</ion-card-subtitle>
+        <ion-card-subtitle>3 de 15 Lecciones.</ion-card-subtitle>
+        <ion-progress-bar value=".3" class="ion-margin-top"></ion-progress-bar>
+      
       </ion-card-content>
       <ion-ripple-effect></ion-ripple-effect>
     </ion-card>

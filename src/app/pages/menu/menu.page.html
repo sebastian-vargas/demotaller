@@ -9,7 +9,7 @@
 
     <ion-content>
       <ion-list>
-        <ion-item  (click)="navigate('home')" class="ion-margin" >
+        <ion-item  (click)="navigate('tabs/home')" class="ion-margin" >
           <ion-icon
             name="home"
             color="light"
@@ -19,7 +19,7 @@
           </ion-item
         >
 
-        <ion-item class="ion-margin" (click)="navigate('workshops')" >
+        <ion-item class="ion-margin" (click)="navigate('tabs/workshops')" >
           <ion-icon
             name="book"
             color="light"
@@ -37,6 +37,14 @@
           ></ion-icon>
           Contacto</ion-item
         >
+        <ion-item class="ion-margin" (click)="navigate('adminws')">
+          <ion-icon
+            name="settings-outline"
+            color="light"
+            slot="start"
+          ></ion-icon>
+          Admin Talleres
+        </ion-item>
       </ion-list>
     </ion-content>
 
@@ -46,23 +54,23 @@
 
       <div class="menu-footer">
 
-        <ion-button color="light" expand="block" fill="clear" size="small">
+        <ion-button color="light" expand="block" fill="clear">
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-button>
   
-        <ion-button color="light" expand="block" fill="clear" size="small">
+        <ion-button color="light" expand="block" fill="clear">
           <ion-icon name="logo-instagram"></ion-icon>
         </ion-button>
   
-        <ion-button color="light" expand="block" fill="clear" size="small">
+        <ion-button color="light" expand="block" fill="clear">
           <ion-icon name="logo-whatsapp"></ion-icon>
         </ion-button>
   
-        <ion-button color="light" expand="block" fill="clear" size="small">
+        <ion-button color="light" expand="block" fill="clear">
           <ion-icon name="logo-linkedin"></ion-icon>
         </ion-button>
   
-        <ion-button color="light" expand="block" fill="clear" size="small">
+        <ion-button color="light" expand="block" fill="clear">
           <ion-icon name="logo-youtube"></ion-icon>
         </ion-button>
       </div>

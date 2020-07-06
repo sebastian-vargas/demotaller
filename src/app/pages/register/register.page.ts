@@ -17,8 +17,7 @@ export class RegisterPage{
       {type:"pattern", message:"El email ingresado no es correcto"}
     ],
     password: [
-      {type:"required", message:"El password es requerido"},
-      {type:"minlength", message:"El password debe ser minimo de 5 letras"}
+      {type:"required", message:"El password es requerido"}
     ],
     nombre: [
       {type:"required", message:"El nombre es requerido"},

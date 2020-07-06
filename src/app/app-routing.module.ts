@@ -26,6 +26,11 @@ const routes: Routes = [
     path: "**",
     redirectTo: "menu",
   },
+  {
+    path: 'list-workshop',
+    loadChildren: () => import('./pages/list-workshop/list-workshop.module').then( m => m.ListWorkshopPageModule)
+  },
+
 ];
 
 @NgModule({

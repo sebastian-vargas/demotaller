@@ -12,20 +12,15 @@ export class MenuPage implements OnInit {
 
   ngOnInit() {
     
-    this.menu.open();
   }
 
   closeMenu(){
     this.menu.close();
   }
-  goHome(){
-    this.menu.close();  
-    this.navCtrl.navigateRoot('/menu/tabs/home');
-  }
 
   navigate(url){
     this.menu.close();  
-    this.navCtrl.navigateRoot(`/menu/tabs/${url}`);
+    this.navCtrl.navigateRoot(`/menu/${url}`);
   }
 
 }

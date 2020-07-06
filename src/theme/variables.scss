@@ -11,6 +11,7 @@
    --ion-color-primary-contrast-rgb: 255, 255, 255;
    --ion-color-primary-shade: #129654;
    --ion-color-primary-tint: #52B788;
+  
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -76,6 +77,17 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+.load {
+  --background: rgba(0, 0, 0, .8);
+  --spinner-color: var(--ion-color-primary);
+
+  color: var(--ion-color-light);
+
+  --backdrop-opacity: .8;
+
+}
+  
 
 @media (prefers-color-scheme: dark) {
   /*

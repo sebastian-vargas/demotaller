@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 })
 export class AuthenticateService {
   constructor(private storage:Storage) { }
+
   async loginUser(credential){
     const user = await this.storage.get("user");
     return new Promise((accept, reject)=>{
@@ -19,8 +20,13 @@ export class AuthenticateService {
       }
     });
   }
+
   registerUser(userData){
     return this.storage.set("user",userData);
+  }
+
+  addWorkshop(wsData){
+    return this.storage.set("ws",wsData);
   }
 }
 
