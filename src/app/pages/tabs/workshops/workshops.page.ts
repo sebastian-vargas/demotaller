@@ -12,9 +12,11 @@ export class WorkshopsPage implements OnInit {
 
   ngOnInit() {
   }
+  
+  id = 1;
 
-  goToWorkship(url){
-    this.navCtrl.navigateRoot(`/menu/${url}`);
+  goToWorkship(){
+    this.navCtrl.navigateForward(`menu/workshop/${this.id}`);
   }
 
 }

@@ -21,10 +21,24 @@ ion-content {
   
     }
   }
+  ion-item {
+    --background: transparent;
+    --border-style: none;
+  
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+  
+    &.item-has-focus ion-label {
+      color: var(--ion-color-light);
+  }
+  }
+  ion-input {
 
-.lesson-select{
-    border-radius: 5px;
-}
+    color: var(--ion-color-light);
+    border-bottom: 1px solid var(--ion-color-light);
+    font-weight: 300;
+  }
+
   ion-card {
     background-color: rgba(0, 0, 0, .5);
     color: var(--ion-color-light); 
@@ -34,5 +48,4 @@ ion-content {
     color: #DDEBE4;
     font-weight: 400;
   }
-  
   

@@ -1,28 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>list-workshop</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="transparent-toolbar">
+    <ion-title class="ion-no-padding">Mis talleres</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-list-header>
-      <ion-label>
-        <h1>El camino a la prosperidad</h1>
-      </ion-label>
-    </ion-list-header> 
-    <ion-item>
-      <ion-label>Seleccionar Lección</ion-label>
-      <ion-select value="brown" okText="Seleccionar" cancelText="Cancelar">
-        <ion-select-option *ngFor="let l of lessons">{{l.nombre}}</ion-select-option> 
-      </ion-select>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="light">El camino a la prosperidad</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Keep close to Nature's heart... and break clear away, once in awhile, and
+      climb a mountain or spend a week in the woods. Wash your spirit clean.
+    </ion-card-content>
+  </ion-card>
 
-    </ion-item >
-    
-  </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-item color="primary" class="lesson-select">
+      <ion-label>Seleccionar Lección</ion-label>
+        <ion-select okText="Seleccionar" cancelText="Cancelar" (ionChange)="onChange($event)" value="0" interface="action-sheet" >
+          <ion-select-option *ngFor="let l of lessons; let i = index" value="{{i}}">{{l.nombre}}</ion-select-option> 
+        </ion-select>
+      </ion-item >
+    </ion-card-header>
+    <ion-card-content>
+      {{current_lesson}}
+    </ion-card-content>   
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-margin">
+    <ion-fab-button (click)="navigate('do-workshop')">
       <ion-icon name="caret-forward-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> 
+  
 </ion-content>

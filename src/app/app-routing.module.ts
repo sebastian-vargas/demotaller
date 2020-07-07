@@ -27,8 +27,8 @@ const routes: Routes = [
     redirectTo: "menu",
   },
   {
-    path: 'list-workshop',
-    loadChildren: () => import('./pages/list-workshop/list-workshop.module').then( m => m.ListWorkshopPageModule)
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
   },
 
 ];

@@ -23,12 +23,23 @@ const routes: Routes = [
         loadChildren: () => import('../contact/contact.module').then( m => m.ContactPageModule)
       },
       {
-        path: 'adminws',
-        loadChildren: () => import('../adminws/adminws.module').then( m => m.AdminwsPageModule)
+        path: "workshop/:id",
+        loadChildren: () =>
+          import("../list-workshop/list-workshop.module").then(
+            (m) => m.ListWorkshopPageModule
+          ),
       },
       {
-      path: 'list-workshop',
-      loadChildren: () => import('../list-workshop/list-workshop.module').then( m => m.ListWorkshopPageModule)
+        path: 'do-workshop',
+        loadChildren: () => import('../do-workshop/do-workshop.module').then( m => m.DoWorkshopPageModule)
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('../admin/admin.module').then( m => m.AdminPageModule)
+      },
+      {
+        path: 'adminws',
+        loadChildren: () => import('../adminws/adminws.module').then( m => m.AdminwsPageModule)
       },
       {
         path: "**",

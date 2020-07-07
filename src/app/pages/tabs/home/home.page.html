@@ -3,11 +3,12 @@
     <ion-title class="ion-no-padding">Magia de amor</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
+      
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="has-footer bg-image">
+<ion-content [fullscreen]="true" class="has-footer" >
   <ion-card>
     <ion-card-header>
       <ion-card-title color="light">Talleres</ion-card-title>
@@ -18,8 +19,8 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-list class="ion-no-padding">
-    <ion-card *ngFor="let a of array" class="ion-activatable ripple-parent" (click)="alertConf()">
+  <ion-list class="ion-no-padding" >
+    <ion-card *ngFor="let a of array" class="ion-activatable ripple-parent" (click)="goToWorkship()">
       <ion-card-content>
         <ion-item class="ion-float-right ion-no-padding">
           <ion-icon name="chevron-forward" color="light"></ion-icon>

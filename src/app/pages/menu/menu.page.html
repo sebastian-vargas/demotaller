@@ -37,14 +37,22 @@
           ></ion-icon>
           Contacto</ion-item
         >
-        <ion-item class="ion-margin" (click)="navigate('adminws')">
+        <ion-item class="ion-margin" (click)="navigate('admin')">
           <ion-icon
             name="settings-outline"
             color="light"
             slot="start"
           ></ion-icon>
-          Admin Talleres
+          Administración
         </ion-item>
+
+        <ion-item class="ion-margin" (click)="navigate('adminws')">
+          <ion-icon name="log-out-outline" color="light"
+          slot="start"></ion-icon>
+          Salir
+        </ion-item>
+
+        
       </ion-list>
     </ion-content>
 
