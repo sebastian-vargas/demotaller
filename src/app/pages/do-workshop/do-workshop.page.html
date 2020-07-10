@@ -20,9 +20,8 @@
   </ion-card>
 
   <iframe width="100%" height="315" [src]="vidUrl" frameborder="0" allowfullscreen></iframe>
-
+  <ion-button expand="full" (click)="showPdf()">Abrir PDF</ion-button>
   <ion-button expand="full" (click)="openLocalPdf()">Abrir PDF local</ion-button>
-  <ion-button expand="full" (click)="dowloadAndOpenPdf()">Descargar y abrir PDF</ion-button>
 
   <ion-item>
     <ion-label position="floating">Comentarios</ion-label>

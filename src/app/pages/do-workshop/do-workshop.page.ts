@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser"
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
+/*
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/File/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';*/
+import { DocumentViewer, DocumentViewerOptions } 
+from '@ionic-native/document-viewer/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { ModalPdfPage } from '../modal-pdf/modal-pdf.page';
 
 @Component({
   selector: 'app-do-workshop',
@@ -13,16 +17,39 @@ import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-vi
 })
 export class DoWorkshopPage implements OnInit {
   vidUrl:SafeResourceUrl;
+  pdfUrl: SafeResourceUrl;
+  pdfData = {
+    title: "PDF de ejemplo",
+    url: 'http://www.africau.edu/images/default/sample.pdf'
+  }
+
   constructor(
     private domSanitizer:DomSanitizer, 
     private platform:Platform, 
-    private file:File, 
+    private documentViewer:DocumentViewer,
+    private fileOpener: FileOpener,
+    private modalController: ModalController
+    /*private file:File, 
     private fileTransfer:FileTransfer, 
     private fileOpener:FileOpener,
-    private documentViewer:DocumentViewer) { }
+    private documentViewer:DocumentViewer*/) { }
 
   ngOnInit() {
     this.vidUrl = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/J0G5mQyHGlI");
+
+    
+  }
+ 
+
+  async showPdf(){
+    const modal = await this.modalController.create({
+      component: ModalPdfPage,
+      componentProps: {
+        'title': this.pdfData.title,
+        'url': this.pdfData.url
+      }
+    });
+    return await modal.present();
   }
   
   openLocalPdf(){
@@ -31,7 +58,7 @@ export class DoWorkshopPage implements OnInit {
     }
     this.documentViewer.viewDocument('assets/myFile.pdf', 'application/pdf', options)
   }
-
+  /*
   dowloadAndOpenPdf(){
     let path = null;
 
@@ -47,6 +74,6 @@ export class DoWorkshopPage implements OnInit {
     });
 
   }
-
+*/
 }
 

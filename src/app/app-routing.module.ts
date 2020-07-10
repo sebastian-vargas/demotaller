@@ -30,6 +30,14 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
   },
+  {
+    path: 'modal-pdf',
+    loadChildren: () => import('./pages/modal-pdf/modal-pdf.module').then( m => m.ModalPdfPageModule)
+  },
+  {
+    path: 'adminuser',
+    loadChildren: () => import('./pages/admin/adminuser/adminuser.module').then( m => m.AdminuserPageModule)
+  },
 
 ];
 

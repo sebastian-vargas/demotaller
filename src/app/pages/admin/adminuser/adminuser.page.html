@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>adminuser</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar></ion-searchbar>
+  <ion-list class="ion-no-padding">
+    <ion-card *ngFor="let user of users" class="ion-activatable ripple-parent" (click)="editUser(user)">
+      <ion-card-content>
+        <ion-item class="ion-float-right ion-no-padding">
+          <ion-icon name="chevron-forward" color="light"></ion-icon>
+        </ion-item>
+        <div class="list-title">
+          {{user.nombre}} {{user.apellido}}
+        </div>  
+      </ion-card-content>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-card>
+  </ion-list>
+</ion-content>

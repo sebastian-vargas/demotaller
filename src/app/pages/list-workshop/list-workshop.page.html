@@ -17,25 +17,17 @@
       climb a mountain or spend a week in the woods. Wash your spirit clean.
     </ion-card-content>
   </ion-card>
-
-
-  <ion-card>
-    <ion-card-header>
-      <ion-item color="primary" class="lesson-select">
-      <ion-label>Seleccionar Lección</ion-label>
-        <ion-select okText="Seleccionar" cancelText="Cancelar" (ionChange)="onChange($event)" value="0" interface="action-sheet" >
-          <ion-select-option *ngFor="let l of lessons; let i = index" value="{{i}}">{{l.nombre}}</ion-select-option> 
-        </ion-select>
-      </ion-item >
-    </ion-card-header>
-    <ion-card-content>
-      {{current_lesson}}
-    </ion-card-content>   
-  </ion-card>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-margin">
-    <ion-fab-button (click)="navigate('do-workshop')">
-      <ion-icon name="caret-forward-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab> 
-  
+  <ion-list class="ion-no-padding">
+    <ion-card *ngFor="let l of lessons" class="ion-activatable ripple-parent" (click)="navigate('do-workshop')">
+      <ion-card-content>
+        <ion-item class="ion-float-right ion-no-padding">
+          <ion-icon name="chevron-forward" color="light"></ion-icon>
+        </ion-item>
+        <div class="list-title">
+          {{l.nombre}}
+        </div>    
+      </ion-card-content>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-card>
+  </ion-list>
 </ion-content>

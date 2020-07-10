@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthenticateService } from 'src/app/services/authenticate.service';
 
 @Component({
-  selector: 'app-adminws',
-  templateUrl: './adminws.page.html',
-  styleUrls: ['./adminws.page.scss'],
+  selector: 'app-addws',
+  templateUrl: './addws.page.html',
+  styleUrls: ['./addws.page.scss'],
 })
-export class AdminwsPage implements OnInit {
+export class AddwsPage implements OnInit {
+
   registerForm:FormGroup;
   upload={};
   validation_messages = {
@@ -25,7 +26,7 @@ export class AdminwsPage implements OnInit {
     private formBuilder:FormBuilder,
     navCtrl:NavController, 
     storage:Storage,
-    private authService:AuthenticateService
+    private authService:AuthenticateService,
     ) {
       this.registerForm = this.formBuilder.group({
         taller: new FormControl(
@@ -76,5 +77,5 @@ export class AdminwsPage implements OnInit {
       //handle errors
     };
   };
-
 }
+

@@ -37,10 +37,7 @@ const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('../admin/admin.module').then( m => m.AdminPageModule)
       },
-      {
-        path: 'adminws',
-        loadChildren: () => import('../adminws/adminws.module').then( m => m.AdminwsPageModule)
-      },
+
       {
         path: "**",
         redirectTo: "tabs"

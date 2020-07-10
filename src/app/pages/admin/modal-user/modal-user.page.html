@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{nombre}} {{apellido}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre: {{nombre}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Apellido: {{apellido}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Correo: {{email}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Contraseña: {{password}}</ion-label>
+    </ion-item>
+  </ion-list>
+<ion-item>
+  <ion-label>Hacer Usuario Administrador</ion-label>
+  <ion-toggle [(ngModel)]="sausage" disabled="false"></ion-toggle>
+</ion-item>
+
+</ion-content>

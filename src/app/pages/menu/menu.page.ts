@@ -23,4 +23,9 @@ export class MenuPage implements OnInit {
     this.navCtrl.navigateRoot(`/menu/${url}`);
   }
 
+  navigateForward(url){
+    this.menu.close();  
+    this.navCtrl.navigateForward(`menu/${url}`);
+  }
+
 }

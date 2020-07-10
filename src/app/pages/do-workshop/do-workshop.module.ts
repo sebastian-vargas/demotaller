@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DoWorkshopPageRoutingModule } from './do-workshop-routing.module';
 
 import { DoWorkshopPage } from './do-workshop.page';
+import { ModalPdfPage } from '../modal-pdf/modal-pdf.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { DoWorkshopPage } from './do-workshop.page';
     IonicModule,
     DoWorkshopPageRoutingModule
   ],
-  declarations: [DoWorkshopPage]
+  declarations: [DoWorkshopPage, ModalPdfPage],
+  entryComponents:[ModalPdfPage]
 })
 export class DoWorkshopPageModule {}

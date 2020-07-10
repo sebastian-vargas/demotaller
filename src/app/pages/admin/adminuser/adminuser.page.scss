@@ -1,0 +1,32 @@
+ion-content {
+    --background: linear-gradient(
+      
+      rgba(21, 87, 153, .7),
+      rgba(32, 179, 105, .7)
+    ),
+    url('../../../../assets/workshop-bg.jpg')
+    no-repeat fixed center;
+     
+  }
+
+  ion-list {
+    background-color: transparent;
+  
+    ion-item {
+      --background: transparent;
+      --border-style: none;
+  
+      --padding-end: 0px;
+    --inner-padding-end: 0px;
+  
+    }
+  }
+  ion-card {
+    background-color: rgba(0, 0, 0, .5);
+    color: var(--ion-color-light); 
+  }
+  
+  ion-card-subtitle {
+    color: #DDEBE4;
+    font-weight: 400;
+  }
