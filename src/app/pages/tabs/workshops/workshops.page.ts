@@ -16,7 +16,7 @@ export class WorkshopsPage implements OnInit {
   id = 1;
 
   goToWorkship(){
-    this.navCtrl.navigateForward(`menu/workshop/${this.id}`);
+    this.navCtrl.navigateForward(`menu/tabs/workshop/${this.id}`);
   }
 
 }

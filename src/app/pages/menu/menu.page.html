@@ -1,38 +1,38 @@
 <ion-split-pane contentId="contentPrincipal">
   <ion-menu contentId="contentPrincipal" side="start">
-
-    <ion-avatar class="ion-margin">
-      <img src="https://m.media-amazon.com/images/M/MV5BMjEzMjA0ODk1OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_UY317_CR6,0,214,317_AL_.jpg">
-    </ion-avatar>
-
-    <ion-label class="username">Elizabeth Olsen</ion-label>
+    <div class="avatar-container">
+      <ion-avatar class="ion-margin">
+        <img src="https://m.media-amazon.com/images/M/MV5BMjEzMjA0ODk1OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_UY317_CR6,0,214,317_AL_.jpg">
+      </ion-avatar>
+      <ion-label class="username">Elizabeth Olsen</ion-label>
+    </div>
+    
 
     <ion-content>
       <ion-list>
-        <ion-item  (click)="navigate('tabs/home')" class="ion-margin" >
+        <ion-item  (click)="navigate('menu/tabs/home')" class="ion-margin " >
           <ion-icon
-            name="home"
-            color="light"
-            slot="start"
+            name="home-outline"
+            color="primary"
+            slot=""
           ></ion-icon>
           Inicio
-          </ion-item
-        >
+          </ion-item>
 
-        <ion-item class="ion-margin" (click)="navigate('tabs/workshops')" >
+        <ion-item class="ion-margin" (click)="navigate('menu/tabs/workshops')" >
           <ion-icon
-            name="book"
-            color="light"
+            name="book-outline"
+            color="primary"
             slot="start"
            
           ></ion-icon>
           Mis talleres</ion-item
         >
 
-        <ion-item class="ion-margin" (click)="navigate('contact')" >
+        <ion-item class="ion-margin" (click)="navigate('menu/tabs/contact')" >
           <ion-icon
-            name="mail"
-            color="light"
+            name="mail-outline"
+            color="primary"
             slot="start"
           ></ion-icon>
           Contacto</ion-item
@@ -40,50 +40,43 @@
         <ion-item class="ion-margin" (click)="navigateForward('admin')">
           <ion-icon
             name="settings-outline"
-            color="light"
+            color="primary"
             slot="start"
           ></ion-icon>
           Administración
         </ion-item>
 
-        <ion-item class="ion-margin" (click)="navigate('adminws')">
-          <ion-icon name="log-out-outline" color="light"
+        <ion-item  *ngIf="isLoggedIn" class="ion-margin" (click)="logOut()">
+          <ion-icon name="log-out-outline" color="primary"
           slot="start"></ion-icon>
           Salir
+        </ion-item>
+
+        <ion-item  *ngIf="!isLoggedIn" class="ion-margin" (click)="navigate('login')">
+          <ion-icon name="log-in-outline" color="primary"
+          slot="start"></ion-icon>
+          Iniciar sesión
         </ion-item>
 
         
       </ion-list>
     </ion-content>
 
-    <ion-footer class="ion-padding">
-
-      <ion-label color="light">Redes sociales</ion-label>
-
+    <ion-footer>
+      <ion-label>Redes sociales</ion-label>
       <div class="menu-footer">
-
-        <ion-button color="light" expand="block" fill="clear">
+        <ion-button color="dark"  expand="block" fill="clear">
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-button>
   
-        <ion-button color="light" expand="block" fill="clear">
+        <ion-button color="dark"  expand="block" fill="clear">
           <ion-icon name="logo-instagram"></ion-icon>
         </ion-button>
   
-        <ion-button color="light" expand="block" fill="clear">
+        <ion-button color="dark"  expand="block" fill="clear">
           <ion-icon name="logo-whatsapp"></ion-icon>
         </ion-button>
-  
-        <ion-button color="light" expand="block" fill="clear">
-          <ion-icon name="logo-linkedin"></ion-icon>
-        </ion-button>
-  
-        <ion-button color="light" expand="block" fill="clear">
-          <ion-icon name="logo-youtube"></ion-icon>
-        </ion-button>
-      </div>
-      
-      
+      </div>      
     </ion-footer>
 
   </ion-menu>

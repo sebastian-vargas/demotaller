@@ -1,10 +1,19 @@
-.transparent-toolbar {
-    --background: rgba(0, 0, 0, .7);
-    --ion-color-base: rgba(0, 0, 0, .7) !important;
+
+ion-content {
+    --background: var(--theme-background);
+}
+  
+ion-title {
+    font-weight: 400;
 }
 
 ion-title, .list-title {
-    font-weight: 400;
     font-size: 18px;
-  }
-  
+}
+
+.list-title, .title {
+    font-weight: 500;
+    color: var(--ion-color-secondary);
+}
+
+

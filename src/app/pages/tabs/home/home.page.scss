@@ -1,17 +1,17 @@
-ion-content {
-  --background: linear-gradient(
-    to bottom,
-    rgba(21, 87, 153, .7),
-    rgba(32, 179, 105, .7)
-  ),
-  url('../../../../assets/home-bg.jpg')
-  no-repeat fixed center;
-   
+.talleres-header {
+  
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
-ion-title, .list-title {
-  font-weight: 400;
-  font-size: 18px;
+.mask {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 2;
+  backdrop-filter: blur(3px);  
 }
 
 ion-list {
@@ -28,11 +28,15 @@ ion-list {
 }
 
 ion-card {
-  background-color: rgba(0, 0, 0, .5);
-  color: var(--ion-color-light); 
+  border-radius: 0;
+  
+  box-shadow: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
+
+  ion-card-subtitle {
+  
+    font-weight: 400;
+  }
 }
 
-ion-card-subtitle {
-  color: #DDEBE4;
-  font-weight: 400;
-}
+

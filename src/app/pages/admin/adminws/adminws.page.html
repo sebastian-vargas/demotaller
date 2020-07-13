@@ -1,22 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>adminws</ion-title>
+<ion-header class="ion-no-border" >
+  <ion-toolbar color="primary" class="transparent-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">Administración</ion-title>
   </ion-toolbar>
+  
+  <ion-searchbar></ion-searchbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-searchbar></ion-searchbar>
+<ion-content >
   <ion-list class="ion-no-padding">
-    <ion-card *ngFor="let w of workshops" class="ion-activatable ripple-parent" (click)="editWS(w)">
+    <ion-card *ngFor="let w of workshops; let i = index" 
+    class="ion-activatable ripple-parent ion-no-margin" (click)="editWS(w)"
+    >
       <ion-card-content>
+        <ion-card-title >{{w.titulo}}</ion-card-title>
         <ion-item class="ion-float-right ion-no-padding">
-          <ion-icon name="chevron-forward" color="light"></ion-icon>
-        </ion-item>
-        <div class="list-title">
-          {{w.titulo}} <br>
-          {{w.descripcion}}
-        </div>  
+          <ion-icon name="eye-outline" color="secondary"></ion-icon>
+        </ion-item> 
       </ion-card-content>
+          
       <ion-ripple-effect></ion-ripple-effect>
     </ion-card>
   </ion-list>

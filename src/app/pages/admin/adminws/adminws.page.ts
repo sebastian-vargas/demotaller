@@ -11,15 +11,23 @@ import { ModalWsPage } from '../modal-ws/modal-ws.page';
 })
 export class AdminwsPage  implements OnInit {
   workshops = [{
-    titulo:"Camino a la prosperidad 1",
+    titulo:"Camino a la prosperidad",
     descripcion:"Describir es explicar, de manera detallada y ordenada, cómo son las personas, animales, lugares, objetos, etc. La descripción sirve sobre todo para ambientar la acción y crear una que haga más creíbles los hechos que se narran",
     pdfUrl:"URLPDFCAMINOPROSPERIDAD",
     vidUrl:"URLVIDCAMINOPROSPERIDAD",
+    readed: false
   }, {
-    titulo:"aprendiendo a vivir 2",
+    titulo:"Aprendiendo a vivir",
     descripcion:"Describir es explicar, de manera detallada y ordenada, cómo son las personas, animales, lugares, objetos, etc. La descripción sirve sobre todo para ambientar la acción y crear una que haga más creíbles los hechos que se narran",
     pdfUrl:"URLPDFAPRENDIENDOAVIVIR2",
     vidUrl:"URLVIDAPRENDIENDOAVIVIR2",
+    readed: true
+  },{
+    titulo:"Aprendiendo a vivir",
+    descripcion:"Describir es explicar, de manera detallada y ordenada, cómo son las personas, animales, lugares, objetos, etc. La descripción sirve sobre todo para ambientar la acción y crear una que haga más creíbles los hechos que se narran",
+    pdfUrl:"URLPDFAPRENDIENDOAVIVIR2",
+    vidUrl:"URLVIDAPRENDIENDOAVIVIR2",
+    readed: false
   }];
   
   constructor(

@@ -1,0 +1,60 @@
+.talleres-header {
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+ion-list {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+  ion-item {
+    --background: transparent;
+    --border-style: none;
+  }
+}
+
+ion-card {
+  position: relative;
+  border-radius: 0;
+  
+  box-shadow: none;
+
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
+
+  ion-icon {
+    color: var(--ion-color-medium);
+  }
+  
+  &.unread {
+    background: #f2f9fd;
+    border-bottom: none;
+
+    ion-card-title {
+      color: var(--ion-color-dark);
+      font-weight: 500;
+    }
+
+    ion-icon {
+      color: var(--ion-color-secondary);
+    }
+  }
+
+  ion-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  ion-card-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ion-color-medium);
+
+    &.header {
+      color: var(--ion-color-dark);
+      font-weight: 500;
+    }
+  }
+  
+}
+

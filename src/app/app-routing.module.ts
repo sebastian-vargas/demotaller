@@ -12,7 +12,6 @@ const routes: Routes = [
     path: "menu",
     loadChildren: () =>
       import("./pages/menu/menu.module").then((m) => m.MenuPageModule),
-      canActivate: [LoginGuard]
   },
   {
     path: 'login',
@@ -29,10 +28,6 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
-  },
-  {
-    path: 'modal-pdf',
-    loadChildren: () => import('./pages/modal-pdf/modal-pdf.module').then( m => m.ModalPdfPageModule)
   },
   {
     path: 'adminuser',

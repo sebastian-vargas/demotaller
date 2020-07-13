@@ -16,7 +16,7 @@ export class AboutUsPage implements OnInit {
   }
 
   navigate(url){
-    this.navCtrl.navigateForward(`menu/${url}`);
+    this.navCtrl.navigateForward(`menu/tabs/${url}`);
   }
 
 }

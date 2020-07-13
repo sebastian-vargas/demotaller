@@ -1,18 +1,17 @@
 ion-tab-bar {
-    --background: var(--ion-color-primary) ;
-    --ion-color-base: transparent !important;
-
     position: relative;
 
-    border: none;
 }
-
-.container {
+.cover {
     position: absolute;
     width: 100%;
     height: 100%;
 
-    background:#f67b28;
+    background: rgba(246,123,40,1);
+    background: linear-gradient(90deg, rgba(246,123,40,1) 0%, rgba(255,193,7,1) 100%);
+}
+.logo{
+    font-size: 40px;
 }
 
 ion-label {

@@ -4,22 +4,27 @@
 /** Ionic CSS Variables **/
 
 :root {
+  /** custom **/
+
+  --theme-background: linear-gradient(90deg,  rgba(2, 136, 214, .1) 0%, rgba(246,123,40,.1) 100%);
+  /*--theme-background: #fff;*/
+
    /** primary **/
-   --ion-color-primary: #20B369;
-   --ion-color-primary-rgb: 32, 179, 105;
+   --ion-color-primary: #FFC000;
+   --ion-color-primary-rgb: 255, 192, 0;
    --ion-color-primary-contrast: #ffffff;
    --ion-color-primary-contrast-rgb: 255, 255, 255;
-   --ion-color-primary-shade: #129654;
-   --ion-color-primary-tint: #52B788;
+   --ion-color-primary-shade: #ffa000 ;
+   --ion-color-primary-tint: #ffca28 ;
   
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
-  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-secondary: #0288D6 ;
+  --ion-color-secondary-rgb: 2, 136, 214;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #36abe0;
-  --ion-color-secondary-tint: #50c8ff;
+  --ion-color-secondary-shade: #0d47a1;
+  --ion-color-secondary-tint: #42a5f5;
 
   /** tertiary **/
   --ion-color-tertiary: #5260ff;

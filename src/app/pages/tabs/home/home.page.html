@@ -1,5 +1,5 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="primary" class="transparent-toolbar">
+<ion-header >
+  <ion-toolbar color="primary" >
     <ion-title class="ion-no-padding">Magia de amor</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
@@ -8,29 +8,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="has-footer" >
-  <ion-card>
+<ion-content class="has-footer" >
+   
+  <ion-card class="talleres-header ion-no-margin">
     <ion-card-header>
-      <ion-card-title color="light">Talleres</ion-card-title>
+      <ion-card-title >Talleres</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       Keep close to Nature's heart... and break clear away, once in awhile, and
       climb a mountain or spend a week in the woods. Wash your spirit clean.
     </ion-card-content>
-  </ion-card>
+  </ion-card> 
 
   <ion-list class="ion-no-padding" >
-    <ion-card *ngFor="let a of array" class="ion-activatable ripple-parent" (click)="goToWorkship()">
+    <ion-card *ngFor="let workshop of workshops; let i = index" class="ion-activatable ripple-parent ion-no-margin" 
+      (click)="workshopHandleCLick(i, workshop.id)" >
+      <div *ngIf="i != 0 && !isLogged" class="mask"></div>
       <ion-card-content>
-        <ion-item class="ion-float-right ion-no-padding">
-          <ion-icon name="chevron-forward" color="light"></ion-icon>
+        <ion-item class="ion-float-right ion-no-padding ion-margin-start">
+          <ion-icon name="chevron-forward" color="secondary"></ion-icon>
         </ion-item>
         <div class="list-title">
-          El camino a la prosperidad
+          {{workshop.title}}
         </div>
-        <ion-card-subtitle>15 Lecciones.</ion-card-subtitle>
+        <ion-card-subtitle>{{workshop.lessons.length}} Lecciones.</ion-card-subtitle>
       </ion-card-content>
-
       <ion-ripple-effect></ion-ripple-effect>
     </ion-card>
   </ion-list>
