@@ -1,8 +1,3 @@
-.talleres-header {
-  
-  background: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, .1);
-}
 
 .mask {
   position: absolute;
@@ -34,8 +29,12 @@ ion-card {
   border-bottom: 1px solid rgba(0, 0, 0, .08);
 
   ion-card-subtitle {
-  
+
     font-weight: 400;
+  }
+
+  .list-title {
+    color: var(--ion-color-secondary);
   }
 }
 

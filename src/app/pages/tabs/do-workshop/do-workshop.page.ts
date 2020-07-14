@@ -30,18 +30,6 @@ export class DoWorkshopPage implements OnInit {
     url: 'http://www.africau.edu/images/default/sample.pdf'
   }
 
-  comments = [
-    {
-      avatar: this.domSanitizer.bypassSecurityTrustResourceUrl("https://m.media-amazon.com/images/M/MV5BNTczMzk1MjU1MV5BMl5BanBnXkFtZTcwNDk2MzAyMg@@._V1_.jpg"),
-      name: "Will Smith",
-      content: "Wow, amazing"
-    },
-    {
-      avatar: this.domSanitizer.bypassSecurityTrustResourceUrl("https://m.media-amazon.com/images/M/MV5BMTQ3ODE2NTMxMV5BMl5BanBnXkFtZTgwOTIzOTQzMjE@._V1_UY317_CR21,0,214,317_AL_.jpg"),
-      name: "Emma Watson",
-      content: "OMG"
-    }
-  ]
 
   lesson = null;
 
@@ -59,6 +47,7 @@ export class DoWorkshopPage implements OnInit {
   lessonId = Number(this.route.snapshot.paramMap.get("lesson"));
 
   ngOnInit() {
+
     this.loadLesson();
 
     this.vidUrl = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/J0G5mQyHGlI");
@@ -70,7 +59,13 @@ export class DoWorkshopPage implements OnInit {
     
     if(lesson != undefined){
       this.lesson = lesson;
-      lesson.readed = true;
+
+      workshop.myWorkshop = true;
+
+      if(!lesson.readed){
+        lesson.readed = true;
+        workshop.lessonsCount++;
+      }
       this.presentLoading();
     }
     else {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { ModalWsPage } from '../modal-ws/modal-ws.page';
-
+import { workshops } from "../../../services/data";
 
 
 @Component({
@@ -35,22 +35,26 @@ export class AdminwsPage  implements OnInit {
     private navCtrl:NavController
   ) { }
 
+    workshop = workshops;
   ngOnInit() {
   }
   navigate(url){
     this.navCtrl.navigateForward(`menu/admin/${url}`);
   }
-
-  async editWS(w){
-    const modal = await this.modalController.create({
-      component: ModalWsPage,
-      componentProps: {
-        'titulo': w.titulo,
-        'descripcion':w.descripcion,
-        'pdfUrl':w.pdfUrl,
-        'vidUrl':w.vidUrl
-      }
-    });
-    return await modal.present();
+    workshopHandleCLick(index, workshopID) {
+        this.navCtrl.navigateForward(`menu/admin/adminws/${workshopID}`);   
     }
+
+    async editWS(w){
+      const modal = await this.modalController.create({
+        component: ModalWsPage,
+        componentProps: {
+          'titulo': w.titulo,
+          'descripcion':w.descripcion,
+          'pdfUrl':w.pdfUrl,
+          'vidUrl':w.vidUrl
+        }
+      });
+      return await modal.present();
+      }
 }

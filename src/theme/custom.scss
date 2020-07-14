@@ -1,13 +1,14 @@
-
 ion-content {
     --background: var(--theme-background);
-}
-  
+  }
+
+  ion-card-title {
+    font-size: 16px;
+  }
+
 ion-title {
     font-weight: 400;
-}
-
-ion-title, .list-title {
+    
     font-size: 18px;
 }
 
@@ -16,4 +17,15 @@ ion-title, .list-title {
     color: var(--ion-color-secondary);
 }
 
+.header {
 
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 0;
+
+  ion-card-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ion-color-secondary);
+  }
+}

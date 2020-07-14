@@ -8,20 +8,34 @@
 </ion-header>
 
 <ion-content fullscreen="true">
+
+  <ion-card class="talleres-header ion-no-margin header">
+    <ion-card-header>
+      <ion-card-title >Mis talleres</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat, ea.
+    </ion-card-content>
+  </ion-card> 
+
   <ion-list class="ion-no-padding">
-    <ion-card *ngFor="let a of workshops" class="ion-activatable ripple-parent ion-no-margin" (click)="goToWorkship()">
+    <ion-card *ngFor="let workshop of workshops" class="ion-activatable ripple-parent ion-no-margin" (click)="goToWorkshop(workshop.id)">
       <ion-card-content>
         <ion-item class="ion-float-right ion-no-padding">
           <ion-icon name="chevron-forward" color="secondary"></ion-icon>
         </ion-item>
         <div class="list-title" >
-          El camino a la prosperidad
+          {{workshop.title}}
         </div>
-        <ion-card-subtitle>3 de 15 Lecciones.</ion-card-subtitle>
-        <ion-progress-bar value=".3" class="ion-margin-top"></ion-progress-bar>
-      
+        <ion-card-subtitle>{{workshop.lessonsCount}} de {{workshop.lessons.length}} Lecciones.</ion-card-subtitle>
+        <ion-progress-bar color="secondary" value="{{workshop.lessonsCount  / workshop.lessons.length}}" class="ion-margin-top"></ion-progress-bar>
       </ion-card-content>
       <ion-ripple-effect></ion-ripple-effect>
+    </ion-card>
+    <ion-card *ngIf="workshops.length === 0" class="ion-no-margin">
+      <ion-card-content style="text-align: center;">
+        No has visto ningun taller.
+      </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>

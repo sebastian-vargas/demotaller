@@ -19,8 +19,7 @@
   <ion-list class="ion-no-padding">
     <ion-card *ngFor="let lesson of workshop.lessons" 
     class="ion-activatable ripple-parent ion-no-margin" 
-    [ngClass]="{'unread': !lesson.readed}"
-    (click)="navigate(lesson.id)">
+    (click)="editLS(lesson)">
       <ion-card-content class="ion-no-padding ion-margin-start" >
         <ion-card-title  class="lesson-title">{{ lesson.name }}</ion-card-title>  
         <ion-item class="ion-no-padding">

@@ -20,8 +20,14 @@ export class MenuPage implements OnInit {
   isLoggedIn = false;
   ngOnInit() {
 
-    this.auth.isLoggedIn().then( isLoggedIn => this.isLoggedIn = isLoggedIn);
+    /** promesas **/
+    //this.auth.isLoggedIn().then( isLoggedIn => this.isLoggedIn = isLoggedIn);
 
+    this.authS.getIsLoggedIn().subscribe((respone) => {
+      this.isLoggedIn = respone;
+    });
+
+    //this.authS.getIsLoggedIn().subscribe(response => this.isLoggedIn = response);
     //this.menu.open();
   }
 
@@ -41,10 +47,9 @@ export class MenuPage implements OnInit {
 
   logOut(){
     //this.auth.logOut();
-
     this.authS.logOut();    
     this.menu.close();
-    window.location.reload();
-    //this.navCtrl.navigateForward(`menu/tabs/home`);
+    //window.location.reload();
+    this.navCtrl.navigateRoot(`menu/tabs/home`);
   }
 }

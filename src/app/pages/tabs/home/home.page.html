@@ -10,9 +10,9 @@
 
 <ion-content class="has-footer" >
    
-  <ion-card class="talleres-header ion-no-margin">
+  <ion-card class="talleres-header ion-no-margin header">
     <ion-card-header>
-      <ion-card-title >Talleres</ion-card-title>
+      <ion-card-title>Talleres</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       Keep close to Nature's heart... and break clear away, once in awhile, and
@@ -28,9 +28,7 @@
         <ion-item class="ion-float-right ion-no-padding ion-margin-start">
           <ion-icon name="chevron-forward" color="secondary"></ion-icon>
         </ion-item>
-        <div class="list-title">
-          {{workshop.title}}
-        </div>
+        <ion-card-title class="list-title">{{workshop.title}}</ion-card-title>
         <ion-card-subtitle>{{workshop.lessons.length}} Lecciones.</ion-card-subtitle>
       </ion-card-content>
       <ion-ripple-effect></ion-ripple-effect>

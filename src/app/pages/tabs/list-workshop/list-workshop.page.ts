@@ -13,7 +13,9 @@ import { workshops } from "../../../services/data";
 })
 export class ListWorkshopPage implements OnInit {
 
-  constructor(public actionSheetController: ActionSheetController, private navCtrl:NavController,private route: ActivatedRoute) { }
+  constructor(public actionSheetController: ActionSheetController, 
+    private navCtrl:NavController,
+    private route: ActivatedRoute) { }
 
   workshop = {
     id: 0,
@@ -34,7 +36,6 @@ export class ListWorkshopPage implements OnInit {
     }
   }
 
-  
   navigate(id){
     this.navCtrl.navigateForward(`menu/tabs/workshop/${this.workshop.id}/lesson/${id}`);
   }

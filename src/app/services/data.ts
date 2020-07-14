@@ -4,7 +4,9 @@ export const workshops = [
     title: "Camino a la gloria",
     description:
       "No se trata de talento, sino de tener corazón. Se trata de quién puede salir a la cancha y jugar más fuerte. Nadie nos va a dar nada, de modo que tienen que salir y tomarlo.",
-    lessons: [
+    myWorkshop: false,
+    lessonsCount : 0,
+      lessons: [
       {
         id: 1,
         name: "Una fabulosa lección",
@@ -90,6 +92,8 @@ export const workshops = [
     id: 2,
     title: "Un nuevo amanecer",
     description: "Un nuevo inicio en tu vida",
+    myWorkshop: false,
+    lessonsCount : 0,
     lessons: [
       {
         id: 1,

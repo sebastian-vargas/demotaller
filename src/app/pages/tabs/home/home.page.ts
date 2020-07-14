@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AlertController, NavController } from "@ionic/angular";
 import { AuthenticateService } from "src/app/services/authenticate.service";
+
 import { workshops } from "../../../services/data";
+
 import { AuthService } from "src/app/services/auth.service";
 @Component({
   selector: "app-home",
@@ -22,8 +24,6 @@ export class HomePage implements OnInit {
 
 
   ngOnInit(): void {
-    /** With promises - AuthenticateService**/
-    //this.auth.isLoggedIn().then((isLoggedIn) => this.isLogged = isLoggedIn);
 
     /** With observable - AuthService **/
     this.auths.getIsLoggedIn().subscribe(res => {

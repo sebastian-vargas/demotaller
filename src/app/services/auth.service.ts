@@ -11,9 +11,8 @@ export class AuthService {
   isLoggedIn$ = new BehaviorSubject(false);
 
   getIsLoggedIn(): Observable<boolean> {
-    this.storage.get("isUserLoggedIn").then((res) => {
-      console.log(res);
-
+    this.storage.get("isUserLoggedIn").then(res => {
+    
       if (res && res != null) {
         this.isLoggedIn$.next(res);
       } else {

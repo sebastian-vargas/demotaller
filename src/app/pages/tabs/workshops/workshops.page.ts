@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+
+import { workshops } from "../../../services/data";
+import { find } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-workshops',
@@ -7,16 +11,23 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./workshops.page.scss'],
 })
 export class WorkshopsPage implements OnInit {
-  workshops = [{}, {}, {},{},{},{},{}];
-  constructor(private navCtrl:NavController) { }
+  workshops = [];
+  constructor(private navCtrl:NavController) {
+    console.log(this.workshops  )
+   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
+    
   }
-  
-  id = 1;
 
-  goToWorkship(){
-    this.navCtrl.navigateForward(`menu/tabs/workshop/${this.id}`);
+  ionViewWillEnter() {
+    
+    this.workshops = workshops.filter(mWorkshop => mWorkshop.myWorkshop);
+}
+
+  goToWorkshop(id){
+    this.navCtrl.navigateForward(`menu/tabs/workshop/${id}`);
   }
 
 }
