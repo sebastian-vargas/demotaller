@@ -43,10 +43,17 @@ ion-title,
   color: var(--ion-color-light);
 }
 
+
 ion-input {
   color: var(--ion-color-light);
-  border-bottom: 1px solid var(--ion-color-light);
+  border: 1px solid rgba(256, 256, 256, .2);
   font-weight: 300;
+
+  margin-top: 8px;
+  padding: 4px 8px !important;
+
+  background: rgba(256, 256, 256, .1);
+  backdrop-filter: blur(2px);  
 }
 
 .titleinput {
@@ -64,7 +71,7 @@ ion-input {
 .titleinput {
   font-weight: 400;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ion-color-light);
 }
 

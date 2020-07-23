@@ -46,6 +46,15 @@
           Administración
         </ion-item>
 
+        <ion-item *ngIf="isLoggedIn" class="ion-margin" (click)="navigateForward('configuser')">
+          <ion-icon
+           name="person-outline"
+           color="primary"
+           slot="start"
+           ></ion-icon>
+          Configuración
+        </ion-item>
+
         <ion-item  *ngIf="isLoggedIn" class="ion-margin" (click)="logOut()">
           <ion-icon name="log-out-outline" color="primary"
           slot="start"></ion-icon>

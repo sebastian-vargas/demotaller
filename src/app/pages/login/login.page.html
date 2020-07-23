@@ -1,6 +1,5 @@
-<ion-content fullscreen="true">
-
-  <h1 class="app-title  ion-padding">MAGIA DE AMOR</h1>
+<ion-content>
+  <h1 class="app-title ion-padding">MAGIA DE AMOR</h1>
 
   <form
     [formGroup]="loginForm"
@@ -9,14 +8,15 @@
   >
     <h2 class="titlelogin ion-margin-bottom">ACCESO</h2>
 
-    <ng-container >
+    <ng-container>
       <ion-item class="ion-no-padding">
-        <ion-label position="floating" class="titleinput" >Email</ion-label>
+        <ion-label position="stacked" class="titleinput">Email</ion-label>
         <ion-input formControlName="email"></ion-input>
       </ion-item>
 
       <ng-container *ngFor="let validation of validation_messages.email">
-        <div class="validation"
+        <div
+          class="validation"
           *ngIf="loginForm.get('email').hasError(validation.type) && 
                     (loginForm.get('email').dirty ||
                     loginForm.get('email').touched)"
@@ -26,12 +26,14 @@
       </ng-container>
 
       <ion-item class="ion-no-padding">
-        <ion-label position="floating" class="titleinput">Constraseña</ion-label>
+        <ion-label position="stacked" class="titleinput">Constraseña</ion-label>
         <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
 
       <ng-container *ngFor="let validation of validation_messages.password">
-        <div class="validation" *ngIf="loginForm.get('password').hasError(validation.type) && 
+        <div
+          class="validation"
+          *ngIf="loginForm.get('password').hasError(validation.type) && 
                     (loginForm.get('password').dirty ||
                     loginForm.get('password').touched)"
         >
@@ -40,35 +42,47 @@
       </ng-container>
     </ng-container>
 
-    <div class="line"></div>
-    
     <div class="buttons">
       <ion-button
-      class="ion-margin-top"
-      color="primary"
-      expand="full"
-      shape="round"
-      [disabled]="!loginForm.valid"
-      type="submit"
-      >Iniciar Sesión
-    </ion-button>
-    <ion-button
-      class="ion-margin-top"
-      color="light"
-      (click)="goToRegister()"
-      expand="full"
-      fill="outline"
-      shape="round"
-      >Registrarme
-    </ion-button>
-      <div style="text-align:center;">
-        <ion-button>
-          <ion-icon name="logo-facebook"></ion-icon>
-        </ion-button>
-        <ion-button>
-          <ion-icon name="logo-google"></ion-icon>
-        </ion-button>
-      </div>
-    </div> 
+        class="ion-margin-top"
+        color="primary"
+        expand="full"
+        [disabled]="!loginForm.valid"
+        type="submit"
+        >Iniciar Sesión
+      </ion-button>
+      <ion-label
+        style="
+          display: block;
+          text-align: center;
+          font-weight: 400;
+          font-size: 12px;
+        "
+        color="light"
+        class="ion-margin-top"
+        >CONTINÚAR CON</ion-label
+      >
+      <ion-row>
+        <ion-col size="6" class="ion-no-padding"
+          ><ion-button class="ion-margin-top fb" expand="full">
+            <ion-icon name="logo-facebook"></ion-icon> </ion-button
+        ></ion-col>
+
+        <ion-col size="6" class="ion-no-padding">
+          <ion-button class="ion-margin-top gl" expand="full">
+            <ion-icon name="logo-google"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-button
+        class="ion-margin-top"
+        color="light"
+        (click)="goToRegister()"
+        expand="full"
+        fill="clear"
+        >Registrarme
+      </ion-button>
+    </div>
   </form>
 </ion-content>

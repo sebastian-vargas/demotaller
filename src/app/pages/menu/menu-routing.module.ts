@@ -22,6 +22,11 @@ const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('../admin/admin.module').then( m => m.AdminPageModule)
       },
+      {
+        path: 'configuser',
+        loadChildren: () => import('../configuser/configuser.module').then( m => m.ConfiguserPageModule)
+      },
+    
 
       {
         path: "**",

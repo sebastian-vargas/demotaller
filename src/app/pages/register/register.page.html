@@ -20,7 +20,7 @@
   >
   <h2 class="titleregister ion-margin-bottom">REGISTRO</h2>
     <ion-item class="ion-no-padding">
-      <ion-label position="floating" class="titleinput">Nombre</ion-label>
+      <ion-label position="stacked" class="titleinput">Nombre</ion-label>
       <ion-input formControlName="nombre"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.nombre">
@@ -34,7 +34,7 @@
     </ng-container>
 
     <ion-item class="ion-no-padding">
-      <ion-label position="floating" class="titleinput">Apellido</ion-label>
+      <ion-label position="stacked" class="titleinput">Apellido</ion-label>
       <ion-input formControlName="apellido"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.apellido">
@@ -48,7 +48,7 @@
     </ng-container>
 
     <ion-item class="ion-no-padding">
-      <ion-label position="floating" class="titleinput">Email</ion-label>
+      <ion-label position="stacked" class="titleinput">Email</ion-label>
       <ion-input formControlName="email"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.email">
@@ -62,7 +62,7 @@
     </ng-container>
 
     <ion-item class="ion-no-padding">
-      <ion-label position="floating" class="titleinput">Constraseña</ion-label>
+      <ion-label position="stacked" class="titleinput">Constraseña</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.password">
@@ -76,7 +76,7 @@
     </ng-container>
 
     <ion-item class="ion-no-padding">
-      <ion-label position="floating" class="titleinput"
+      <ion-label position="stacked" class="titleinput"
         >Confirmar Contraseña</ion-label
       >
       <ion-input type="password" formControlName="passconfirm"></ion-input>
@@ -104,7 +104,6 @@
     <ion-button
       class="btn-submit"
       expand="full"
-      shape="round"
       color="primary"
       [disabled]="!registerForm.valid"
       type="submit"

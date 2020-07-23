@@ -44,10 +44,13 @@ ion-card-subtitle {
 }
 
 .comment-name {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 14px;
 }
 
-.comment-card  {
-  width: 100%;
-  margin-bottom: 4px;
-}
+audio { 
+  width: 90%; 
+  display: block;
+  margin: 16px auto;
+} 
+

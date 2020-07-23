@@ -6,6 +6,8 @@ ion-content {
   ),
     url("../../../assets/login-bg.jpg")
       no-repeat fixed center;
+
+   
 }
 
 ion-item {
@@ -25,20 +27,28 @@ ion-item {
 
   font-size: 44px;
   font-weight: bold;
-  margin: 70px auto 15px;
+
+  margin: 50px auto auto;
 
   color: var(--ion-color-light);
 }
 
 .login {
   border-radius: 5px;
-  padding: 15px;
+  padding: 0 15px;
 }
+
 
 ion-input {
   color: var(--ion-color-light);
-  border-bottom: 1px solid var(--ion-color-light);
+  border: 1px solid rgba(256, 256, 256, .2);
   font-weight: 300;
+
+  margin-top: 8px;
+  padding: 4px 8px !important;
+
+  background: rgba(256, 256, 256, .1);
+  backdrop-filter: blur(2px);  
 }
 
 .titlelogin {
@@ -50,7 +60,7 @@ ion-input {
 .titleinput {
   font-weight: 400;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ion-color-light);
 }
 
@@ -62,9 +72,18 @@ ion-input {
 }
 
 .buttons {
-  margin-top: 50px;
+  margin-top: 32px;
 }
 
 ion-button {
   font-weight: 400;
+}
+
+
+.fb {
+  --background: var(--facebook-bg);
+}
+
+.gl {
+  --background: var(--google-bg);
 }

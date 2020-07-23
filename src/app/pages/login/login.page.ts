@@ -4,6 +4,9 @@ import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
+import {AuthService} from 'src/app/services/auth.service'
+import { from } from 'rxjs';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -28,7 +31,8 @@ export class LoginPage implements OnInit {
     private formBuilder:FormBuilder,
     private authService:AuthenticateService,
     private navCtrl:NavController,
-    private storage:Storage
+    private storage:Storage,
+    private authS: AuthService
     ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -52,16 +56,15 @@ export class LoginPage implements OnInit {
   }
 
   loginUser(credentials){
-    this.authService.loginUser(credentials).then(res=>{
+    this.authS.loginUser(credentials).then(res=>{
       this.errorMessage="";
-      this.storage.set("isUserLoggedIn", true);
-      this.navCtrl.navigateForward("/home");
+      this.navCtrl.navigateRoot("/home");
     }).catch(err=>{
       this.errorMessage = err;
     });
   }
 
   goToRegister(){
-    this.navCtrl.navigateForward('/register');
+    this.navCtrl.navigateRoot('/register');
   }
 }

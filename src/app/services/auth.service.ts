@@ -28,4 +28,31 @@ export class AuthService {
     this.storage.set("isUserLoggedIn", false);
     this.isLoggedIn$.next(false);
   }
+
+  login(credentials) {
+    this.storage.get('user').then(user => {
+      if(user.email == credentials.email && user.password == credentials.password){
+        this.storage.set("isUserLoggedIn", true);
+        this.isLoggedIn$.next(true);
+      }
+    });
+  }
+
+
+  async loginUser(credential){
+    const user = await this.storage.get("user");
+    return new Promise((accept, reject)=>{
+      if(
+        user.email == credential.email &&
+        user.password == credential.password
+        ){
+          this.storage.set("isUserLoggedIn", true);
+        this.isLoggedIn$.next(true);
+        accept("login correcto");
+      }else{
+        reject("login incorrecto");
+      }
+    });
+  }
+
 }

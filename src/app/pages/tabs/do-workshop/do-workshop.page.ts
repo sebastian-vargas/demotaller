@@ -4,10 +4,10 @@ import { Platform, ModalController, LoadingController, NavController } from '@io
 /*
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/File/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';*/
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { DocumentViewer, DocumentViewerOptions } 
 from '@ionic-native/document-viewer/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';*/
 import { ModalPdfPage } from '../modal-pdf/modal-pdf.page';
 import { ActivatedRoute } from '@angular/router';
 
@@ -31,11 +31,9 @@ export class DoWorkshopPage implements OnInit {
   }
 
 
-  lesson = null;
-
   constructor(
     private domSanitizer:DomSanitizer, 
-    private documentViewer:DocumentViewer,
+    //private documentViewer:DocumentViewer,
     private navCtrl:NavController,
     private modalController: ModalController,
     public loadingController: LoadingController,
@@ -43,14 +41,19 @@ export class DoWorkshopPage implements OnInit {
 
     loading: HTMLIonLoadingElement = null;
 
-  workshopId = Number(this.route.snapshot.parent.paramMap.get("id"));
-  lessonId = Number(this.route.snapshot.paramMap.get("lesson"));
+    workshopId = Number(this.route.snapshot.parent.paramMap.get("id"));
+    lessonId = Number(this.route.snapshot.paramMap.get("lesson"));
 
+    lesson = {};
   ngOnInit() {
 
-    this.loadLesson();
 
     this.vidUrl = this.domSanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/J0G5mQyHGlI");
+  }
+
+  ionViewWillEnter() {
+
+    this.loadLesson();
   }
 
   loadLesson(){
@@ -66,7 +69,7 @@ export class DoWorkshopPage implements OnInit {
         lesson.readed = true;
         workshop.lessonsCount++;
       }
-      this.presentLoading();
+      //this.presentLoading();
     }
     else {
       this.navCtrl.navigateRoot(`menu/tabs/workshop/${workshop.id}`);
@@ -96,12 +99,12 @@ export class DoWorkshopPage implements OnInit {
     });
     return await modal.present();
   }
-  
+ /* 
   openLocalPdf(){
     const options: DocumentViewerOptions = { 
       title: "My PDF TITLE"
     }
     this.documentViewer.viewDocument('assets/myFile.pdf', 'application/pdf', options)
-  }
+  }*/
 }
 
