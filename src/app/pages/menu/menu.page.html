@@ -4,7 +4,7 @@
       <ion-avatar class="ion-margin">
         <img src="https://m.media-amazon.com/images/M/MV5BMjEzMjA0ODk1OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_UY317_CR6,0,214,317_AL_.jpg">
       </ion-avatar>
-      <ion-label class="username">Elizabeth Olsen</ion-label>
+      <ion-label class="username">{{ user.full_name}}</ion-label>
     </div>
     
 
@@ -46,7 +46,7 @@
           Administración
         </ion-item>
 
-        <ion-item *ngIf="isLoggedIn" class="ion-margin" (click)="navigateForward('configuser')">
+        <ion-item *ngIf="isLoggedIn" class="ion-margin" (click)="navigate('menu/tabs/configuration')">
           <ion-icon
            name="person-outline"
            color="primary"

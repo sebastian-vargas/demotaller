@@ -6,8 +6,12 @@
 :root {
   /** custom **/
 
-  --theme-background: linear-gradient(90deg,  rgba(2, 136, 214, .1) 0%, rgba(246,123,40,.1) 100%);
-  /*--theme-background: #fff;*/
+  //--theme-background: linear-gradient(90deg,  rgba(2, 136, 214, .1) 0%, rgba(246,123,40,.1) 100%);
+  //--theme-background: #f7f7f7;
+  --theme-background: #fff;
+
+  --facebook-bg: #3b5998;
+  --google-bg: #EA4335;
 
    /** primary **/
    --ion-color-primary: #FFC000;

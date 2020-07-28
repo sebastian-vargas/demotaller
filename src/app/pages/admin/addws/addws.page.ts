@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NavController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { AuthenticateService } from 'src/app/services/authenticate.service';
 
 @Component({
   selector: 'app-addws',
@@ -25,9 +24,7 @@ export class AddwsPage implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     navCtrl:NavController, 
-    storage:Storage,
-    private authService:AuthenticateService,
-    ) {
+    storage:Storage) {
       this.registerForm = this.formBuilder.group({
         taller: new FormControl(
           "", 
@@ -55,11 +52,7 @@ export class AddwsPage implements OnInit {
   ngOnInit() {
   }
 
-  agregar(wsData){
-    this.authService.addWorkshop(wsData);
-    console.log(wsData);
-  }
-
+  
   loadImageFromDevice(event) {
     const file = event.target.files[0];
     const reader = new FileReader();

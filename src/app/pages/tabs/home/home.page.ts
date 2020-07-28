@@ -1,11 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AlertController, NavController, ModalController } from "@ionic/angular";
-import { AuthenticateService } from "src/app/services/authenticate.service";
-
-import { workshops } from "../../../services/data";
 
 import { AuthService } from "src/app/services/auth.service";
-import { LoginPage } from '../../login/login.page';
+import { WorkshopService } from "src/app/services/workshop.service";
+
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -15,21 +13,32 @@ export class HomePage implements OnInit {
   constructor(
     public alertController: AlertController,
     private navCtrl: NavController,
-    private auth: AuthenticateService,
     private auths: AuthService,
-    public modalController: ModalController
+    public modalController: ModalController,    
+    private workShopService: WorkshopService
   ) {}
 
-  workshops = workshops;
+  workshops:any = [];
 
   isLogged = false;
-
+  user = {};
 
   ngOnInit(): void {
 
     /** With observable - AuthService **/
-    this.auths.getIsLoggedIn().subscribe(res => this.isLogged = res);
-    
+    //this.auths.getIsLoggedIn().subscribe(isLogged => this.isLogged = isLogged);
+    this.auths.getUserData().subscribe(user => {
+      this.user = user;
+      this.isLogged = user.isLoggedIn;
+      console.log(user)
+    });
+
+
+    this.workShopService.getWotkshops(1, 10).subscribe((response: any) => {
+      this.workshops = response.workshops;
+
+    });
+     
   }
 
   async alertLogin() {

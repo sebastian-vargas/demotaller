@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { AuthenticateService } from 'src/app/services/authenticate.service';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import {AuthService} from 'src/app/services/auth.service'
 import { from } from 'rxjs';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,6 @@ export class LoginPage implements OnInit {
 
   constructor(
     private formBuilder:FormBuilder,
-    private authService:AuthenticateService,
     private navCtrl:NavController,
     private storage:Storage,
     private authS: AuthService
@@ -53,14 +52,23 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
+       
   }
 
   loginUser(credentials){
-    this.authS.loginUser(credentials).then(res=>{
-      this.errorMessage="";
-      this.navCtrl.navigateRoot("/home");
-    }).catch(err=>{
-      this.errorMessage = err;
+    this.authS.login(credentials).subscribe(response => {
+      let res:any = response; 
+      if(res.status == 200){
+        let user = res.user;
+        user.isLoggedIn = true;
+        this.storage.set('userData', user);
+        this.authS.userData$.next(user);
+        this.authS.isLoggedIn$.next(true);
+        this.navCtrl.navigateRoot("menu/tabs/home");
+      }
+      else {
+        console.log(res.message);
+      }
     });
   }
 

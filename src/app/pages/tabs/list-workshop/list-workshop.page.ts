@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
+import { switchMap, delay } from 'rxjs/operators';
 import { workshops } from "../../../services/data";
+import { WorkshopService } from 'src/app/services/workshop.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,29 +17,43 @@ export class ListWorkshopPage implements OnInit {
 
   constructor(public actionSheetController: ActionSheetController, 
     private navCtrl:NavController,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private workShopService: WorkshopService) { }
 
-  workshop = {
-    id: 0,
-    title: "Magia de amor",
-    description: ""
-  };
-
+  workshop = {};
+  
+  id = this.route.snapshot.paramMap.get("id");
+  workshopSubscription: Subscription;
+  
   ngOnInit() {
-
-    let id = Number(this.route.snapshot.paramMap.get("id"));
-
-    let workshop = workshops.find(workshop => workshop.id == id);
+    
+    /*let workshop = workshops.find(workshop => workshop.id == id);
     
     if(workshop != undefined){
       this.workshop = workshop;
     }else {
       this.navCtrl.navigateRoot('menu/tabs/home');
-    }
+    }*/
+  }
+  ionViewWillEnter() {
+
+    this.workshopSubscription = this.workShopService.getWorkshop(this.id).pipe(delay(1000)).subscribe((response: any) => {
+      console.log(response);
+      this.workshop = response.workshop;
+    });
+  }
+
+  ionViewWillLeave(){
+    this.workshopSubscription.unsubscribe();
   }
 
   navigate(id){
-    this.navCtrl.navigateForward(`menu/tabs/workshop/${this.workshop.id}/lesson/${id}`);
+    this.navCtrl.navigateForward(`menu/tabs/workshop/${this.id}/lesson/${id}`);
+    //this.navCtrl.navigateForward(`menu/tabs/workshop/1/lesson/1`);
+
+  }
+  goBack(){
+    this.navCtrl.back()
   }
 }
 

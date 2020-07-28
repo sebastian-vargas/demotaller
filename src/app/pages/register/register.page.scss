@@ -21,10 +21,8 @@ ion-item {
 }
 
 ion-toolbar {
-
   --background: rgba(0, 0, 0, 0);
   --ion-color-base: rgba(0, 0, 0, 0) !important;
-
 }
 
 ion-title,
@@ -43,18 +41,6 @@ ion-title,
   color: var(--ion-color-light);
 }
 
-
-ion-input {
-  color: var(--ion-color-light);
-  border: 1px solid rgba(256, 256, 256, .2);
-  font-weight: 300;
-
-  margin-top: 8px;
-  padding: 4px 8px !important;
-
-  background: rgba(256, 256, 256, .1);
-  backdrop-filter: blur(2px);  
-}
 
 .titleinput {
   font-weight: bolder;

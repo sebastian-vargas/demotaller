@@ -11,7 +11,7 @@
     <ng-container>
       <ion-item class="ion-no-padding">
         <ion-label position="stacked" class="titleinput">Email</ion-label>
-        <ion-input formControlName="email"></ion-input>
+        <ion-input class="input-transparent" formControlName="email"></ion-input>
       </ion-item>
 
       <ng-container *ngFor="let validation of validation_messages.email">
@@ -27,7 +27,7 @@
 
       <ion-item class="ion-no-padding">
         <ion-label position="stacked" class="titleinput">Constraseña</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
+        <ion-input class="input-transparent" type="password" formControlName="password"></ion-input>
       </ion-item>
 
       <ng-container *ngFor="let validation of validation_messages.password">

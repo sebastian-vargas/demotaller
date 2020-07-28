@@ -23,12 +23,6 @@ const routes: Routes = [
         loadChildren: () => import('../admin/admin.module').then( m => m.AdminPageModule)
       },
       {
-        path: 'configuser',
-        loadChildren: () => import('../configuser/configuser.module').then( m => m.ConfiguserPageModule)
-      },
-    
-
-      {
         path: "**",
         redirectTo: "tabs"
       }

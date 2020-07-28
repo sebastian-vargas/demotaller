@@ -51,11 +51,19 @@ const routes: Routes = [
         loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
       },
       {
+        path: 'configuration',
+        loadChildren: () => import('./configuser/configuser.module').then( m => m.ConfiguserPageModule)
+      },
+      {
         path: "",
         redirectTo: "home",
         pathMatch: "full",
       },
     ],
+  },
+  {
+    path: 'modal-comm',
+    loadChildren: () => import('./modal-comm/modal-comm.module').then( m => m.ModalCommPageModule)
   },
 ];
 

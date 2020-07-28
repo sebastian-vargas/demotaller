@@ -1,39 +1,69 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary" >
-    <ion-title class="ion-no-padding">{{workshop.title}}</ion-title>
-    <ion-buttons slot="start">
-      <Ion-menu-button ></Ion-menu-button>
+    <ion-title class="ion-no-padding">Magia de amor</ion-title>
+    <ion-buttons slot="start" >
+      <ion-button  (click)="goBack()" >
+        <ion-icon class="back" slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card class="ion-no-margin header">
+  <ion-card class="header ion-no-margin">
     <ion-card-header>
-      <ion-card-title class="title">{{ workshop.title }}</ion-card-title>
+      <ion-card-title class="title" *ngIf="workshop.title" >{{ workshop.title}}</ion-card-title>
+      <ion-card-title class="title" *ngIf="!workshop.title" >
+        <ion-skeleton-text animated style="width: 90%;  height: 18  px;"></ion-skeleton-text>
+      </ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="!workshop.description">
+      <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </ion-card-content>
+    <ion-card-content *ngIf="workshop.description">
       {{workshop.description}}
     </ion-card-content>
   </ion-card>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
   <ion-list class="ion-no-padding">
+    
+    <ion-list-header *ngIf="workshop.lessons">
+      <ion-label color="secondary">Lecciones</ion-label>
+    </ion-list-header>
+
+    <ng-container *ngIf="!workshop.lessons">
+      <ion-list-header >
+        <ion-label color="secondary">
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </ion-label>
+      </ion-list-header>
+      <ion-card *ngFor="let l of [1,2,3,5]" >
+        <ion-card-content>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 8%"></ion-skeleton-text>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+
     <ion-card *ngFor="let lesson of workshop.lessons" 
-    class="ion-activatable ripple-parent ion-no-margin" 
-    [ngClass]="{'unread': !lesson.readed}"
-    (click)="navigate(lesson.id)">
-      <ion-card-content class="ion-no-padding ion-margin-start" >
+      class="ion-activatable ripple-parent " 
+      [ngClass]="{'unread': !lesson.readed}"
+      (click)="navigate(lesson.id_lesson)">
+        <ion-card-content class="ion-no-padding ion-margin-start" >
+          <ion-card-title  class="lesson-title">{{ lesson.title }}</ion-card-title>   
+          <div class="icon-container">
+            <ion-icon name="play" class="ion-margin"></ion-icon>
+          </div>       
+        </ion-card-content>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-card>
 
-        <ion-card-title  class="lesson-title">{{ lesson.name }}</ion-card-title>  
-        
-        
-        <ion-item class="ion-no-padding">
-          <ion-icon name="play" ></ion-icon>
-        </ion-item>
-
-      </ion-card-content>
-      <ion-ripple-effect></ion-ripple-effect>
-      
-
-    </ion-card>
+      <ion-card *ngIf="workshop.lessons && workshop.lessons.length == 0">
+        <ion-card-content  style="text-align: center; display: block;">
+          Aún no hay lecciones disponibles.
+        </ion-card-content>
+      </ion-card>
   </ion-list>
 </ion-content>

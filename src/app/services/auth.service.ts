@@ -1,58 +1,60 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Storage } from "@ionic/storage";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private http: HttpClient) {}
+  API_URL ="http://localhost:8080/api/users/";
 
   isLoggedIn$ = new BehaviorSubject(false);
 
+  defaulUser = {
+    isLoggedIn: false,
+    full_name: "Invitado",
+    id_user: "0"
+  }
+  
+  userData$ = new BehaviorSubject(this.defaulUser);
+
+  login(credentials) {
+
+    let formData = new FormData();
+
+    formData.append('email', credentials.email.toString());
+    formData.append('password', credentials.password.toString());
+
+    return this.http.post(`${this.API_URL}login`, formData, {headers: new HttpHeaders()});
+  }
+
   getIsLoggedIn(): Observable<boolean> {
-    this.storage.get("isUserLoggedIn").then(res => {
-    
+    this.storage.get("userData").then(res => {
       if (res && res != null) {
-        this.isLoggedIn$.next(res);
+        this.storage.set("userData", res);
+        this.isLoggedIn$.next(res.isLoggedIn);
       } else {
-        this.storage.set("isUserLoggedIn", false);
+        this.storage.set("userData", this.defaulUser);
+        this.userData$.next(this.defaulUser);
         this.isLoggedIn$.next(false);
       }
     });
-
     return this.isLoggedIn$;
   }
 
   logOut() {
-    this.storage.set("isUserLoggedIn", false);
-    this.isLoggedIn$.next(false);
+    this.storage.set("userData", this.defaulUser);
+    //this.isLoggedIn$.next(false);
+    this.userData$.next(this.defaulUser);
   }
 
-  login(credentials) {
-    this.storage.get('user').then(user => {
-      if(user.email == credentials.email && user.password == credentials.password){
-        this.storage.set("isUserLoggedIn", true);
-        this.isLoggedIn$.next(true);
-      }
+  getUserData(): Observable<any>{
+    this.storage.get("userData").then(res => {
+      this.userData$.next(res);
     });
+
+    return this.userData$;
   }
-
-
-  async loginUser(credential){
-    const user = await this.storage.get("user");
-    return new Promise((accept, reject)=>{
-      if(
-        user.email == credential.email &&
-        user.password == credential.password
-        ){
-          this.storage.set("isUserLoggedIn", true);
-        this.isLoggedIn$.next(true);
-        accept("login correcto");
-      }else{
-        reject("login incorrecto");
-      }
-    });
-  }
-
 }

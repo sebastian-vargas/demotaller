@@ -21,7 +21,7 @@
   <h2 class="titleregister ion-margin-bottom">REGISTRO</h2>
     <ion-item class="ion-no-padding">
       <ion-label position="stacked" class="titleinput">Nombre</ion-label>
-      <ion-input formControlName="nombre"></ion-input>
+      <ion-input class="input-transparent" formControlName="nombre"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.nombre">
       <div class="validation"
@@ -35,7 +35,7 @@
 
     <ion-item class="ion-no-padding">
       <ion-label position="stacked" class="titleinput">Apellido</ion-label>
-      <ion-input formControlName="apellido"></ion-input>
+      <ion-input class="input-transparent" formControlName="apellido"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.apellido">
       <div class="validation"
@@ -49,7 +49,7 @@
 
     <ion-item class="ion-no-padding">
       <ion-label position="stacked" class="titleinput">Email</ion-label>
-      <ion-input formControlName="email"></ion-input>
+      <ion-input class="input-transparent" formControlName="email"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.email">
       <div class="validation"
@@ -63,7 +63,7 @@
 
     <ion-item class="ion-no-padding">
       <ion-label position="stacked" class="titleinput">Constraseña</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
+      <ion-input class="input-transparent" type="password" formControlName="password"></ion-input>
     </ion-item>
     <ng-container *ngFor="let validation of validation_messages.password">
       <div class="validation"
@@ -79,7 +79,7 @@
       <ion-label position="stacked" class="titleinput"
         >Confirmar Contraseña</ion-label
       >
-      <ion-input type="password" formControlName="passconfirm"></ion-input>
+      <ion-input class="input-transparent" type="password" formControlName="passconfirm"></ion-input>
     </ion-item>
     <div class="validation-errors">
       <ion-container *ngFor="let validation of validation_messages.passconfirm">

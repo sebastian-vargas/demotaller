@@ -38,7 +38,7 @@
       Your browser does not support the <code>audio</code> element.
     </audio>
 
-    <ion-item class="ion-activatable ripple-parent" (click)="showPdf()">
+    <ion-item class="ion-activatable ripple-parent" (click)="openPDF()">
       <ion-icon name="document-outline" class="ion-margin-end"></ion-icon>
       <ion-label> {{ pdfData.title }}</ion-label>
       <ion-ripple-effect></ion-ripple-effect>
@@ -62,5 +62,12 @@
         <p>{{comment.comment}}</p>
       </ion-label>
     </ion-item>
+    <ion-button
+      class="ion-margin-top"  
+      (click)="showComments()"
+      expand="full"
+      fill="clear"
+      >Leer mas...
+    </ion-button>
   </ion-list>
 </ion-content>
