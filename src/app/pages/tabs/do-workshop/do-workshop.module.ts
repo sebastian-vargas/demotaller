@@ -8,16 +8,18 @@ import { DoWorkshopPageRoutingModule } from './do-workshop-routing.module';
 
 import { DoWorkshopPage } from './do-workshop.page';
 import { ModalPdfPage } from '../modal-pdf/modal-pdf.page';
-import { SafePipe } from 'src/app/pipes/safe.pipe';
+import { AudioPlayerComponent } from './audio-player/audio-player.component';
+import { MainPipeModule } from 'src/app/modules/main-pipe/main-pipe.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DoWorkshopPageRoutingModule
+    DoWorkshopPageRoutingModule,
+    MainPipeModule
   ],
-  declarations: [DoWorkshopPage, ModalPdfPage],
-  entryComponents:[ModalPdfPage]
+  declarations: [DoWorkshopPage, ModalPdfPage, AudioPlayerComponent],
+  entryComponents:[ModalPdfPage],
 })
 export class DoWorkshopPageModule {}

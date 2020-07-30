@@ -10,5 +10,22 @@
 </ion-header>
 
 <ion-content>
+  <ion-list *ngIf="lesson.comments && lesson.comments.length > 0">
+    <ion-list-header>
+      <ion-label color="secondary">Comentarios</ion-label>
+    </ion-list-header>
 
+    <ion-item *ngFor="let comment of lesson.comments">
+      <ion-avatar slot="start">
+        <img [src]="comment.avatar || 'assets/avatar.png'"/>
+      </ion-avatar>
+      <ion-label
+        style="word-break: normal; white-space: normal;"
+        class="ion-padding-end"
+      >
+        <h2 class="comment-name">{{comment.full_name}}</h2>
+        <p>{{comment.comment}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

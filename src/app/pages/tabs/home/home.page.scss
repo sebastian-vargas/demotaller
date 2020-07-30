@@ -9,33 +9,6 @@
   backdrop-filter: blur(3px);  
 }
 
-ion-list {
-  background-color: transparent;
 
-  ion-item {
-    --background: transparent;
-    --border-style: none;
-
-    --padding-end: 0px;
-  --inner-padding-end: 0px;
-
-  }
-}
-
-ion-card {
-  border-radius: 0;
-  
-  box-shadow: none;
-  border-bottom: 1px solid rgba(0, 0, 0, .08);
-
-  ion-card-subtitle {
-
-    font-weight: 400;
-  }
-
-  .list-title {
-    color: var(--ion-color-secondary);
-  }
-}
 
 

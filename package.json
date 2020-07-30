@@ -28,6 +28,7 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/storage": "^2.2.0",
     "cordova-plugin-preview-any-file": "^0.1.6",
+    "howler": "^2.2.0",
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.6.0",
     "tslib": "^1.10.0",

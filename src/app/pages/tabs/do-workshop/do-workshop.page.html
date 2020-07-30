@@ -1,73 +1,114 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title class="ion-no-padding">Taller</ion-title>
+    <ion-title class="ion-no-padding" *ngIf="lesson.workshop_title">{{lesson.workshop_title || 'Magia de amor'}}</ion-title>
+    <ion-title class="ion-no-padding" *ngIf="!lesson.workshop_title">
+      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+    </ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
+
+  <ion-card class="ion-no-padding ion-no-margin header">
+    <ion-card-header>
+      <ion-card-title *ngIf="lesson.title">{{lesson.title}}</ion-card-title>
+      <ion-card-title *ngIf="!lesson.title">
+      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="lesson.description">
+      {{lesson.description}}
+    </ion-card-content>
+    <ion-card-content *ngIf="!lesson.description">
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
 </ion-header>
 
 <ion-content [fullscreen]="false" class="has-footer">
-  <ion-card class="ion-no-padding ion-no-margin header">
-    <ion-card-header>
-      <ion-card-title>{{lesson.name}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      {{lesson.description}}
-    </ion-card-content>
-  </ion-card>
-
-  <ion-list>
-    <ion-list-header>
-      <ion-label color="secondary">Archivos</ion-label>
-    </ion-list-header>
-
-    <iframe
-      width="100%"
-      [src]="vidUrl"
-      frameborder="0"
-      id="video"
-      allowfullscreen
-    ></iframe>
-
-    <audio controls>
-      <source
-        src="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_1MG.mp3"
-        type="audio/mpeg"
-      />
-      Your browser does not support the <code>audio</code> element.
-    </audio>
-
-    <ion-item class="ion-activatable ripple-parent" (click)="openPDF()">
-      <ion-icon name="document-outline" class="ion-margin-end"></ion-icon>
-      <ion-label> {{ pdfData.title }}</ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
+  <ion-list *ngFor="let content of lesson.contents">
+    <ng-container *ngIf="content.type == '1'">
+      <ion-list-header>
+        <ion-label color="secondary">Video</ion-label>
+      </ion-list-header>
+      <div class="ion-padding-horizontal ion-margin-bottom">
+        <iframe
+          width="100%"
+          height="200"
+          [src]="content.url | safe:'resourceUrl'"
+          id="video"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="content.type == '2'">
+      <ion-list-header>
+        <ion-label color="secondary">Audio</ion-label>
+      </ion-list-header>
+      <div class="ion-padding-horizontal ion-margin-bottom">
+        <app-audio-player
+          title="{{content.title}}"
+          url="{{content.url}}"
+        ></app-audio-player>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="content.type == '3'">
+      
+      <ion-list-header >
+        <ion-label color="secondary">Archivo PDF</ion-label>
+      </ion-list-header>
+      <div class="ion-padding-horizontal ion-margin-bottom">
+        <ion-card
+          class="ion-activatable ripple-parent ion-no-margin"
+          (click)="openPDF(content.url)"
+        >
+          <ion-card-content class="file">
+            <div class="icon">
+              <ion-icon name="document-outline"></ion-icon>
+            </div>
+            <div class="text">
+              <div class="title">{{ content.title }}</div>
+              <div class="pdf">Abrir pdf</div>
+            </div>
+          </ion-card-content>
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-card>
+      </div>
+    </ng-container>
+    
   </ion-list>
 
-  <ion-list>
+  <ion-list *ngIf="lesson.comments && lesson.comments.length > 0">
     <ion-list-header>
       <ion-label color="secondary">Comentarios</ion-label>
     </ion-list-header>
 
     <ion-item *ngFor="let comment of lesson.comments">
       <ion-avatar slot="start">
-        <img [src]="comment.avatar" />
+        <img [src]="comment.avatar || 'assets/avatar.png'" />
       </ion-avatar>
       <ion-label
         style="word-break: normal; white-space: normal;"
         class="ion-padding-end"
       >
-        <h2 class="comment-name">{{comment.username}}</h2>
+        <h2 class="comment-name">{{comment.full_name}}</h2>
         <p>{{comment.comment}}</p>
       </ion-label>
     </ion-item>
-    <ion-button
-      class="ion-margin-top"  
+  </ion-list>
+
+
+
+  <ion-button *ngIf="lesson.total_comments && lesson.total_comments > 3"
+      class="ion-margin"
       (click)="showComments()"
       expand="full"
       fill="clear"
-      >Leer mas...
+      >Ver mas comentarios...
     </ion-button>
-  </ion-list>
 </ion-content>

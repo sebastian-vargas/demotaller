@@ -9,19 +9,20 @@ import { AppRoutingModule } from "./app-routing.module";
 import { IonicStorageModule } from "@ionic/storage";
 
 import { HttpClientModule } from '@angular/common/http';
-import { SafePipe } from "./pipes/safe.pipe";
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { MainPipeModule } from './modules/main-pipe/main-pipe.module';
 
 
 @NgModule({
-  declarations: [AppComponent, SafePipe],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MainPipeModule
   ],
   providers: [
     StatusBar,
@@ -30,5 +31,8 @@ import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
     PreviewAnyFile
   ],
   bootstrap: [AppComponent],
+  exports: [
+    
+  ]
 })
 export class AppModule {}

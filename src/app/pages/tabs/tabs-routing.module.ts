@@ -14,13 +14,6 @@ const routes: Routes = [
           import("./home/home.module").then((m) => m.HomePageModule),
       },
       {
-        path: "favorites",
-        loadChildren: () =>
-          import("./workshops/workshops.module").then(
-            (m) => m.WorkshopsPageModule
-          ),
-      },
-      {
         path: "workshops",
         loadChildren: () =>
           import("./workshops/workshops.module").then(

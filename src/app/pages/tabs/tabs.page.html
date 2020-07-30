@@ -1,18 +1,31 @@
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <div class="cover"></div>
-    <ion-tab-button tab="home">
-      <ion-icon name="home" color="light"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-        
-    <ion-tab-button tab="about-us" class="about">
-      <ion-icon class="logo" name="stop-circle-outline" color="light"></ion-icon>
-    </ion-tab-button>
 
-    <ion-tab-button tab="workshops">
-      <ion-icon name="book" color="light"></ion-icon>
-      <ion-label>Mis talleres</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
+
+<ion-tabs >
+  <ion-fab  vertical="bottom" horizontal="center" translucent="true">
+    <ion-fab-button color="secondary" #fab (click)="goToAboutUs()">
+      <ion-icon name="stop-circle-outline" color="light"></ion-icon>
+      <!--img src="../../assets/logo.png" width="100%" style="margin: auto;"-->
+    </ion-fab-button>
+  </ion-fab>
+  
+  
+  <div class="tab-container ">
+    <ion-tab-bar slot="bottom" class="ion-no-border" color="">
+    
+      <ion-tab-button tab="home" class="left">
+        <ion-icon name="home" color="light"></ion-icon>
+        <ion-label>Inicio</ion-label>
+      </ion-tab-button>
+
+    
+      <svg height="50" viewBox="0 0 100 50" width="100" xmlns="http://www.w3.org/2000/svg"><path d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z" fill="red" fill-rule="evenodd"></path></svg>
+      
+      
+      <ion-tab-button tab="workshops" class="right">
+        <ion-icon name="book" color="light"></ion-icon>
+        <ion-label>Mis talleres</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </div>
 </ion-tabs>
+

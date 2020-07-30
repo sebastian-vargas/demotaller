@@ -1,0 +1,63 @@
+.player {
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, .2);
+    display: flex;
+    min-height: 90px;
+
+    .player-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      cursor: pointer;
+      position: relative;
+  
+      background: rgb(21,87,153);
+      background: radial-gradient(circle, rgba(21,87,153,1) 0%, rgba(2,136,214,1) 80%);
+  
+      ion-icon, ion-spinner{
+        color: #fff;
+      }
+
+      &.error {
+        cursor: initial;
+        background: rgb(168,12,31);
+        background: radial-gradient(circle, rgba(168,12,31,1) 0%, rgba(235,68,90,1) 100%);
+      }
+    }
+  
+    .player-info {
+      width: calc(100% - 90px);
+      padding: 8px 16px;
+      .player-title {
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.error {
+          color: #eb445a;
+        }
+      }
+  
+      .playe-slider {
+        width: 100%;
+  
+        ion-range {
+          padding: 0;
+          --bar-background-active: #0288D6;
+          --bar-background:rgba(0, 0, 0, .1);
+        }
+      }
+  
+      .player-duration {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+      }
+    }
+}
+  

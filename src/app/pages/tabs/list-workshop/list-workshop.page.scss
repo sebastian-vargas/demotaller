@@ -5,11 +5,7 @@
 
 ion-list {
   ion-card {
-    position: relative;
-    border-radius: 0; 
     padding-left: 8px;
-    box-shadow: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .08);
   
     .icon-container{
       display: flex;
@@ -27,7 +23,7 @@ ion-list {
       border-bottom: none;
       box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
 
-      border-radius: 5px; 
+     // border-radius: 5px; 
       &::after{
         content: '';
         position: absolute;
@@ -57,20 +53,8 @@ ion-list {
       align-items: center;
     }
     
-    ion-card-title {
-      font-weight: 400;
-      color: var(--ion-color-medium);
-  
-      &.header {
-        color: var(--ion-color-secondary);
-        font-weight: 500;
-      }
-    }
-    
   }
 }
-
-
 
 .back {
   opacity: 0;
