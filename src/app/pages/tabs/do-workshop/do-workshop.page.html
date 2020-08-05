@@ -1,11 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="tertiary">
     <ion-title class="ion-no-padding" *ngIf="lesson.workshop_title">{{lesson.workshop_title || 'Magia de amor'}}</ion-title>
-    <ion-title class="ion-no-padding" *ngIf="!lesson.workshop_title">
-      <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+    <ion-title  class="ion-no-padding" *ngIf="!lesson.workshop_title">
+      <ion-skeleton-text animated style="width: 40%; margin: auto;"></ion-skeleton-text>
     </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-buttons slot="start" >
+      <ion-button  (click)="goBack()" >
+        <ion-icon class="back" slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" style="width: 48px;" >
     </ion-buttons>
   </ion-toolbar>
 
@@ -83,12 +87,20 @@
     
   </ion-list>
 
-  <ion-list *ngIf="lesson.comments && lesson.comments.length > 0">
+  <ion-list >
     <ion-list-header>
       <ion-label color="secondary">Comentarios</ion-label>
     </ion-list-header>
 
-    <ion-item *ngFor="let comment of lesson.comments">
+   <div class="comment-form">
+    <ion-textarea placeholder="Escribe tu comentario..."></ion-textarea>
+    
+    <ion-button fill="clear" color="secondary" >
+      <ion-icon slot="icon-only" name="send"></ion-icon>
+    </ion-button>
+   </div>
+
+    <ion-item *ngFor="let comment of comments">
       <ion-avatar slot="start">
         <img [src]="comment.avatar || 'assets/avatar.png'" />
       </ion-avatar>

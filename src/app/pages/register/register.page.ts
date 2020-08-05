@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { AuthService } from 'src/app/services/auth.service';
+import { AlertService } from 'src/app/services/shared/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -11,21 +13,18 @@ import { Storage } from '@ionic/storage';
 export class RegisterPage{
   registerForm: FormGroup;
   validation_messages = {
+    full_name: [
+      {type:"required", message:"El nombre es requerido"},
+      {type:"minlength", message:"El nombre debe ser minimo de 3 letras"}
+    ],
     email: [
       {type:"required", message:"El email es requerido"},
       {type:"pattern", message:"El email ingresado no es correcto"}
     ],
     password: [
-      {type:"required", message:"El password es requerido"}
+      {type:"required", message:"El password es requerido"},
+      {type:"minlength", message:"la contraseña debe ser minimo de 5 digitos"}
     ],
-    nombre: [
-      {type:"required", message:"El nombre es requerido"},
-      {type:"pattern", message:"El nombre debe ser minimo de 3 letras"}
-    ],
-    apellido: [
-      {type:"required", message:"El apellido es requerido"},
-      {type:"minlength", message:"El apellido debe ser minimo de 3 letras"}
-    ]
   };
 
   errorMessage:String="";
@@ -33,9 +32,18 @@ export class RegisterPage{
   constructor(
     private formBuilder:FormBuilder,
     private navCtrl:NavController,
-    private storage:Storage
+    private storage:Storage,
+    private authS: AuthService,
+    private alertService: AlertService,
     ) {
     this.registerForm = this.formBuilder.group({
+      full_name: new FormControl(
+        "", 
+        Validators.compose([
+        Validators.required,
+        Validators.minLength(3)
+      ])
+      ),
       email: new FormControl(
         "", 
         Validators.compose([
@@ -57,20 +65,6 @@ export class RegisterPage{
         Validators.minLength(5)
       ])
       ),
-      nombre: new FormControl(
-        "", 
-        Validators.compose([
-        Validators.required,
-        Validators.minLength(3)
-      ])
-      ),
-      apellido: new FormControl(
-        "", 
-        Validators.compose([
-        Validators.required,
-        Validators.minLength(3)
-      ])
-      )
     }, {validator: this.matchingPassword('password', 'passconfirm')}
     );
    }
@@ -90,5 +84,19 @@ export class RegisterPage{
         };
       }
     }
+  }
+
+  registerUser(register){
+    this.authS.register(register).subscribe(response => {
+      let res:any = response; 
+      if(res.status == 200){   
+        this.alertService.basicAlert("Se han registrado tus datos, ahora usa tu correo y contraseña registrados para ingresar", ['Aceptar'], "¡Registro Exitoso!");
+        this.navCtrl.navigateRoot("/login");
+      }
+      else {
+        console.log(res.message);
+      }
+    });
+
   }
 }

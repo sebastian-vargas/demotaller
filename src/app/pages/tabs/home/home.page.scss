@@ -9,6 +9,47 @@
   backdrop-filter: blur(3px);  
 }
 
+.content ion-card {
 
+  &.unread{
+    position: relative;
+    //background: #f2f9fd;
 
+    background: #f2f3ff;
+    
+    .left {
+      .list-title {
+        color: var(--ion-color-dark)!important;
+          font-weight: 500;
+      }
+    }
 
+    .right {
+      color: var(--ion-color-secondary)!important;
+    }
+  }
+
+  ion-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left {
+      width: 90%;
+      
+      .list-title {
+        color: var(--ion-color-medium);
+      }
+    }
+
+    .right {
+      width: 10%;
+      font-size: 24px;
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end;
+      
+      color: var(--ion-color-medium);
+    }
+  }
+}

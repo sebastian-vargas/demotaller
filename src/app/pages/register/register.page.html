@@ -16,37 +16,22 @@
   <form
     class="register ion-margin"
     [formGroup]="registerForm"
-    (ngSubmit)="register(registerForm.value)"
+    (ngSubmit)="registerUser(registerForm.value)"
   >
   <h2 class="titleregister ion-margin-bottom">REGISTRO</h2>
     <ion-item class="ion-no-padding">
       <ion-label position="stacked" class="titleinput">Nombre</ion-label>
-      <ion-input class="input-transparent" formControlName="nombre"></ion-input>
+      <ion-input class="input-transparent" formControlName="full_name"></ion-input>
     </ion-item>
-    <ng-container *ngFor="let validation of validation_messages.nombre">
+    <ng-container *ngFor="let validation of validation_messages.full_name">
       <div class="validation"
-        *ngIf="registerForm.get('nombre').hasError(validation.type) && 
-                   (registerForm.get('nombre').dirty ||
-                   registerForm.get('nombre').touched)"
+        *ngIf="registerForm.get('full_name').hasError(validation.type) && 
+                   (registerForm.get('full_name').dirty ||
+                   registerForm.get('full_name').touched)"
       >
         {{ validation.message}}
       </div>
     </ng-container>
-
-    <ion-item class="ion-no-padding">
-      <ion-label position="stacked" class="titleinput">Apellido</ion-label>
-      <ion-input class="input-transparent" formControlName="apellido"></ion-input>
-    </ion-item>
-    <ng-container *ngFor="let validation of validation_messages.apellido">
-      <div class="validation"
-        *ngIf="registerForm.get('apellido').hasError(validation.type) && 
-                   (registerForm.get('apellido').dirty ||
-                   registerForm.get('apellido').touched)"
-      >
-        {{ validation.message}}
-      </div>
-    </ng-container>
-
     <ion-item class="ion-no-padding">
       <ion-label position="stacked" class="titleinput">Email</ion-label>
       <ion-input class="input-transparent" formControlName="email"></ion-input>

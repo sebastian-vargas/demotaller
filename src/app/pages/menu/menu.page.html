@@ -1,16 +1,20 @@
 <ion-split-pane contentId="contentPrincipal">
   <ion-menu contentId="contentPrincipal" side="start">
     <div class="avatar-container">
-      <ion-avatar class="ion-margin">
-        <img src="https://m.media-amazon.com/images/M/MV5BMjEzMjA0ODk1OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_UY317_CR6,0,214,317_AL_.jpg">
+      <ion-avatar *ngIf="userData.isLoggedIn"  class="ion-margin" (click)="navigate('menu/tabs/configuration')">
+        <img [src]="userData.user.avatar">
+        <ion-badge  ><ion-icon name="pencil"></ion-icon></ion-badge>
       </ion-avatar>
-      <ion-label class="username">{{ user.full_name}}</ion-label>
+      <ion-avatar *ngIf="!userData.isLoggedIn"  class="ion-margin">
+        <img [src]="userData.user.avatar">
+      </ion-avatar>
+      <ion-label class="username">{{ userData.user.full_name}}</ion-label>
     </div>
     
 
     <ion-content>
       <ion-list>
-        <ion-item  (click)="navigate('menu/tabs/home')" class="ion-margin " >
+        <ion-item  (click)="navigate('menu/tabs/home')"  >
           <ion-icon
             name="home-outline"
             color="primary"
@@ -19,7 +23,7 @@
           Inicio
           </ion-item>
 
-        <ion-item class="ion-margin" (click)="navigate('menu/tabs/workshops')" >
+        <ion-item  (click)="navigate('menu/tabs/workshops')" >
           <ion-icon
             name="book-outline"
             color="primary"
@@ -29,7 +33,7 @@
           Mis talleres</ion-item
         >
 
-        <ion-item class="ion-margin" (click)="navigate('menu/tabs/contact')" >
+        <ion-item  (click)="navigate('menu/tabs/contact')" >
           <ion-icon
             name="mail-outline"
             color="primary"
@@ -37,7 +41,7 @@
           ></ion-icon>
           Contacto</ion-item
         >
-        <ion-item class="ion-margin" (click)="navigateForward('admin')">
+        <ion-item *ngIf="userData.isLoggedIn && userData.user.role == '1'" (click)="navigateForward('admin')">
           <ion-icon
             name="settings-outline"
             color="primary"
@@ -46,28 +50,26 @@
           Administración
         </ion-item>
 
-        <ion-item *ngIf="isLoggedIn" class="ion-margin" (click)="navigate('menu/tabs/configuration')">
+        <ion-item *ngIf="userData.isLoggedIn"  (click)="navigate('menu/tabs/configuration')">
           <ion-icon
            name="person-outline"
            color="primary"
            slot="start"
            ></ion-icon>
-          Configuración
+          Editar perfil
         </ion-item>
 
-        <ion-item  *ngIf="isLoggedIn" class="ion-margin" (click)="logOut()">
+        <ion-item color="" *ngIf="userData.isLoggedIn" (click)="logOut()">
           <ion-icon name="log-out-outline" color="primary"
           slot="start"></ion-icon>
           Salir
         </ion-item>
-
-        <ion-item  *ngIf="!isLoggedIn" class="ion-margin" (click)="navigate('login')">
+    
+        <ion-item color="" *ngIf="!userData.isLoggedIn" (click)="navigate('login')">
           <ion-icon name="log-in-outline" color="primary"
           slot="start"></ion-icon>
           Iniciar sesión
         </ion-item>
-
-        
       </ion-list>
     </ion-content>
 

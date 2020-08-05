@@ -58,12 +58,28 @@ export class LoginPage implements OnInit {
   loginUser(credentials){
     this.authS.login(credentials).subscribe(response => {
       let res:any = response; 
-      if(res.status == 200){
-        let user = res.user;
+      if(res.status == 200){   
+        let u = {
+          isLoggedIn: true,
+          user: {
+            id_user: res.user.id_user,
+            full_name: res.user.full_name,
+            email: res.user.email,
+            role: res.user.role,
+            avatar: res.user.avatar || 'assets/avatar.jpg',
+            token: res.user.token
+          }
+        }
+        this.storage.set('token', res.user.token);
+        this.authS.userData.next(u);
+        
+        //old
+        /*
+        let user = res.user;  
         user.isLoggedIn = true;
         this.storage.set('userData', user);
         this.authS.userData$.next(user);
-        this.authS.isLoggedIn$.next(true);
+        this.authS.isLoggedIn$.next(true);*/
         this.navCtrl.navigateRoot("menu/tabs/home");
       }
       else {

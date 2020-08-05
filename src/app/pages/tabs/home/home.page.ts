@@ -1,55 +1,71 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { AlertController, NavController, ModalController, IonInfiniteScroll, IonVirtualScroll } from "@ionic/angular";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import {
+  AlertController,
+  NavController,
+  ModalController,
+  IonInfiniteScroll,
+  IonVirtualScroll,
+} from "@ionic/angular";
 
 import { AuthService } from "src/app/services/auth.service";
 import { WorkshopService } from "src/app/services/workshop.service";
-import { delay } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { Workshop} from '../../../models/workshop.model';
- 
+import { delay } from "rxjs/operators";
+import { Subscription } from "rxjs";
+import { Workshop } from "../../../models/workshop.model";
+
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
   styleUrls: ["home.page.scss"],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   constructor(
     public alertController: AlertController,
     private navCtrl: NavController,
     private auths: AuthService,
-    public modalController: ModalController,    
+    public modalController: ModalController,
     private workShopService: WorkshopService
-  ) {}
+  ) { }
 
-  workshops:Workshop[] = [];
+  workshops: Workshop[] = [];
 
-  isLogged = false;
+  userData: any = {
+    isLoggedIn: false,
+  };
+
   loading = true;
   refreshing = false;
   page = 1;
   limit = Math.round(screen.height / 70);
   firstLoad = true;
+
   workshopsSubscription: Subscription;
+  userSubscription: Subscription;
 
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
-    /** With observable - AuthService **/
-    this.auths.getIsLoggedIn().subscribe(isLogged => this.isLogged = isLogged);
-    this.auths.getUserData().subscribe(user => {
-      this.isLogged = user.isLoggedIn;
-      console.log(user)
+  ngOnDestroy() { }
+
+  ionViewWillEnter() {
+    this.userSubscription = this.auths.userData.subscribe((userData) => {
+      this.userData = userData;
+      if (this.workshops.length > 0 && !userData.isLoggedIn) {
+        this.reset();
+      }
+      this.loadWorkshops();
     });
-  } 
-
-  ionViewWillEnter(){
-    this.loadWorkshops();
   }
 
   ionViewWillLeave() {
     this.workshopsSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.reset();
+  }
+
+  reset() {
     this.page = 1;
     this.loading = true;
     this.firstLoad = true;
@@ -60,44 +76,56 @@ export class HomePage implements OnInit {
   loadWorkshops(scroll?, refresh?) {
     this.loading = true;
     this.workshopsSubscription = this.workShopService
-      .getWotkshops(this.page, this.limit)
-      .pipe(delay(1000))
+      .getWotkshops(this.page, this.limit, this.userData.user.token)
+      .pipe(delay(100))
       .subscribe(
         (response) => {
           console.log(response["workshops"]);
           this.page++;
-          if (this.firstLoad && this.infiniteScroll.disabled) {
+          let workshops = response["workshops"];
+          if(!this.userData.isLoggedIn){
+
+          }
+
+          if (
+            this.firstLoad &&
+            this.infiniteScroll.disabled &&
+            workshops.length >= this.limit &&
+            this.userData.isLoggedIn
+          ) {
             this.firstLoad = false;
             this.toggleInfiniteScroll();
           }
           if (refresh) {
-            this.workshops = response["workshops"];
+            this.workshops = workshops;
             refresh.target.complete();
             this.refreshing = false;
-            if (this.infiniteScroll.disabled) {
+            if (
+              this.infiniteScroll.disabled &&
+              workshops.length >= this.limit &&
+              this.userData.isLoggedIn
+            ) {
               this.toggleInfiniteScroll();
             }
           } else {
-            if(this.workshops.length > 0){
-              let workshops = response["workshops"];
+            if (this.workshops.length > 0) {
 
-              workshops.forEach(workshop => {
+              workshops.forEach((workshop) => {
                 let cont = 0;
-                this.workshops.forEach(w => {
-                  if(w.id_workshop === workshop.id_workshop){
+                this.workshops.forEach((w) => {
+                  if (w.id_workshop === workshop.id_workshop) {
                     cont++;
                   }
-                });  
-                if(cont == 0){
+                });
+                if (cont == 0) {
                   this.workshops.push(workshop);
                 }
               });
-            }
-            else {
+            } else {
               this.workshops.push(...response["workshops"]);
             }
           }
-          
+
           this.loading = false;
           //Rerender Virtual Scroll List After Adding New Data
           this.virtualScroll.checkEnd();
@@ -129,8 +157,6 @@ export class HomePage implements OnInit {
     this.loadWorkshops(null, refresh);
   }
 
-
-
   async alertLogin() {
     const alert = await this.alertController.create({
       header: "Inicia sesión para ver más",
@@ -153,13 +179,56 @@ export class HomePage implements OnInit {
     let result = await alert.onDidDismiss();
   }
 
-  workshopHandleCLick(index, workshopID) {
-    if (index != 0 && !this.isLogged) {
+  async alertStart(workshop) {
+    const alert = await this.alertController.create({
+      header: "¿Iniciar taller?",
+      message: `¿Está seguro de que desea empezar "${workshop.title}"?`,
+      buttons: [
+        {
+          text: "Cancelar",
+          cssClass: "cancel",
+        },
+        {
+          text: "Iniciar",
+          role: "accept",
+          cssClass: "alert-button",
+          handler: () => this.redirectToWorkshop(workshop),
+        },
+      ],
+    });
+    await alert.present();
+    let result = await alert.onDidDismiss();
+  }
+  workshopHandleCLick(index, workshop) {
+    if (index != 0 && !this.userData.isLoggedIn) {
       this.alertLogin();
     } else {
-      this.navCtrl.navigateForward(`menu/tabs/workshop/${workshopID}`);
+      if (!workshop.readed) {
+        this.alertStart(workshop);
+      } else {
+        this.redirectToWorkshop(workshop);
+      }
     }
   }
+
+  redirectToWorkshop(workshop) {
+    if (!workshop.readed) {
+      this.workShopService
+        .startWorkshop(workshop.id_workshop, this.userData.user.token)
+        .subscribe((res: any) => {
+          if (res.status == 200) {
+            this.navCtrl.navigateForward(
+              `menu/tabs/workshop/${workshop.id_workshop}`
+            );
+          }
+        });
+    } else {
+      this.navCtrl.navigateForward(
+        `menu/tabs/workshop/${workshop.id_workshop}`
+      );
+    }
+  }
+
   redirectToLogin() {
     this.navCtrl.navigateForward(`login`);
   }

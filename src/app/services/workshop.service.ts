@@ -22,6 +22,18 @@ export class WorkshopService {
     return this.http.post(`${this.API_URL}list`, formData, {headers: new HttpHeaders()});
   }
 
+  getMyWorkshops(page, limit, token?){
+    let formData = new FormData()
+
+    formData.append('page', page.toString());
+    formData.append('limit', limit.toString());
+    if(token){
+      formData.append('token', token);
+    }
+
+    return this.http.post(`${this.API_URL}list-started`, formData, {headers: new HttpHeaders()});
+  }
+
   getWorkshop(id, token?){
     let formData = new FormData();
 
@@ -30,6 +42,17 @@ export class WorkshopService {
       formData.append('token', token);
     }
     return this.http.post(`${this.API_URL}watch`, formData, {headers: new HttpHeaders()});
+
+  }
+
+  startWorkshop(id,  token){
+    let formData = new FormData();
+
+    formData.append('id_workshop', id);
+    formData.append('token', token);
+
+
+    return this.http.post(`${this.API_URL}start-workshop`, formData, {headers: new HttpHeaders()});
 
   }
 }

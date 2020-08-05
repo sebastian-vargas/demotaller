@@ -25,4 +25,14 @@ export class LessonService {
 
     return this.http.post(`${this.API_URL}comments`, formData, {headers: new HttpHeaders()});
   }
+
+  startLesson(id_lesson, token) {
+    let formData = new FormData()
+
+    formData.append('id_lesson', id_lesson.toString());
+    formData.append('token', token.toString());
+
+    return this.http.post(`${this.API_URL}start-lesson`, formData, {headers: new HttpHeaders()});
+    
+  }
 }

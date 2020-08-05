@@ -1,10 +1,12 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary" >
+  <ion-toolbar color="tertiary" >
     <ion-title class="ion-no-padding">Magia de amor</ion-title>
     <ion-buttons slot="start" >
       <ion-button  (click)="goBack()" >
         <ion-icon class="back" slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" style="width: 48px;" >
     </ion-buttons>
   </ion-toolbar>
 
@@ -47,10 +49,10 @@
       </ion-card>
     </ng-container>
 
-    <ion-card *ngFor="let lesson of workshop.lessons" 
+    <ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
       class="ion-activatable ripple-parent " 
-      [ngClass]="{'unread': !lesson.readed}"
-      (click)="navigate(lesson.id_lesson)">
+      [ngClass]="{'unread': !lesson.readed && !lesson.disabled, 'disabled': lesson.disabled}"
+      (click)="startLesson(lesson)">
         <ion-card-content class="ion-no-padding ion-margin-start" >
           <ion-card-title  class="lesson-title">{{ lesson.title }}</ion-card-title>   
           <div class="icon-container">

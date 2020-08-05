@@ -1,14 +1,15 @@
 <ion-header >
-  <ion-toolbar color="primary" >
+  <ion-toolbar color="tertiary" >
     <ion-title class="ion-no-padding">Magia de amor</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-spinner *ngIf="loading" slot="end" color="light" class="ion-margin-horizontal"></ion-spinner>
-    </ion-buttons>
-  </ion-toolbar>
 
+      <ion-buttons slot="end" style="width: 48px;" >
+      </ion-buttons>
+
+    <ion-progress-bar *ngIf="loading" type="indeterminate" color="primary"></ion-progress-bar>
+  </ion-toolbar>
   <ion-card class="talleres-header ion-no-margin header">
     <ion-card-header>
       <ion-card-title>Talleres</ion-card-title>
@@ -39,17 +40,27 @@
   </ion-list>
 
 
-  <ion-list class="ion-no-padding">
+  <ion-list class="ion-no-padding content">
     <ion-virtual-scroll [items]="workshops" approxItemHeight="70px" >
-      <ion-card *virtualItem="let workshop; let i = index" (click)="workshopHandleCLick(i, workshop.id_workshop)"  class="ion-activatable ripple-parent" >
-        <div *ngIf="i != 0 && !isLogged" class="mask"></div>
+      <ion-card *virtualItem="let workshop; let i = index"
+       (click)="workshopHandleCLick(i, workshop)" 
+       [ngClass]="{'unread': !workshop.readed}"
+        class="ion-activatable ripple-parent ion-no-margin" >
+        <div *ngIf="i != 0 && !userData.isLoggedIn" class="mask"></div>
+
         <ion-card-content>
-          <ion-item class="ion-float-right ion-no-padding ion-margin-start">
-            <ion-icon name="chevron-forward" color="secondary"></ion-icon>
-          </ion-item>
-          <ion-card-title class="list-title">{{workshop.title}}</ion-card-title>
-          <ion-card-subtitle>{{workshop.lessons_count}} Lecciones.</ion-card-subtitle>
+          <div class="left">
+            <ion-card-title class="list-title">{{workshop.title}}
+            </ion-card-title>
+            <ion-card-subtitle>{{workshop.lessons_count}} Lecciones.</ion-card-subtitle>
+          </div>
+
+          <div class="right">
+            <ion-icon  name="chevron-forward" ></ion-icon>
+          </div>
         </ion-card-content>
+
+        
         <ion-ripple-effect></ion-ripple-effect>
       </ion-card>
     </ion-virtual-scroll>

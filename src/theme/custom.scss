@@ -1,5 +1,6 @@
 ion-content {
     --background: var(--theme-background);
+    --padding-bottom: 8px;
   }
 
 ion-card-title {
@@ -57,7 +58,7 @@ ion-input {
 }
 
 ion-card {
-  border-radius: 15px; 
+  border-radius: 4px; 
 }
 
 input:read-only{
@@ -83,14 +84,18 @@ ion-header {
 
   &:after {
       content: none!important;
-  }
+  } 
+
   ion-toolbar {
-    
-    //box-shadow: 0 3px 6px rgba(0, 0, 0, .10), 0px -1px 6px rgba(0, 0, 0, .05);
-    //border-radius: 35px 35px 15px 15px ;
+    display: flex; 
+    justify-content: space-between;
 
     .loader{
       width: 32px;
+    }
+
+    ion-title {
+      text-align: center;
     }
   }
 

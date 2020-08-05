@@ -20,8 +20,8 @@ ion-item {
   }
 }
 
-ion-toolbar {
-  --background: rgba(0, 0, 0, 0);
+ion-header, ion-toolbar {
+  background: transparent!important;
   --ion-color-base: rgba(0, 0, 0, 0) !important;
 }
 

@@ -7,7 +7,6 @@ ion-content {
     url("../../../assets/login-bg.jpg")
       no-repeat fixed center;
 
-   
 }
 
 ion-item {
@@ -23,6 +22,7 @@ ion-item {
 }
 
 .app-title {  
+  position: relative;
   text-align: center;
 
   font-size: 44px;
@@ -30,7 +30,8 @@ ion-item {
 
   margin: 50px auto auto;
 
-  color: var(--ion-color-light);
+  color: var(--ion-color-secondary);
+  text-shadow: 1px 1px 1px rgba(255,255,255,.5  ), -1px -1px 1px rgba(255,255,255,.5  );
 }
 
 .login {

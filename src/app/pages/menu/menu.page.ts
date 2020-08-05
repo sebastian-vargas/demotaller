@@ -15,11 +15,17 @@ export class MenuPage implements OnInit {
     private authS: AuthService
     ) { }
 
-  isLoggedIn = false;
-  user = {};
+    userData:any = {
+      isLoggedIn: false
+    };
 
   ngOnInit() {
-    this.authS.getIsLoggedIn().subscribe(isLoggedin => this.isLoggedIn = isLoggedin);
+    //this.authS.getIsLoggedIn().subscribe(isLoggedin => this.isLoggedIn = isLoggedin);
+
+    this.authS.userData.subscribe(userData => {
+      this.userData = userData;
+      console.log(userData)
+  })
     //this.menu.open();
 /*
     this.authS.getUserData().subscribe(user => {

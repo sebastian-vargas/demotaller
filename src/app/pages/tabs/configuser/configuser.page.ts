@@ -10,13 +10,11 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./configuser.page.scss'],
 })
 export class ConfiguserPage implements OnInit {
-  user = {
-    id_user: "",
-    full_name: "",
-    email: "",
-    avatar: ""
-  };
+  userData:any = {
+    user: {
 
+    }
+  };
 
   public imagePath;
 
@@ -32,21 +30,19 @@ export class ConfiguserPage implements OnInit {
     confirm_password: new FormControl('')
   });
 
-
   constructor(private storage: Storage, private authS: AuthService) {   }
 
   ngOnInit() {
-    this.authS.getUserData().subscribe(user => {
-      this.user = user;
+    
 
-      this.user.avatar = "https://m.media-amazon.com/images/M/MV5BMjEzMjA0ODk1OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_UY317_CR6,0,214,317_AL_.jpg";
+    this.authS.userData.subscribe(user => {
+      this.userData = user;
 
       this.userForm.patchValue({
-        full_name: this.user.full_name,
-        email: this.user.email
+        full_name: this.userData.user.full_name,
+        email: this.userData.user.email
       });
-
-    });
+    })
 
   }
   
@@ -56,9 +52,9 @@ export class ConfiguserPage implements OnInit {
   }
 
   saveUser() {
-    if(this.userForm.value.full_name !== this.user.full_name || this.userForm.value.avatar !== ''){
+    if(this.userForm.value.full_name !== this.userData.user.full_name || this.userForm.value.avatar !== ''){
       let userData = {
-        id_user: this.user.id_user,
+        id_user: this.userData.user.id_user,
         ...this.userForm.value
       }
       console.log(userData);
@@ -81,11 +77,11 @@ export class ConfiguserPage implements OnInit {
           this.userForm.patchValue({
             avatar: reader.result.toString()
           });
-          this.user.avatar = reader.result.toString();
+          this.userData.user.avatar = reader.result.toString();
         }
         reader.onerror = (err)=> {
           console.log(err);
-        }
+        } 
     }
   }
 }

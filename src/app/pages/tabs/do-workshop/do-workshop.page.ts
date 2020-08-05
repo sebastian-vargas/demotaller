@@ -53,13 +53,15 @@ export class DoWorkshopPage implements OnInit {
 
   loading: HTMLIonLoadingElement = null;
 
-  workshopId = Number(this.route.snapshot.parent.paramMap.get("id"));
-  lessonId = Number(this.route.snapshot.paramMap.get("lesson"));
+  loadingVideo = true;
 
-  //id = this.route.snapshot.paramMap.get("lesson");
+  workshopId = this.route.snapshot.parent.paramMap.get("id");
+  lessonId = this.route.snapshot.paramMap.get("lesson");
+
   lessonSubscription: Subscription;
 
-  lesson = {};
+  lesson: any = {  };
+  comments: any = [];
 
   ngOnInit() {
     this.vidUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -70,7 +72,7 @@ export class DoWorkshopPage implements OnInit {
   ionViewWillEnter() {
     this.lessonSubscription = this.lessonService
       .getLessons(this.lessonId)
-      .pipe(delay(1000))
+      .pipe(delay(0))
       .subscribe((response: any) => {
         if(response && response.status == 200){
 
@@ -85,6 +87,11 @@ export class DoWorkshopPage implements OnInit {
       });
   }
 
+  ionViewWillLeave(){
+    this.lessonSubscription.unsubscribe();
+    this.lesson = {};
+  }
+
   openPDF(url) {
     this.previewAnyFile.preview(url).then(
       (_) => {},
@@ -92,36 +99,8 @@ export class DoWorkshopPage implements OnInit {
     );
   }
 
-  loadLesson() {
-    let workshop = workshops.find((w) => w.id == this.workshopId);
-    let lesson = workshop.lessons.find((l) => l.id == this.lessonId);
-
-    if (lesson != undefined) {
-      this.lesson = lesson;
-
-      workshop.myWorkshop = true;
-
-      if (!lesson.readed) {
-        lesson.readed = true;
-        workshop.lessonsCount++;
-      }
-      //this.presentLoading();
-    } else {
-      this.navCtrl.navigateRoot(`menu/tabs/workshop/${workshop.id}`);
-    }
-  }
-
-  async presentLoading() {
-    this.loading = await this.loadingController.create({
-      cssClass: "loader",
-      message: "Cargando...",
-      backdropDismiss: false,
-    });
-
-    document.getElementById("video").onload = (loader) => {
-      this.loading.dismiss();
-    };
-    await this.loading.present();
+  goBack(){
+    this.navCtrl.navigateRoot(`menu/tabs/workshop/${this.workshopId}`);
   }
 
   async showComments() {
@@ -134,21 +113,4 @@ export class DoWorkshopPage implements OnInit {
     return await modal.present();
   }
 
-  async showPdf() {
-    const modal = await this.modalController.create({
-      component: ModalPdfPage,
-      componentProps: {
-        title: this.pdfData.title,
-        url: this.pdfData.url,
-      },
-    });
-    return await modal.present();
-  }
-  /* 
-  openLocalPdf(){
-    const options: DocumentViewerOptions = { 
-      title: "My PDF TITLE"
-    }
-    this.documentViewer.viewDocument('assets/myFile.pdf', 'application/pdf', options)
-  }*/
 }
