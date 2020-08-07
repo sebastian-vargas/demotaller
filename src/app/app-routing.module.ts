@@ -14,14 +14,6 @@ const routes: Routes = [
       import("./pages/menu/menu.module").then((m) => m.MenuPageModule),
   },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
-  },
-  {
     path: "**",
     redirectTo: "menu",
   },
@@ -32,6 +24,10 @@ const routes: Routes = [
   {
     path: 'adminuser',
     loadChildren: () => import('./pages/admin/adminuser/adminuser.module').then( m => m.AdminuserPageModule)
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
   },
 ];
 

@@ -11,6 +11,7 @@ import { IonicStorageModule } from "@ionic/storage";
 import { HttpClientModule } from '@angular/common/http';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { MainPipeModule } from './modules/main-pipe/main-pipe.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MainPipeModule } from './modules/main-pipe/main-pipe.module';
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     HttpClientModule,
-    MainPipeModule
+    MainPipeModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

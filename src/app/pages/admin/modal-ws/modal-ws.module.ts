@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ModalWsPageRoutingModule } from './modal-ws-routing.module';
 
 import { ModalWsPage } from './modal-ws.page';
+import { MainPipeModule } from 'src/app/modules/main-pipe/main-pipe.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalWsPageRoutingModule
+    ModalWsPageRoutingModule,
+    MainPipeModule
   ],
   declarations: [ModalWsPage]
 })

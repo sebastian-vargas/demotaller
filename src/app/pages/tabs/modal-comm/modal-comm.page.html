@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal-comm</ion-title>
+    <ion-title style="text-align: left;">Comentarios</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -10,22 +10,36 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="lesson.comments && lesson.comments.length > 0">
+  <ion-list *ngIf="comments && comments.length > 0">
     <ion-list-header>
       <ion-label color="secondary">Comentarios</ion-label>
     </ion-list-header>
 
-    <ion-item *ngFor="let comment of lesson.comments">
+    <ion-item *ngFor="let comment of comments">
       <ion-avatar slot="start">
-        <img [src]="comment.avatar || 'assets/avatar.png'"/>
+        <img [src]="comment.avatar || 'assets/avatar.jpg'"/>
       </ion-avatar>
       <ion-label
         style="word-break: normal; white-space: normal;"
         class="ion-padding-end"
       >
-        <h2 class="comment-name">{{comment.full_name}}</h2>
+        <h2 class="comment-name">{{comment.full_name}} <ion-badge *ngIf="comment.role == 1" color="secondary">Admin</ion-badge></h2>
         <p>{{comment.comment}}</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-button *ngIf="loadMore" (click)="getComments()" color="medium" expand="block" fill="clear" class="ion-margin">
+    Cargar mas comentarios
+  </ion-button>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <app-comment-form 
+    (updateComments)="reloadComments()"
+    id_lesson="{{id_lesson}}" 
+    token="{{token}}"></app-comment-form>
+  </ion-toolbar>
+</ion-footer>

@@ -10,36 +10,71 @@ import { switchMap, delay } from "rxjs/operators";
   styleUrls: ['./modal-comm.page.scss'],
 })
 export class ModalCommPage implements OnInit {
-  @Input() lessonId: Number;
+  @Input() id_lesson: String;
+  @Input() token: String;
+
   constructor(
     private modalController:ModalController,
     private lessonService: LessonService,
     private route: ActivatedRoute,
   ) { }
 
-  //workshopId = Number(this.route.snapshot.parent.paramMap.get("id"));
-  //lessonId = Number(this.route.snapshot.paramMap.get("lesson"));
+  commentsSubscription: Subscription;
+  comments = [];
+  loadMore = false;
 
-  lessonSubscription: Subscription;
-  lesson = {};
+  firstLoad = true;
+
+  page = 1;
+  limit = 5;
 
   ngOnInit() {
+   
   }
   async closeModal(){
     await this.modalController.dismiss();
   }
 
   ionViewWillEnter() {
-    this.lessonSubscription = this.lessonService
-      .getLessons(this.lessonId)
-      .pipe(delay(1000))
-      .subscribe((response: any) => {
-        if(response && response.status == 200){
+    this.getComments();
+  }
 
-          this.lesson = response.lesson;
-        
-          console.log(response);
+  ionViewWillLeave(){
+    this.page = 0;
+    this.firstLoad = true;
+    this.commentsSubscription.unsubscribe();
+  }
+  reloadComments(){
+    this.firstLoad = true;
+    this.page = 0;
+    this.getComments();
+  }
+
+  getComments(){
+    if(this.loadMore){
+      this.page++;
+    }
+    this.commentsSubscription = this.lessonService
+    .getComments(this.id_lesson,this.page, this.limit)
+    .pipe(delay(1000))
+    .subscribe((response: any) => {
+      if(response && response.status == 200){
+        if(this.firstLoad){
+          this.comments = response.comments;
+          this.firstLoad = false;
         }
-      });
+        else {
+          this.comments = this.comments.concat(response.comments);
+        }
+
+        if(response.comments.length < this.limit){
+          this.loadMore = false;
+        }
+        else {
+          this.loadMore = true;
+        }
+        console.log(response);
+      }
+    });
   }
 }

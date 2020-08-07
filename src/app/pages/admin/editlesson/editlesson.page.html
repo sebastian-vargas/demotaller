@@ -7,29 +7,59 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card class="ion-no-margin header">
-    <ion-card-header>
-      <ion-card-title class="title">{{ workshop.title }}</ion-card-title>
+<ion-content>
+  <ion-card>
+    <ion-card-header >
+      <ion-card-title>Editar taller</ion-card-title>
+      <ion-button fill="clear" color="secondary" (click)="saveUser()">
+        Guardar
+      </ion-button>
     </ion-card-header>
-    <ion-card-content>
-      {{workshop.description}}
-    </ion-card-content>
-  </ion-card>
-  <ion-list class="ion-no-padding">
-    <ion-card *ngFor="let lesson of workshop.lessons" 
-    class="ion-activatable ripple-parent ion-no-margin" 
-    (click)="editLS(lesson)">
-      <ion-card-content class="ion-no-padding ion-margin-start" >
-        <ion-card-title  class="lesson-title">{{ lesson.name }}</ion-card-title>  
+    <ion-card-content class="ion-margin-bottom">
+      <form 
+      [formGroup]="workshopForm"
+      (ngSubmit)="workshopData(workshopForm.value)"
+      >
         <ion-item class="ion-no-padding">
-          <ion-icon name="play" ></ion-icon>
+          <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+          <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
         </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.title">
+          <div class="validation"
+            *ngIf="workshopForm.get('title').hasError(validation.type) && 
+                      (workshopForm.get('title').dirty ||
+                      workshopForm.get('title').touched)"
+          >
+            {{ validation.message}}
+          </div>
+        </ng-container>
 
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="titleinput">Descripción</ion-label>
+          <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.title">
+          <div class="validation"
+            *ngIf="workshopForm.get('description').hasError(validation.type) && 
+                      (workshopForm.get('description').dirty ||
+                      workshopForm.get('description').touched)"
+          >
+            {{ validation.message}}
+          </div>
+        </ng-container>
+      </form>
+    </ion-card-content>
+    <ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
+    class="ion-activatable ripple-parent " 
+    (click)="getLesson(lesson)">
+      <ion-card-content class="ion-no-padding ion-margin-start" >
+        <ion-card-title  class="lesson-title">{{ lesson.title }}</ion-card-title>   
+        <div class="icon-container">
+          <ion-icon name="create-outline" class="ion-margin"></ion-icon>
+        </div>       
       </ion-card-content>
       <ion-ripple-effect></ion-ripple-effect>
-      
-
     </ion-card>
-  </ion-list>
+  </ion-card>
+
 </ion-content>

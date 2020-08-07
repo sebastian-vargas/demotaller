@@ -10,6 +10,7 @@ import { DoWorkshopPage } from './do-workshop.page';
 import { ModalPdfPage } from '../modal-pdf/modal-pdf.page';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { MainPipeModule } from 'src/app/modules/main-pipe/main-pipe.module';
+import { CommentFormComponent } from '../comment-form/comment-form.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { MainPipeModule } from 'src/app/modules/main-pipe/main-pipe.module';
     DoWorkshopPageRoutingModule,
     MainPipeModule
   ],
-  declarations: [DoWorkshopPage, ModalPdfPage, AudioPlayerComponent],
+  declarations: [DoWorkshopPage, ModalPdfPage, AudioPlayerComponent, CommentFormComponent],
   entryComponents:[ModalPdfPage],
 })
 export class DoWorkshopPageModule {}

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalCommPageRoutingModule } from './modal-comm-routing.module';
 
 import { ModalCommPage } from './modal-comm.page';
+import { CommentFormComponent } from '../comment-form/comment-form.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ModalCommPage } from './modal-comm.page';
     IonicModule,
     ModalCommPageRoutingModule
   ],
-  declarations: [ModalCommPage]
+  declarations: [ModalCommPage, CommentFormComponent]
 })
 export class ModalCommPageModule {}

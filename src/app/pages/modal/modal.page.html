@@ -1,0 +1,21 @@
+
+
+<ion-content fullscreen="true">
+  <div class="close">
+    <ion-icon name="close" color="light" class="ion-margin" (click)="dismiss()"></ion-icon>
+    
+  </div>
+  <ion-slides #slider>
+    <ion-slide>
+      <ion-content >
+        <app-login-modal (handleAction)="handleAction($event)"></app-login-modal>
+      </ion-content>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-content>
+        <app-register-modal (handleAction)="handleAction($event)"></app-register-modal>
+      </ion-content>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

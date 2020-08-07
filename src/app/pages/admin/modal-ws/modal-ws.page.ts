@@ -7,10 +7,12 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./modal-ws.page.scss'],
 })
 export class ModalWsPage implements OnInit {
-  @Input() titulo: string;
-  @Input() descripcion: string;
-  @Input() pdfUrl: string;
-  @Input() vidUrl: string;
+  @Input() title: string;
+  @Input() description: string;
+  @Input() workshop_title: string;
+  @Input() total_comments: Number;
+  @Input() contents: any;
+
   constructor(
     private modalController:ModalController, 
   ) { }

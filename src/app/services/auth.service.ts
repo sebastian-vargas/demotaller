@@ -2,12 +2,15 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Storage } from "@ionic/storage";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ModalController } from '@ionic/angular';
+import { ModalPage } from '../pages/modal/modal.page';
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  constructor(private storage: Storage, private http: HttpClient) {}
+  constructor(private storage: Storage, private http: HttpClient, 
+    public modalController: ModalController) {}
   API_URL = "http://localhost:8080/api/users/";
 
   default = {
@@ -87,6 +90,36 @@ export class AuthService {
       headers: new HttpHeaders(),
     });
   }
+  modal;
+
+  getUsers(token){
+    let formToken = new FormData();
+    formToken.append("token", token.toString());
+    return this.http
+      .post(`${this.API_URL}list`, formToken, {
+        headers: new HttpHeaders(),
+      });
+        }
+
+  editRole(id_user,token){
+    let formData = new FormData();
+    formData.append("token", token.toString());
+    formData.append("id_user", id_user.toString());
+    return this.http
+      .post(`${this.API_URL}edit-role`, formData, {
+        headers: new HttpHeaders(),
+      });
+  }
+
+
+  async presentLoginRegisterModal() {
+    this.modal = await this.modalController.create({
+      component: ModalPage,
+      cssClass: "modal",
+    });
+    await this.modal.present();
+  }
+
 
   /* VIEJO */
   /*

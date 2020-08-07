@@ -12,6 +12,7 @@ import { WorkshopService } from "src/app/services/workshop.service";
 import { delay } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { Workshop } from "../../../models/workshop.model";
+import { ModalPage } from '../../modal/modal.page';
 
 @Component({
   selector: "app-home",
@@ -23,7 +24,6 @@ export class HomePage implements OnInit, OnDestroy {
     public alertController: AlertController,
     private navCtrl: NavController,
     private auths: AuthService,
-    public modalController: ModalController,
     private workShopService: WorkshopService
   ) { }
 
@@ -52,9 +52,11 @@ export class HomePage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.userSubscription = this.auths.userData.subscribe((userData) => {
       this.userData = userData;
+      /*
       if (this.workshops.length > 0 && !userData.isLoggedIn) {
         this.reset();
-      }
+      }*/
+      this.reset();
       this.loadWorkshops();
     });
   }
@@ -72,6 +74,8 @@ export class HomePage implements OnInit, OnDestroy {
     this.workshops = [];
     this.infiniteScroll.disabled = true;
   }
+
+  
 
   loadWorkshops(scroll?, refresh?) {
     this.loading = true;
@@ -201,7 +205,8 @@ export class HomePage implements OnInit, OnDestroy {
   }
   workshopHandleCLick(index, workshop) {
     if (index != 0 && !this.userData.isLoggedIn) {
-      this.alertLogin();
+      this.auths.presentLoginRegisterModal();
+      //this.alertLogin();
     } else {
       if (!workshop.readed) {
         this.alertStart(workshop);

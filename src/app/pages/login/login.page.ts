@@ -4,8 +4,6 @@ import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 import {AuthService} from 'src/app/services/auth.service'
-import { from } from 'rxjs';
-import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-login',

@@ -11,18 +11,73 @@
 <ion-content class="ion-padding">
   <ion-list>
     <ion-item>
-      <ion-label>{{titulo}}</ion-label>
+      <ion-label>{{title}}</ion-label>
     </ion-item>
     <ion-item>
         <p>
-          {{descripcion}}
+          {{description}}
         </p>  
     </ion-item>
     <ion-item>
-      <ion-label>{{pdfUrl}}</ion-label>
+      <ion-label>{{workshop_title}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>{{vidUrl}}</ion-label>
+      <ion-label>{{total_comments}}</ion-label>
     </ion-item>
+    <ion-list *ngFor="let content of contents">
+      <ng-container *ngIf="content.type == '1'">
+        <ion-list-header>
+          <ion-label color="secondary">Video</ion-label>
+        </ion-list-header>
+        <div class="ion-padding-horizontal ion-margin-bottom">
+          <iframe
+            width="100%"
+            height="200"
+            [src]="content.url | safe:'resourceUrl'"
+            id="video"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </ng-container>
+      
+      <ng-container *ngIf="content.type == '2'">
+        <ion-list-header>
+          <ion-label color="secondary">Audio</ion-label>
+        </ion-list-header>
+        <div class="ion-padding-horizontal ion-margin-bottom">
+          <app-audio-player
+            title="{{content.title}}"
+            url="{{content.url}}"
+          ></app-audio-player>
+        </div>
+      </ng-container>
+      
+      <ng-container *ngIf="content.type == '3'">
+        
+        <ion-list-header >
+          <ion-label color="secondary">Archivo PDF</ion-label>
+        </ion-list-header>
+        <div class="ion-padding-horizontal ion-margin-bottom">
+          <ion-card
+            class="ion-activatable ripple-parent ion-no-margin"
+            (click)="openPDF(content.url)"
+          >
+            <ion-card-content class="file">
+              <div class="icon">
+                <ion-icon name="document-outline"></ion-icon>
+              </div>
+              <div class="text">
+                <div class="title">{{ content.title }}</div>
+                <div class="pdf">Abrir pdf</div>
+              </div>
+            </ion-card-content>
+            <ion-ripple-effect></ion-ripple-effect>
+          </ion-card>
+        </div>
+      </ng-container>
+      
+    </ion-list>
   </ion-list>
 </ion-content>

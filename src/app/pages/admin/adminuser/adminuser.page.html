@@ -14,7 +14,7 @@
     <ion-card *ngFor="let user of users" class="ion-activatable ripple-parent ion-no-margin" (click)="editUser(user)">
       <ion-card-content>
         <ion-card-title class="user-title">
-          {{user.nombre}} {{user.apellido}}
+          {{user.full_name}}
         </ion-card-title>
         <ion-item class="ion-float-right ion-no-padding">
           <ion-icon name="eye-outline" color="secondary" ></ion-icon>

@@ -20,6 +20,16 @@ const routes: Routes = [
         path: '',
         redirectTo:"adminws"
       },
+
+      {
+        path: "adminws/:id",
+          children: [
+            {
+              path: "",
+              loadChildren: () => import('./editlesson/editlesson.module').then((m) => m.EditlessonPageModule),
+            },
+          ]
+      },
     ]
   },
   {
@@ -37,21 +47,6 @@ const routes: Routes = [
   {
     path: 'editlesson',
     loadChildren: () => import('./editlesson/editlesson.module').then( m => m.EditlessonPageModule)
-  },
-  
-  {
-    path: "adminws/:id",
-      children: [
-        {
-          path: "",
-          loadChildren: () => import('./editlesson/editlesson.module').then((m) => m.EditlessonPageModule),
-        },
-        {
-          path: "lesson/:lesson",
-          loadChildren: () =>
-            import("../tabs/do-workshop/do-workshop.module").then((m) => m.DoWorkshopPageModule),
-        },
-      ]
   },
 
 ];

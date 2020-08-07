@@ -1,0 +1,22 @@
+
+ion-content {
+  --padding-bottom: 0!important;
+}
+ion-slides {
+    height: 100%;
+}
+.close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  padding-left: 16px;
+
+  display: flex;
+  justify-content: flex-end;
+
+  ion-icon {
+    font-size: 32px;
+  }
+}

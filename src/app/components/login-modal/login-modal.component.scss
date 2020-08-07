@@ -1,0 +1,81 @@
+ion-content {
+    --background: linear-gradient(
+      to bottom,
+      rgba(var(--ion-color-primary-rgb), .8),
+      rgba(var(--ion-color-secondary-rgb), .7)
+    ),
+      url("../../../assets/login-bg.jpg")
+        no-repeat fixed center;
+
+    padding-bottom: 0;
+  
+  }
+  
+  ion-item {
+    --background: transparent;
+    --border-style: none;
+  
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
+  
+    &.item-has-focus ion-label {
+      color: var(--ion-color-light);
+  }
+  }
+  
+  .app-title {  
+    position: relative;
+    text-align: center;
+  
+    font-size: 44px;
+    font-weight: bold;
+  
+    margin: 50px auto auto;
+  
+    color: var(--ion-color-secondary);
+    text-shadow: 1px 1px 1px rgba(255,255,255,.5  ), -1px -1px 1px rgba(255,255,255,.5  );
+  }
+  
+  .login {
+    border-radius: 5px;
+    padding: 0 15px;
+  }
+  
+  .titlelogin {
+    text-align: center;
+    font-weight: 500;
+    color: var(--ion-color-light);
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+  
+  .titleinput {
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: var(--ion-color-light);
+  }
+  
+  .validation {
+    color: var(--ion-color-light);
+    font-size: 12px;
+    font-weight: 200;
+    font-style: italic;
+  }
+  
+  .buttons {
+    margin-top: 32px;
+  }
+  
+  ion-button {
+    font-weight: 400;
+  }
+  
+  
+  .fb {
+    --background: var(--facebook-bg);
+  }
+  
+  .gl {
+    --background: var(--google-bg);
+  }

@@ -1,0 +1,94 @@
+
+<ion-content [fullscreen]="true">
+  <form
+    class="register ion-margin"
+    [formGroup]="registerForm"
+    (ngSubmit)="registerUser(registerForm.value)"
+  >
+  <h2 class="titleregister ion-margin-bottom">REGISTRO</h2>
+    <ion-item class="ion-no-padding">
+      <ion-label position="stacked" class="titleinput">Nombre</ion-label>
+      <ion-input class="input-transparent" formControlName="full_name"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validation_messages.full_name">
+      <div class="validation"
+        *ngIf="registerForm.get('full_name').hasError(validation.type) && 
+                   (registerForm.get('full_name').dirty ||
+                   registerForm.get('full_name').touched)"
+      >
+        {{ validation.message}}
+      </div>
+    </ng-container>
+    <ion-item class="ion-no-padding">
+      <ion-label position="stacked" class="titleinput">Email</ion-label>
+      <ion-input class="input-transparent" formControlName="email"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validation_messages.email">
+      <div class="validation"
+        *ngIf="registerForm.get('email').hasError(validation.type) && 
+                     (registerForm.get('email').dirty ||
+                     registerForm.get('email').touched)"
+      >
+        {{ validation.message}}
+      </div>
+    </ng-container>
+
+    <ion-item class="ion-no-padding">
+      <ion-label position="stacked" class="titleinput">Constraseña</ion-label>
+      <ion-input class="input-transparent" type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validation_messages.password">
+      <div class="validation"
+        *ngIf="registerForm.get('password').hasError(validation.type) && 
+                   (registerForm.get('password').dirty ||
+                   registerForm.get('password').touched)"
+      >
+        {{ validation.message}}
+      </div>
+    </ng-container>
+
+    <ion-item class="ion-no-padding">
+      <ion-label position="stacked" class="titleinput"
+        >Confirmar Contraseña</ion-label
+      >
+      <ion-input class="input-transparent" type="password" formControlName="passconfirm" (input)="onPassConfirmChange($event.target.value)"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+      <ion-container *ngFor="let validation of validation_messages.passconfirm">
+        <div class="validation"
+          *ngIf="registerForm.get('passconfirm').hasError(validation.type) &&
+                   (registerForm.get('passconfirm').dirty ||
+                    registerForm.get('passconfirm').touched)"
+        >
+          {{validation.message}}
+        </div>
+      </ion-container>
+      <div class="validation"
+        *ngIf="registerForm.get('password').valid &&
+                    registerForm.hasError('mismatchedPasswords') &&
+                  ( registerForm.get('passconfirm').dirty ||
+                    registerForm.get('passconfirm').touched)"
+      >
+        Contraseña de confirmación incorrecto
+      </div>
+    </div>
+    {{errorMessage}}
+    <ion-button
+      class="btn-submit"
+      expand="full"
+      color="primary"
+      [disabled]="!registerForm.valid"
+      type="submit"
+      >Registrarme
+    </ion-button>
+
+    <ion-button
+        class="ion-margin-top"
+        color="light"
+        (click)="goToLogin()"
+        expand="full"
+        fill="clear"
+        >Iniciar sesión
+      </ion-button>
+  </form>
+</ion-content>

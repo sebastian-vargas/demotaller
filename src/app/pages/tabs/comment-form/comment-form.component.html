@@ -1,0 +1,9 @@
+<form (submit)="submit($event)">
+  <div class="comment-form">
+    <ion-textarea placeholder="Escribe tu comentario..." rows="1" maxlength="250" #comment (input)='onInputComment($event.target.value)'></ion-textarea>
+      <ion-button fill="clear" color="secondary" type="submit" >
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+    </ion-button>
+   </div>
+   <span *ngIf="count" class="count">{{characterCount}} de 250 caracteres.</span>
+</form>

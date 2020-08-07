@@ -21,10 +21,21 @@ export class LessonService {
 
     formData.append('page', page.toString());
     formData.append('limit', limit.toString());
-    formData.append('id_lesson', limit.toString());
+    formData.append('id_lesson', id_lesson.toString());
 
     return this.http.post(`${this.API_URL}comments`, formData, {headers: new HttpHeaders()});
   }
+
+  addComment(id_lesson, token, comment) {
+    let formData = new FormData()
+
+    formData.append('id_lesson', id_lesson.toString());
+    formData.append('token', token.toString());
+    formData.append('comment', comment.toString());
+
+    return this.http.post(`${this.API_URL}add-comment`, formData, {headers: new HttpHeaders()});
+  }
+
 
   startLesson(id_lesson, token) {
     let formData = new FormData()

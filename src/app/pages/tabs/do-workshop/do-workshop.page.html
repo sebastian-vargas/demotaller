@@ -31,6 +31,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="false" class="has-footer">
+  <p *ngIf="lesson.contents && lesson.contents.length == 0" style="text-align: center; color: var(--ion-color-medium);" >Aún no hay contenido disponible.</p>
+
   <ion-list *ngFor="let content of lesson.contents">
     <ng-container *ngIf="content.type == '1'">
       <ion-list-header>
@@ -92,31 +94,32 @@
       <ion-label color="secondary">Comentarios</ion-label>
     </ion-list-header>
 
-   <div class="comment-form">
-    <ion-textarea placeholder="Escribe tu comentario..."></ion-textarea>
-    
-    <ion-button fill="clear" color="secondary" >
-      <ion-icon slot="icon-only" name="send"></ion-icon>
-    </ion-button>
-   </div>
-
-    <ion-item *ngFor="let comment of comments">
+    <div style="margin: 4px 16px 16px;">
+      <app-comment-form *ngIf="lesson.id_lesson && userData.isLoggedIn" 
+    (updateComments)="getComments()"
+    count="true"
+    id_lesson="{{lesson.id_lesson}}" 
+    token="{{userData.user.token}}"></app-comment-form>
+    </div>
+   
+   
+    <ion-item *ngFor="let comment of comments" >
       <ion-avatar slot="start">
-        <img [src]="comment.avatar || 'assets/avatar.png'" />
+        <img [src]="comment.avatar || 'assets/avatar.jpg'" />
       </ion-avatar>
       <ion-label
         style="word-break: normal; white-space: normal;"
         class="ion-padding-end"
       >
-        <h2 class="comment-name">{{comment.full_name}}</h2>
+        <h2 class="comment-name">{{comment.full_name}} <ion-badge *ngIf="comment.role == 1" color="secondary">Admin</ion-badge></h2>
         <p>{{comment.comment}}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
+  <p *ngIf="comments.length == 0" style="text-align: center; color: var(--ion-color-medium);" >Aún no hay comentarios disponibles.</p>
 
-
-  <ion-button *ngIf="lesson.total_comments && lesson.total_comments > 3"
+  <ion-button *ngIf="totalComments > 5"
       class="ion-margin"
       (click)="showComments()"
       expand="full"

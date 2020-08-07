@@ -1,38 +1,74 @@
-<ion-header class="ion-no-border" >
-  <ion-toolbar color="primary" class="transparent-toolbar">
+<ion-header >
+  <ion-toolbar color="tertiary" >
+    <ion-title class="ion-no-padding">Administracion</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title class="ion-no-padding">Administración</ion-title>
-  </ion-toolbar>
-  
-  <ion-searchbar></ion-searchbar>
-</ion-header>
 
-<ion-content >
+      <ion-buttons slot="end" style="width: 48px;" >
+      </ion-buttons>
+
+    <ion-progress-bar *ngIf="loading" type="indeterminate" color="primary"></ion-progress-bar>
+  </ion-toolbar>
   <ion-card class="talleres-header ion-no-margin header">
     <ion-card-header>
       <ion-card-title>Talleres</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content  >
       Keep close to Nature's heart... and break clear away, once in awhile, and
       climb a mountain or spend a week in the woods. Wash your spirit clean.
     </ion-card-content>
   </ion-card> 
+</ion-header>
 
-  <ion-list class="ion-no-padding" >
-    <ion-card *ngFor="let ws of workshop; let i = index" class="ion-activatable ripple-parent ion-no-margin" 
-      (click)="workshopHandleCLick(i, ws.id)" >
+<ion-content class="has-footer ion-padding-bottom" >
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </ion-refresher>
+
+  <ion-list class="ion-no-padding" *ngIf="loading && firstLoad" >
+    <ion-card *ngFor="let i of ' '.repeat(5).split('')" style="transition: all .3s ease;">
       <ion-card-content>
-        <ion-item class="ion-float-right ion-no-padding ion-margin-start">
-          <ion-icon name="chevron-forward" color="secondary"></ion-icon>
-        </ion-item>
-        <ion-card-title class="list-title">{{ws.title}}</ion-card-title>
-        <ion-card-subtitle>{{ws.lessons.length}} Lecciones.</ion-card-subtitle>
+        <ion-card-title ><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-card-title>
+        <ion-card-subtitle><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></ion-card-subtitle>
       </ion-card-content>
-      <ion-ripple-effect></ion-ripple-effect>
     </ion-card>
   </ion-list>
+
+
+  <ion-list class="ion-no-padding content">
+    <ion-virtual-scroll [items]="workshops" approxItemHeight="70px" >
+      <ion-card *virtualItem="let workshop; let i = index"
+       (click)="workshopHandleCLick(i, workshop)" 
+       [ngClass]="{'unread': !workshop.readed}"
+        class="ion-activatable ripple-parent ion-no-margin" >
+        <div *ngIf="i != 0 && !userData.isLoggedIn" class="mask"></div>
+
+        <ion-card-content>
+          <div class="left">
+            <ion-card-title class="list-title">{{workshop.title}}
+            </ion-card-title>
+            <ion-card-subtitle>{{workshop.lessons_count}} Lecciones.</ion-card-subtitle>
+          </div>
+
+          <div class="right">
+            <ion-icon  name="chevron-forward" ></ion-icon>
+          </div>
+        </ion-card-content>
+
+        
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-card>
+    </ion-virtual-scroll>
+  </ion-list>
+ 
+
+  <ion-infinite-scroll  position="bottom" threshold="20%" (ionInfinite)="loadMore($event)" disabled="true">
+    <ion-infinite-scroll-content class="ion-padding-top" loadingSpinner="crescent" loadingText="Cargando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-margin">
     <ion-fab-button (click)="navigate('addws')" color="secondary">

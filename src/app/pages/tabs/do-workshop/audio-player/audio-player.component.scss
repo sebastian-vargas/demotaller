@@ -15,7 +15,7 @@
       position: relative;
   
       background: rgb(21,87,153);
-      background: radial-gradient(circle, rgba(21,87,153,1) 0%, rgba(2,136,214,1) 80%);
+      background: radial-gradient(circle, rgba(var(--ion-color-secondary-rgb),.5) 0%, rgba(var(--ion-color-secondary-rgb),1) 80%);
   
       ion-icon, ion-spinner{
         color: #fff;
@@ -47,7 +47,7 @@
   
         ion-range {
           padding: 0;
-          --bar-background-active: #0288D6;
+          --bar-background-active:var(--ion-color-secondary);
           --bar-background:rgba(0, 0, 0, .1);
         }
       }

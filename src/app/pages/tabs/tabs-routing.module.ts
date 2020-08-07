@@ -57,7 +57,7 @@ const routes: Routes = [
   {
     path: 'modal-comm',
     loadChildren: () => import('./modal-comm/modal-comm.module').then( m => m.ModalCommPageModule)
-  },
+  }
 ];
 
 @NgModule({

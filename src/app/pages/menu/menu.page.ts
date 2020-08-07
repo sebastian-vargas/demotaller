@@ -55,4 +55,9 @@ export class MenuPage implements OnInit {
     //window.location.reload();
     this.navCtrl.navigateRoot(`menu/tabs/home`);
   }
+
+  login() {
+    this.menu.close();
+    this.authS.presentLoginRegisterModal();
+  }
 }
