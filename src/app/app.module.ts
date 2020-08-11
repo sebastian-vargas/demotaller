@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { MainPipeModule } from './modules/main-pipe/main-pipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
+    SQLitePorter,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PreviewAnyFile
   ],

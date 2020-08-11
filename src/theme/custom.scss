@@ -1,6 +1,6 @@
 ion-content {
     --background: var(--theme-background);
-    --padding-bottom: 8px;
+    --padding-bottom: 4px;
   }
 
 ion-card-title {
@@ -89,6 +89,7 @@ ion-header {
   ion-toolbar {
     display: flex; 
     justify-content: space-between;
+    padding-right: 52px;
 
     .loader{
       width: 32px;

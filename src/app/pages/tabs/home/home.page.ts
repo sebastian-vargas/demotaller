@@ -13,6 +13,7 @@ import { delay } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { Workshop } from "../../../models/workshop.model";
 import { ModalPage } from '../../modal/modal.page';
+import { GuestService } from 'src/app/services/guest.service';
 
 @Component({
   selector: "app-home",
@@ -24,7 +25,8 @@ export class HomePage implements OnInit, OnDestroy {
     public alertController: AlertController,
     private navCtrl: NavController,
     private auths: AuthService,
-    private workShopService: WorkshopService
+    private workShopService: WorkshopService,
+    private guestService: GuestService
   ) { }
 
   workshops: Workshop[] = [];
@@ -50,6 +52,8 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnDestroy() { }
 
   ionViewWillEnter() {
+    //this.guestService.DeleteWorkshopsStarted();
+
     this.userSubscription = this.auths.userData.subscribe((userData) => {
       this.userData = userData;
       /*
@@ -75,7 +79,6 @@ export class HomePage implements OnInit, OnDestroy {
     this.infiniteScroll.disabled = true;
   }
 
-  
 
   loadWorkshops(scroll?, refresh?) {
     this.loading = true;
@@ -84,11 +87,15 @@ export class HomePage implements OnInit, OnDestroy {
       .pipe(delay(100))
       .subscribe(
         (response) => {
-          console.log(response["workshops"]);
           this.page++;
           let workshops = response["workshops"];
           if(!this.userData.isLoggedIn){
 
+            workshops.forEach(w => {
+              this.guestService.checkWorkshop(w.id_workshop).then(res => {
+                w.readed = res;
+              })
+            });
           }
 
           if (
@@ -218,7 +225,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   redirectToWorkshop(workshop) {
     if (!workshop.readed) {
-      this.workShopService
+
+      if(this.userData.isLoggedIn){
+        this.workShopService
         .startWorkshop(workshop.id_workshop, this.userData.user.token)
         .subscribe((res: any) => {
           if (res.status == 200) {
@@ -227,6 +236,16 @@ export class HomePage implements OnInit, OnDestroy {
             );
           }
         });
+      } else {
+        this.guestService.startWorkshop(workshop.id_workshop).then(res => {
+         if(res > 0){
+          this.navCtrl.navigateForward(
+            `menu/tabs/workshop/${workshop.id_workshop}`
+          );
+         }
+        })
+      }
+
     } else {
       this.navCtrl.navigateForward(
         `menu/tabs/workshop/${workshop.id_workshop}`

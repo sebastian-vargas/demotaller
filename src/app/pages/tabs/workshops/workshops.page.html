@@ -4,14 +4,7 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-
-      <ion-buttons slot="end" style="width: 48px;" >
-      </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content fullscreen="true">
-
   <ion-card class="talleres-header ion-no-margin header">
     <ion-card-header>
       <ion-card-title >Mis talleres</ion-card-title>
@@ -20,30 +13,18 @@
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat, ea.
     </ion-card-content>
   </ion-card> 
+</ion-header>
 
-  <!--ion-list class="ion-no-padding">
-    <ion-card *ngFor="let workshop of workshops" class="ion-activatable ripple-parent ion-no-margin" (click)="goToWorkshop(workshop.id)">
-      <ion-card-content>
-        <ion-item class="ion-float-right ion-no-padding">
-          <ion-icon name="chevron-forward" color="secondary"></ion-icon>
-        </ion-item>
-        <div class="list-title" >
-          {{workshop.title}}
-        </div>
-        <ion-card-subtitle>{{workshop.lessonsCount}} de {{workshop.lessons.length}} Lecciones.</ion-card-subtitle>
-        <ion-progress-bar color="secondary" value="{{workshop.lessonsCount  / workshop.lessons.length}}" class="ion-margin-top"></ion-progress-bar>
-      </ion-card-content>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-card>
-    <ion-card *ngIf="workshops.length === 0" class="ion-no-margin">
-      <ion-card-content style="text-align: center;">
-        No has visto ningun taller.
-      </ion-card-content>
-    </ion-card>
-  </ion-list-->
+<ion-content fullscreen="true">
+ 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </ion-refresher>
 
   <ion-list class="ion-no-padding">
-    <ion-virtual-scroll [items]="workshops" approxItemHeight="70px" >
+    <ion-virtual-scroll [items]="workshops" approxItemHeight="90px" >
       <ion-card *virtualItem="let workshop; let i = index" (click)="workshopHandleCLick(workshop.id_workshop)"  class="ion-activatable ripple-parent" >
         <ion-card-content>
         <ion-item class="ion-float-right ion-no-padding">
@@ -59,11 +40,13 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-card>
     </ion-virtual-scroll>
+
     <ion-card *ngIf="workshops.length === 0 && !loading" class="ion-no-margin">
       <ion-card-content style="text-align: center;">
         No has visto ningun taller.
       </ion-card-content>
     </ion-card>
+    
   </ion-list>
   <ion-infinite-scroll  position="bottom" threshold="20%" (ionInfinite)="loadMore($event)" disabled="true">
     <ion-infinite-scroll-content class="ion-padding-top" loadingSpinner="crescent" loadingText="Cargando...">

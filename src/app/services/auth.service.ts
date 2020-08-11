@@ -4,6 +4,7 @@ import { Storage } from "@ionic/storage";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../pages/modal/modal.page';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +12,8 @@ import { ModalPage } from '../pages/modal/modal.page';
 export class AuthService {
   constructor(private storage: Storage, private http: HttpClient, 
     public modalController: ModalController) {}
-  API_URL = "http://localhost:8080/api/users/";
+    API_URL = environment.API_URL + "users/";
+    //API_URL = "http://localhost:8080/api/users/";
 
   default = {
     isLoggedIn: false,
@@ -49,7 +51,6 @@ export class AuthService {
                     token: token
                   },
                 };
-                console.log(user)
                 this.userData.next(user);
                 resolve(true);
               } else {
@@ -99,7 +100,16 @@ export class AuthService {
       .post(`${this.API_URL}list`, formToken, {
         headers: new HttpHeaders(),
       });
-        }
+  }
+
+  getUserbyId(id_user){
+    let formToken = new FormData();
+    formToken.append("id_user", id_user.toString());
+    return this.http
+      .post(`${this.API_URL}get-user`, formToken, {
+        headers: new HttpHeaders(),
+      });
+  }
 
   editRole(id_user,token){
     let formData = new FormData();

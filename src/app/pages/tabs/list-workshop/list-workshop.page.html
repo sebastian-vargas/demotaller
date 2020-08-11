@@ -6,8 +6,8 @@
         <ion-icon class="back" slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end" style="width: 48px;" >
-    </ion-buttons>
+
+    <ion-progress-bar *ngIf="loading" type="indeterminate" color="primary"></ion-progress-bar>
   </ion-toolbar>
 
   <ion-card class="header ion-no-margin">
@@ -31,11 +31,11 @@
   
   <ion-list class="ion-no-padding">
     
-    <ion-list-header *ngIf="workshop.lessons">
+    <ion-list-header *ngIf="workshop.lessons && !loading">
       <ion-label color="secondary">Lecciones</ion-label>
     </ion-list-header>
 
-    <ng-container *ngIf="!workshop.lessons">
+    <ng-container *ngIf="!workshop.lessons && loading">
       <ion-list-header >
         <ion-label color="secondary">
           <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
@@ -49,7 +49,8 @@
       </ion-card>
     </ng-container>
 
-    <ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
+    <ng-container *ngIf="workshop.lessons && !loading">
+      <ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
       class="ion-activatable ripple-parent " 
       [ngClass]="{'unread': !lesson.readed && !lesson.disabled, 'disabled': lesson.disabled}"
       (click)="startLesson(lesson)">
@@ -67,5 +68,6 @@
           Aún no hay lecciones disponibles.
         </ion-card-content>
       </ion-card>
+    </ng-container>
   </ion-list>
 </ion-content>

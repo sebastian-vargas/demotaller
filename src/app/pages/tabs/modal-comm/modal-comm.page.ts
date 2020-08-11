@@ -24,7 +24,7 @@ export class ModalCommPage implements OnInit {
   loadMore = false;
 
   firstLoad = true;
-
+  newComments = false;
   page = 1;
   limit = 5;
 
@@ -32,7 +32,9 @@ export class ModalCommPage implements OnInit {
    
   }
   async closeModal(){
-    await this.modalController.dismiss();
+    await this.modalController.dismiss({
+      'newComments': this.newComments
+    });
   }
 
   ionViewWillEnter() {
@@ -40,13 +42,19 @@ export class ModalCommPage implements OnInit {
   }
 
   ionViewWillLeave(){
-    this.page = 0;
+    this.page = 1;
     this.firstLoad = true;
     this.commentsSubscription.unsubscribe();
   }
   reloadComments(){
     this.firstLoad = true;
-    this.page = 0;
+    this.page = 1;
+    this.loadMore= false;
+
+    if(!this.newComments){
+      this.newComments = true;
+    }
+
     this.getComments();
   }
 
@@ -56,24 +64,38 @@ export class ModalCommPage implements OnInit {
     }
     this.commentsSubscription = this.lessonService
     .getComments(this.id_lesson,this.page, this.limit)
-    .pipe(delay(1000))
     .subscribe((response: any) => {
       if(response && response.status == 200){
+        let comments = response.comments
+        console.log(comments)
         if(this.firstLoad){
-          this.comments = response.comments;
+          this.comments = comments;
           this.firstLoad = false;
         }
         else {
-          this.comments = this.comments.concat(response.comments);
+          if (this.comments.length > 0) {
+            comments.forEach((comment) => {
+              let cont = 0;
+              this.comments.forEach((c) => {
+                if (c.id_lesson_comments === comment.id_lesson_comments) {
+                  cont++;
+                }
+              });
+              if (cont == 0) {
+                this.comments.push(comment);
+              }
+            });
+          } else {
+            this.comments.push(...comments);
+          }
         }
 
-        if(response.comments.length < this.limit){
+        if(comments.length < this.limit){
           this.loadMore = false;
         }
         else {
           this.loadMore = true;
         }
-        console.log(response);
       }
     });
   }

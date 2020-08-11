@@ -88,7 +88,6 @@ export class DoWorkshopPage implements OnInit {
     
     this.lessonSubscription = this.lessonService
       .getLessons(this.lessonId)
-      .pipe(delay(0))
       .subscribe((response: any) => {
         if(response && response.status == 200){
           this.lesson = response.lesson;
@@ -139,6 +138,13 @@ export class DoWorkshopPage implements OnInit {
         'token': this.userData.user.token
       },
     });
+    
+    modal.onDidDismiss().then(data => {
+      if(data.data.newComments){
+        this.getComments();
+      }
+    })
+    
     return await modal.present();
   }
 

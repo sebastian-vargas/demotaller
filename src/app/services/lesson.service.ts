@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class LessonService {
 
   constructor(private http: HttpClient) { }
-
-  API_URL ="http://localhost:8080/api/lessons/";
+  API_URL = environment.API_URL + "lessons/";
+  //API_URL ="http://localhost:8080/api/lessons/";
 
   getLessons(id_lesson){
     let formData = new FormData()

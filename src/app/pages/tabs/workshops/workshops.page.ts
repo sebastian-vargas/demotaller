@@ -10,6 +10,7 @@ import { Workshop } from "src/app/models/workshop.model";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { WorkshopService } from "src/app/services/workshop.service";
+import { GuestService } from 'src/app/services/guest.service';
 
 @Component({
   selector: "app-workshops",
@@ -20,7 +21,8 @@ export class WorkshopsPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private auths: AuthService,
-    private workShopService: WorkshopService
+    private workShopService: WorkshopService,
+    private guestService: GuestService
   ) {}
 
   workshops: Workshop[] = [];
@@ -47,14 +49,37 @@ export class WorkshopsPage implements OnInit {
     this.userSubscription = this.auths.userData.subscribe(userData => {
       this.userData = userData;
       if(userData.isLoggedIn) {
-
+        this.reset();
         this.loadWorkshops();
+      }
+      else {
+        this.loadSqliteWorkshops();
+        
       }
     });
   }
 
+  loadSqliteWorkshops(){
+    this.guestService.fetchWorkshops().then(workshops => {
+      this.workShopService.getWorkshopsForGuest(workshops).subscribe((res: any) => {
+        this.workshops = res.workshops
+        this.workshops.forEach((w:any, i) => {
+          let cont = 0;
+          w.lessons.forEach((l) => {
+            this.guestService.checkLesson(l).then(res => {
+              if(res){
+                cont++;
+              }
+              w.lessons_readed_count = cont;
+            });
+          });
+        });
+      });
+    });
+  }
+
   ionViewWillLeave() {
-    this.workshopsSubscription.unsubscribe();
+    if(this.workshopsSubscription) this.workshopsSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
     this.reset();
   }
@@ -140,7 +165,14 @@ export class WorkshopsPage implements OnInit {
     this.page = 1;
     this.limit = Math.round(screen.height / 70);
     this.refreshing = true;
-    this.loadWorkshops(null, refresh);
+    if(this.userData.isLoggedIn){
+
+      this.loadWorkshops(null, refresh);
+    }else {
+      this.loadSqliteWorkshops()
+      refresh.target.complete();
+      this.refreshing = false;
+    }
   }
 
   workshopHandleCLick( workshopID) {

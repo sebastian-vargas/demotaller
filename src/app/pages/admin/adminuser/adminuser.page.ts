@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ModalUserPage } from '../modal-user/modal-user.page';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
@@ -14,10 +14,12 @@ import { User } from 'src/app/models/user.model';
 export class AdminuserPage implements OnInit {
 
   users:any= [];
+  userlogued:Number;
   constructor(
     private modalController:ModalController,
     private storage:Storage,
-    private authS: AuthService
+    private authS: AuthService,
+    public alertController: AlertController,
   ) { }
 
   userData: any = {
@@ -29,12 +31,12 @@ export class AdminuserPage implements OnInit {
 
   }
 
-
   ionViewWillEnter() {
     this.userSubscription = this.authS.userData.subscribe((userData) => {
       this.userData = userData;
-      console.log("hola", this.userData.user.token);
+      console.log("hola", this.userData.user);
       this.getUser(this.userData.user.token);
+      this.userlogued = this.userData.user.id_user;
     });
   }
   ionViewWillLeave() {
@@ -53,9 +55,6 @@ async editUser(user){
     component: ModalUserPage,
     componentProps: {
       'id_user' : user.id_user,
-      'full_name': user.full_name,
-      'email':user.email,
-      'role':user.role
     }
   });
   return await modal.present();
