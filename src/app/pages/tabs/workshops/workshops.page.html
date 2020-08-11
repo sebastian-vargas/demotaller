@@ -33,7 +33,7 @@
         <div class="list-title" >
           {{workshop.title}}
         </div>
-        <ion-card-subtitle>{{workshop.lessons_readed_count}} de {{workshop.lessons_count}} Lecciones.</ion-card-subtitle>
+        <ion-card-subtitle>{{workshop.lessons_readed_count || 0}} de {{workshop.lessons_count}} Lecciones.</ion-card-subtitle>
         
         <ion-progress-bar color="secondary" value="{{workshop.lessons_readed_count / workshop.lessons_count || 0}}" class="ion-margin-top"></ion-progress-bar>
       </ion-card-content>

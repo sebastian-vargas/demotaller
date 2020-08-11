@@ -1,0 +1,52 @@
+<ion-card>
+  <ion-card-header >
+    <ion-card-title>Agregar Lección</ion-card-title>
+    <ion-button fill="clear" color="secondary" (click)="saveUser()">
+      Agregar
+    </ion-button>
+  </ion-card-header>
+  <ion-card-content class="ion-margin-bottom">
+    <form
+    [formGroup]="lessonForm"
+    (ngSubmit)="lessonData(lessonForm.value)"
+    >
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+        <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo de la lección"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let validation of validation_messages.title">
+        <div class="validation"
+          *ngIf="lessonForm.get('title').hasError(validation.type) && 
+                    (lessonForm.get('title').dirty ||
+                    lessonForm.get('title').touched)"
+        >
+          {{ validation.message}}
+        </div>
+      </ng-container>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked" class="titleinput">Descripción</ion-label>
+        <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción para la lección"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let validation of validation_messages.description">
+        <div class="validation"
+          *ngIf="lessonForm.get('description').hasError(validation.type) && 
+                    (lessonForm.get('description').dirty ||
+                    lessonForm.get('description').touched)"
+        >
+          {{ validation.message}}
+        </div>
+      </ng-container>
+    </form>
+  </ion-card-content>
+</ion-card>
+<ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
+class="ion-activatable ripple-parent " 
+(click)="getLesson(lesson)">
+  <ion-card-content class="ion-no-padding ion-margin-start" >
+    <ion-card-title  class="lesson-title">{{ lesson.title }}</ion-card-title>   
+    <div class="icon-container">
+      <ion-icon name="create-outline" class="ion-margin"></ion-icon>
+    </div>       
+  </ion-card-content>
+  <ion-ripple-effect></ion-ripple-effect>
+</ion-card>

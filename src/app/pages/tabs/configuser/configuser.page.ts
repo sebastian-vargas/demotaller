@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from "@ionic/storage";
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+
+import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
+import { AvatarComponent } from './avatar/avatar.component';
 @Component({
   selector: 'app-configuser',
   templateUrl: './configuser.page.html',
@@ -30,7 +33,10 @@ export class ConfiguserPage implements OnInit {
     confirm_password: new FormControl('')
   });
 
-  constructor(private storage: Storage, private authS: AuthService) {   }
+  constructor(private storage: Storage, 
+    public modalController: ModalController,
+    private authS: AuthService,
+    private chooser: Chooser,) {   }
 
   ngOnInit() {
     
@@ -64,6 +70,34 @@ export class ConfiguserPage implements OnInit {
 
     
   }
+
+  choose(){
+    this.chooser.getFile('image/*')
+      .then((file: ChooserResult) => {
+        
+        this.processImage(file)
+      })
+      .catch((error: any) => console.error(error));
+  }
+
+  async processImage(file) {
+    const modal = await this.modalController.create({
+      component: AvatarComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        file
+      }
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if (data !== null && data.data.changed) {
+        this.authS.loadUser();
+      }
+    });
+     
+    await modal.present();
+  }
+  
 
   uploadFile(event){
     

@@ -63,6 +63,8 @@ export class WorkshopsPage implements OnInit {
     this.guestService.fetchWorkshops().then(workshops => {
       this.workShopService.getWorkshopsForGuest(workshops).subscribe((res: any) => {
         this.workshops = res.workshops
+        
+      console.log(res.workshops)
         this.workshops.forEach((w:any, i) => {
           let cont = 0;
           w.lessons.forEach((l) => {

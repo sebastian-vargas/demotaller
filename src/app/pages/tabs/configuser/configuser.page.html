@@ -17,13 +17,12 @@
     </ion-card-header>
     <ion-card-content class="ion-margin-bottom">
       <div class="avatar-container">
-        <ion-avatar (click)="avatarInput.click()">
+        <ion-avatar (click)="choose()">
           <!--<img [src]="user.avatar" />-->
           <div class="img" style="background-image: url({{userData.user.avatar}});"></div>
           <ion-badge ><ion-icon name="camera"></ion-icon></ion-badge>
         </ion-avatar>
-        <input id="avatarInput" type="file" accept="image/*" #avatarInput style="display: none;" (change)="uploadFile($event)"/>
-        <ion-label (click)="avatarInput.click()">Cambiar avatar</ion-label>
+        <ion-label (click)="choose()">Cambiar avatar</ion-label>
       </div> 
       <form [formGroup]="userForm">
         <div class="input-container">

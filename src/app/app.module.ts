@@ -14,7 +14,8 @@ import { MainPipeModule } from './modules/main-pipe/main-pipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-
+import {NgxImageCompressService} from 'ngx-image-compress';
+import { Chooser } from '@ionic-native/chooser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,8 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
     SplashScreen,
     SQLite,
     SQLitePorter,
+    Chooser,
+    NgxImageCompressService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PreviewAnyFile
   ],

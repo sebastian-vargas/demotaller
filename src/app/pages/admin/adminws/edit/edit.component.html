@@ -1,0 +1,43 @@
+
+<ion-card>
+  <ion-card-header >
+    <ion-card-title>Editar taller</ion-card-title>
+    <ion-button fill="clear" color="secondary" (click)="saveUser()">
+      Guardar
+    </ion-button>
+  </ion-card-header>
+  <ion-card-content class="ion-margin-bottom">
+    <form 
+    [formGroup]="workshopForm"
+    (ngSubmit)="workshopData(workshopForm.value)"
+    >
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+        <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let validation of validation_messages.title">
+        <div class="validation"
+          *ngIf="workshopForm.get('title').hasError(validation.type) && 
+                    (workshopForm.get('title').dirty ||
+                    workshopForm.get('title').touched)"
+        >
+          {{ validation.message}}
+        </div>
+      </ng-container>
+
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked" class="titleinput">Descripción</ion-label>
+        <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let validation of validation_messages.description">
+        <div class="validation"
+          *ngIf="workshopForm.get('description').hasError(validation.type) && 
+                    (workshopForm.get('description').dirty ||
+                    workshopForm.get('description').touched)"
+        >
+          {{ validation.message}}
+        </div>
+      </ng-container>
+    </form>
+  </ion-card-content>
+</ion-card>

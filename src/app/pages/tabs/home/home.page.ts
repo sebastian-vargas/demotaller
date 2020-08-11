@@ -53,6 +53,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     //this.guestService.DeleteWorkshopsStarted();
+    //this.guestService.DeleteLessonsReaded();
 
     this.userSubscription = this.auths.userData.subscribe((userData) => {
       this.userData = userData;

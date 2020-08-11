@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { ConfiguserPageRoutingModule } from './configuser-routing.module';
 
 import { ConfiguserPage } from './configuser.page';
+import { AvatarComponent } from './avatar/avatar.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   imports: [
@@ -14,8 +16,9 @@ import { ConfiguserPage } from './configuser.page';
     FormsModule,
     IonicModule,
     ConfiguserPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageCropperModule
   ],
-  declarations: [ConfiguserPage]
+  declarations: [ConfiguserPage, AvatarComponent]
 })
 export class ConfiguserPageModule {}

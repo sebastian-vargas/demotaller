@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>avatar-modal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <image-cropper
+    [imageBase64]="file.dataURI ? file.dataURI : null"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="1 / 1"
+    format="jpg"
+    resizeToWidth="1080"
+    resizeToHeight="1080"
+    roundCropper="true"
+    imageQuality="100"
+    hideResizeSquares="true"
+    (imageCropped)="imageCropped($event)"
+    (cropperReady)="cropperReady()"
+    (imageLoaded)="imageLoaded()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+
+  <ion-button (click)="save()" expand="block" fill="clear" shape="round">
+    Save
+  </ion-button>
+</ion-content>

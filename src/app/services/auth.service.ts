@@ -40,6 +40,7 @@ export class AuthService {
             })
             .subscribe((res: any) => {
               if (res && res.status == 200) {
+                console.log(res.data)
                 let user = {
                   isLoggedIn: true,
                   user: {
@@ -62,6 +63,15 @@ export class AuthService {
         }
       });
     });
+  }
+
+  getUserbyId(id_user){
+    let formToken = new FormData();
+    formToken.append("id_user", id_user.toString());
+    return this.http
+      .post(`${this.API_URL}get-user`, formToken, {
+        headers: new HttpHeaders(),
+      });
   }
 
   logOut() {
@@ -100,16 +110,7 @@ export class AuthService {
       .post(`${this.API_URL}list`, formToken, {
         headers: new HttpHeaders(),
       });
-  }
-
-  getUserbyId(id_user){
-    let formToken = new FormData();
-    formToken.append("id_user", id_user.toString());
-    return this.http
-      .post(`${this.API_URL}get-user`, formToken, {
-        headers: new HttpHeaders(),
-      });
-  }
+        }
 
   editRole(id_user,token){
     let formData = new FormData();

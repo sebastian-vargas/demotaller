@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { LessonService } from "src/app/services/lesson.service";
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from '@angular/router';
@@ -14,10 +14,16 @@ export class ModalCommPage implements OnInit {
   @Input() token: String;
 
   constructor(
+    private platform: Platform,
     private modalController:ModalController,
     private lessonService: LessonService,
     private route: ActivatedRoute,
-  ) { }
+  ) { 
+    this.platform.backButton.subscribe(() => {
+      
+      this.closeModal()
+    });
+  }
 
   commentsSubscription: Subscription;
   comments = [];
