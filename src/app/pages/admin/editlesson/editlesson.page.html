@@ -1,27 +1,76 @@
 <ion-header>
-  <ion-toolbar color="primary" >
-    <ion-title class="ion-no-padding">{{workshop.title}}</ion-title>
+  <ion-toolbar color="tertiary">
+    <ion-title *ngIf="workshop" class="ion-no-padding"
+      >{{workshop.title}}</ion-title
+    >
     <ion-buttons slot="start">
-      <Ion-menu-button ></Ion-menu-button>
+      <Ion-menu-button></Ion-menu-button>
     </ion-buttons>
+
+    <ion-progress-bar
+      *ngIf="loading"
+      type="indeterminate"
+      color="primary"
+    ></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
-
-<ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segmentValue">
-  <ion-segment-button value="edit">
-    <ion-label>Editar</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="lessons">
-    <ion-label>lecciónes</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="users">
-    <ion-label>Usuarios</ion-label>
-  </ion-segment-button>
-</ion-segment>
 <ion-content>
-  <div [ngSwitch]="segmentValue">
-    <app-edit *ngSwitchCase="'edit'"></app-edit>
-    <app-lessons *ngSwitchCase="'lessons'"></app-lessons>
-    <app-users *ngSwitchCase="'users'"></app-users>
-  </div>
+  <ng-container *ngIf="workshop">
+    <ion-segment
+      (ionChange)="segmentChanged($event)"
+      [(ngModel)]="segmentValue"
+    >
+      <ion-segment-button value="edit">
+        <ion-label>Editar</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lessons">
+        <ion-label>lecciónes</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="users">
+        <ion-label>Usuarios</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="segmentValue">
+     
+
+      <ng-container 
+      *ngSwitchCase="'edit'">
+        <app-edit
+        *ngIf="workshop.id_workshop"   
+          [workshop]="workshop"
+          [editing]="true"
+          (saveWorkshop)="saveWorkshop($event)"
+        ></app-edit>
+      </ng-container>
+      <ng-container *ngSwitchCase="'lessons'">
+
+        <app-lessons         
+          [editing]="false"
+          (saveLesson)="saveLessonParent($event)"
+        ></app-lessons>
+
+        <ion-list class="ion-no-padding content">
+          <ion-virtual-scroll [items]="workshop.lessons" approxItemHeight="70px" >
+            <ion-card *virtualItem="let lesson; let i = index"
+             (click)="editLS(lesson)" 
+              class="ion-activatable ripple-parent ion-no-margin" >      
+             
+              <ion-card-content class="ion-padding ">
+                <ion-card-title class="lesson-title left"
+                  >{{ lesson.title }}</ion-card-title
+                >
+                <div class="right">
+                  <ion-icon name="create-outline"></ion-icon>
+                </div>
+              </ion-card-content>
+              
+              <ion-ripple-effect></ion-ripple-effect>
+            </ion-card>
+          </ion-virtual-scroll>
+        </ion-list>
+      </ng-container>
+      <app-users *ngSwitchCase="'users'"></app-users>
+    </div>
+  </ng-container>
 </ion-content>

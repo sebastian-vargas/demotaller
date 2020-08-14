@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
@@ -11,18 +11,7 @@ import { WorkshopService } from 'src/app/services/workshop.service';
   styleUrls: ['./edit.component.scss'],
 })
 export class EditComponent implements OnInit {
-  workshopForm: FormGroup;
-  validation_messages = {
-    title: [
-      {type:"required", message:"El Titulo es requerido"},
-      {type:"minlength", message:"El titulo debe contener al menos una palabra"}
-    ],
-    description: [
-      {type:"required", message:"La descripcion es requerida"},
-      {type:"minlength", message:"La descripcion debe contener al menos una palabra"}
-    ],
-  };
-
+  
   constructor(
     public actionSheetController: ActionSheetController,
     private navCtrl:NavController,
@@ -47,27 +36,67 @@ export class EditComponent implements OnInit {
       ),
     });
    }
-  workshopId = this.route.snapshot.parent.paramMap.get("id");
-  workshop: any = {}
+
+   workshopForm: FormGroup;
+  validation_messages = {
+    title: [
+      {type:"required", message:"El Titulo es requerido"},
+      {type:"minlength", message:"El titulo debe contener al menos una palabra"}
+    ],
+    description: [
+      {type:"required", message:"La descripcion es requerida"},
+      {type:"minlength", message:"La descripcion debe contener al menos una palabra"}
+    ],
+  };
+
+
+  @Input()workshop :any;
+  @Input()editing :boolean;
+
+  @Output()saveWorkshop = new EventEmitter<{}>();
+
+
+
   ngOnInit() {
-    this.workshopS.getWorkshop(this.workshopId).subscribe((res:any) =>{
-      this.workshop = res.workshop;
+    if(this.editing){
+
       this.workshopForm.patchValue({
         title: this.workshop.title,
         description: this.workshop.description
       });
-    })
+    }else {
+      
+    }
   }
 
-  getWorkshop() {
-    this.workshopS.getWorkshop(this.workshopId).subscribe((response: any) => {
-      if(response && response.status == 200){
-        let workshop = response.workshop;
-        this.workshop = workshop;
+  save(form){
+    if(this.editing){
+      if(form.title != this.workshop.title || form.decription != this.workshop.decription){
+     
+        this.saveWorkshop.emit(form);
       }
       else {
-        this.navCtrl.navigateRoot('menu/tabs/home');
+        
+        this.saveWorkshop.emit({
+          error: true,
+          message: "Todos los campos son requeridos."
+        });
       }
-    });
+    }
+    else {
+      if(this.workshopForm.valid){
+        this.saveWorkshop.emit(form);
+        this.workshopForm.reset();
+      }
+      else {
+        this.saveWorkshop.emit({
+          error: true,
+          message: "Todos los campos son requeridos."
+        });
+      }
+    }
+    
   }
+
+
 }

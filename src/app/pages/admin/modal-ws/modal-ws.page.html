@@ -1,80 +1,131 @@
 <ion-header>
-  <ion-toolbar style="padding-right : 0">
+  <ion-toolbar style="padding-right: 0; padding-left: 52px;">
     <ion-title>{{title}}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="closeModal()">
-          <ion-icon slot="icon-only" name="close"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-card>
-  <ion-card-header >
-    <ion-card-title>Editar lección</ion-card-title>
-    <ion-button fill="clear" color="secondary" (click)="saveUser()">
-      Guardar
-    </ion-button>
-  </ion-card-header>
-  <ion-card-content class="ion-margin-bottom">
-    <form 
-    [formGroup]="lessonForm"
-    (ngSubmit)="lessonData(lessonForm.value)"
-    >
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
-        <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
-      </ion-item>
-      <ng-container *ngFor="let validation of validation_messages.title">
-        <div class="validation"
-          *ngIf="lessonForm.get('title').hasError(validation.type) && 
-                    (lessonForm.get('title').dirty ||
-                    lessonForm.get('title').touched)"
-        >
-          {{ validation.message}}
-        </div>
-      </ng-container>
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Descripción</ion-label>
-        <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción"></ion-input>
-      </ion-item>
-      <ng-container *ngFor="let validation of validation_messages.description">
-        <div class="validation"
-          *ngIf="lessonForm.get('description').hasError(validation.type) && 
-                    (lessonForm.get('description').dirty ||
-                    lessonForm.get('description').touched)"
-        >
-          {{ validation.message}}
-        </div>
-      </ng-container>
-    </form>
-  </ion-card-content>
-</ion-card>
+<ion-content>
+  <ion-segment
+    (ionChange)="segmentChanged($event)"
+    [(ngModel)]="segmentValue"
+  >
+    <ion-segment-button value="edit">
+      <ion-label>Editar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="add">
+      <ion-label>Contenidos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!--SEGMENT CON EDITAR LECCION y CONTENIDOS-->
+  <div [ngSwitch]="segmentValue">
 
-<ion-card *ngFor="let content of contents">
-  <ion-card-content *ngIf="content.type == '1'">
-    <form [formGroup]="contentForm"
-    (ngSubmit)="contentData(contentForm.value)">
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
-        <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
-      </ion-item>
-      <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">url</ion-label>
-        <ion-input formControlName="title" type="text" placeholder="Ingresa una url"></ion-input>
-      </ion-item>
-    </form>
-    <ion-list-header>
-      <ion-label color="secondary">Vista previa</ion-label>
-    </ion-list-header>
-    <iframe
-      width="100%"
-      height="200"
-      [src]="content.url | safe:'resourceUrl'"
-      id="video"
-      frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
-  </ion-card-content>
-</ion-card>
+    <ng-container
+    *ngSwitchCase="'edit'">
+      <app-lessons
+      *ngIf="lesson.id_lesson"
+      [lesson]="lesson"
+      [editing]="true"
+      (saveLesson)="saveLesson($event)"
+      ></app-lessons>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'add'">
+  
+      <app-content-form [editing]="false" (saveContent)="saveContent($event)"></app-content-form>
+    <!--CONTENTS FORM EN MODO AGREGAR-->
+    
+    <app-content-form *ngFor="let content of lesson.contents" editing="true" [content]="content"(saveContent)="saveContent($event)"></app-content-form>
+
+    <ion-card *ngFor="let content of lesson.contents">
+      <ion-card-content *ngIf="content.type == '1'">
+        <form
+          [formGroup]="contentForm"
+          (ngSubmit)="contentData(contentForm.value)"
+        >
+          <ion-item class="ion-no-padding">
+            <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+            <ion-input
+              formControlName="title"
+              type="text"
+              placeholder="Ingresa un titulo para el video"
+            ></ion-input>
+          </ion-item>
+          <ion-item class="ion-no-padding">
+            <ion-label position="stacked" class="titleinput">url</ion-label>
+            <ion-input
+              formControlName="url"
+              type="text"
+              placeholder="Ingresa una url"
+            ></ion-input>
+          </ion-item>
+        </form>
+        <ion-list-header>
+          <ion-label color="secondary">Vista previa</ion-label>
+        </ion-list-header>
+        <iframe
+          width="100%"
+          height="200"
+          [src]="content.url | safe:'resourceUrl'"
+          id="video"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </ion-card-content>
+  
+      <ion-card-content *ngIf="content.type == '2'">
+        <form
+          [formGroup]="contentForm"
+          (ngSubmit)="contentData(contentForm.value)"
+        >
+          <ion-item class="ion-no-padding">
+            <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+            <ion-input
+              formControlName="title"
+              type="text"
+              placeholder="Ingresa un titulo para el audio"
+            ></ion-input>
+          </ion-item>
+          <ion-item class="ion-no-padding">
+            <ion-label position="stacked" class="titleinput">url</ion-label>
+            <ion-input
+              formControlName="url"
+              type="text"
+              placeholder="Ingresa la url del audio"
+            ></ion-input>
+          </ion-item>
+        </form>
+      </ion-card-content>
+  
+      <ion-card-content *ngIf="content.type == '3'">
+        <form
+        [formGroup]="contentForm"
+        (ngSubmit)="contentData(contentForm.value)"
+      >
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+          <ion-input
+            formControlName="title"
+            type="text"
+            placeholder="Ingresa un titulo para el PDF"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="titleinput">url</ion-label>
+          <ion-input
+            formControlName="url"
+            type="text"
+            placeholder="Ingresa la url del PDF"
+          ></ion-input>
+        </ion-item>
+      </form>
+      </ion-card-content>
+    </ion-card>
+   </ng-container>
+  </div>
+</ion-content>

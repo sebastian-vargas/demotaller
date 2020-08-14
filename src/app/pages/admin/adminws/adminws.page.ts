@@ -7,6 +7,7 @@ import { WorkshopService } from 'src/app/services/workshop.service';
 import { Workshop } from 'src/app/models/workshop.model';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { AlertService } from 'src/app/services/shared/alert.service';
 
 
 
@@ -22,7 +23,8 @@ export class AdminwsPage  implements OnInit, OnDestroy {
     private navCtrl:NavController,
     public alertController: AlertController,
     private auths: AuthService,
-    private workShopService: WorkshopService
+    private workShopService: WorkshopService,
+    private alertService: AlertService,
   ) { }
 
   workshops: Workshop[] = [];
@@ -52,10 +54,7 @@ export class AdminwsPage  implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.userSubscription = this.auths.userData.subscribe((userData) => {
       this.userData = userData;
-      /*
-      if (this.workshops.length > 0 && !userData.isLoggedIn) {
-        this.reset();
-      }*/
+     
       this.reset();
       
       this.loadWorkshops();
@@ -79,9 +78,31 @@ export class AdminwsPage  implements OnInit, OnDestroy {
     this.firstLoad = true;
     this.workshops = [];
     this.infiniteScroll.disabled = true;
+    this.searching = false;
   }
 
-  
+  saveWorkshop(event){
+    if(!event.error){
+      let workshop = {
+        title: event.title,
+        description: event.description
+      }
+      
+      this.workShopService.addWorkshop(workshop, this.userData.user.token).subscribe((res: any) => {
+        if(res.status == 200){
+          
+          this.alertService.presentToast("El taller ha sido guardado correctamente.", 3000);
+          this.reset();
+          this.loadWorkshops();
+
+        } 
+      });
+    }
+    else {
+      this.alertService.presentToast(event.message, 3000) 
+    }
+    
+  }
 
   loadWorkshops(scroll?, refresh?) {
     this.loading = true;
@@ -155,7 +176,26 @@ export class AdminwsPage  implements OnInit, OnDestroy {
   loadMore(scroll) {
     this.loadWorkshops(scroll);
   }
+  searching = false;
+  search(value){
+    if(value !== ''){
+      this.loading = true;
+      this.searching = true;
+      this.workShopService.searchWorkshop(value, this.userData.user.token).subscribe((res: any) => {
+        if(res.status == 200){
+          
+          if(!this.infiniteScroll.disabled) this.infiniteScroll.disabled = true;
 
+          this.loading = false;
+          this.workshops = res.workshops;
+        }
+      })
+    }else {
+
+      this.reset();
+      this.loadWorkshops();
+    }
+  }
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
@@ -167,32 +207,7 @@ export class AdminwsPage  implements OnInit, OnDestroy {
     this.loadWorkshops(null, refresh);
   }
 
-  /*workshopHandleCLick(index, workshop) {
-    if (index != 0 && !this.userData.isLoggedIn) {
-      this.auths.presentLoginRegisterModal();
-      //this.alertLogin();
-    } else {
-      if (!workshop.readed) {
-        this.alertStart(workshop);
-      } else {
-        this.redirectToWorkshop(workshop);
-      }
-    }
-  }*/
   workshopHandleCLick(index, workshop) {
         this.navCtrl.navigateForward(`menu/admin/adminws/${workshop.id_workshop}`);   
     }
-
-   /* async editWS(w){
-      const modal = await this.modalController.create({
-        component: ModalWsPage,
-        componentProps: {
-          'titulo': w.titulo,
-          'descripcion':w.descripcion,
-          'pdfUrl':w.pdfUrl,
-          'vidUrl':w.vidUrl
-        }
-      });
-      return await modal.present();
-      }*/
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Storage } from "@ionic/storage";
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, AbstractControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { PopoverController, ModalController } from '@ionic/angular';
+import { PopoverController, ModalController, IonImg } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
@@ -13,34 +13,109 @@ import { AvatarComponent } from './avatar/avatar.component';
   styleUrls: ['./configuser.page.scss'],
 })
 export class ConfiguserPage implements OnInit {
+  userForm: FormGroup;
+  passwordForm: FormGroup;
   userData:any = {
     user: {
 
     }
   };
+  validation_messages = {
+    full_name: [
+      {type:"required", message:"El nombre es requerido"},
+      {type:"minlength", message:"El nombre debe ser minimo de 3 letras"}
+    ],
+    email: [
+      {type:"required", message:"El email es requerido"},
+      {type:"pattern", message:"El email ingresado no es correcto"}
+    ],
+    password: [
+      {type:"required", message:"El password es requerido"},
+      {type:"minlength", message:"la contraseña debe ser minimo de 5 digitos"}
+    ],
+  };
 
   public imagePath;
 
-  userForm = new FormGroup({
+  /*userForm = new FormGroup({
     full_name: new FormControl(''),
     email: new FormControl(''),
     avatar: new FormControl('')
-  })
+  })*/
 
-  passwordForm = new FormGroup({
+  /*passwordForm = new FormGroup({
     current_password: new FormControl(''),
     new_password: new FormControl(''),
     confirm_password: new FormControl('')
-  });
+  });*/
 
   constructor(private storage: Storage, 
     public modalController: ModalController,
+    private formBuilder:FormBuilder,
     private authS: AuthService,
-    private chooser: Chooser,) {   }
+    private chooser: Chooser,
+    ) { 
+      this.userForm = this.formBuilder.group({
+        full_name: new FormControl(
+          "", 
+          Validators.compose([
+          Validators.required,
+          Validators.minLength(3)
+        ])
+        ),
+        email: new FormControl(
+          "", 
+          Validators.compose([
+          Validators.required,
+        ])
+        ),
+        avatar: new FormControl("")
+      }); 
+    //------form Password ---***
+      this.passwordForm = this.formBuilder.group({
+        current_password: new FormControl(
+          "", 
+          Validators.compose([
+          Validators.required,
+          Validators.minLength(5)
+        ])
+        ),
+        new_password: new FormControl(
+          "", 
+          Validators.compose([
+          Validators.required,
+          Validators.minLength(5)
+        ])
+        ),
+        confirm_password: new FormControl(
+          "", 
+          Validators.compose([
+          Validators.required,
+          Validators.minLength(5)
+        ])
+        ),
+      }, {validator: this.MatchPassword}
+      );
+      }
 
+    @ViewChild(IonImg) avatar: IonImg;
   ngOnInit() {
-    
+  
 
+  }
+
+  private MatchPassword(AC: AbstractControl) {
+    const new_password = AC.get('new_password').value // to get value in input tag
+    const confirm_password = AC.get('confirm_password').value // to get value in input tag
+     if(new_password != confirm_password) {
+         AC.get('confirm_password').setErrors( { MatchPassword: true } )
+     } else {
+         AC.get('confirm_password').setErrors(null);
+     }
+ }
+
+  
+  ionViewWillEnter() {
     this.authS.userData.subscribe(user => {
       this.userData = user;
 
@@ -49,21 +124,30 @@ export class ConfiguserPage implements OnInit {
         email: this.userData.user.email
       });
     })
-
-  }
+    }
   
-
   changePassword(){
     console.log(this.passwordForm.value);
   }
 
   saveUser() {
-    if(this.userForm.value.full_name !== this.userData.user.full_name || this.userForm.value.avatar !== ''){
-      let userData = {
-        id_user: this.userData.user.id_user,
-        ...this.userForm.value
+    if(this.userForm.value.full_name !== this.userData.user.full_name){
+      if(this.userForm.value.full_name != ''){
+        let userData = {
+          token: this.userData.user.token,
+          full_name: this.userForm.value.full_name
+        }
+  
+        this.authS.editSelf(this.userData.user.token, this.userForm.value.full_name).subscribe((res: any) => {
+          if(res.status == 200){
+            this.authS.loadUser();
+          }
+        })
       }
-      console.log(userData);
+      else {
+        console.log("El nombre es requerido")
+      }
+      
     }else {
       console.log("No hay cambios que guardar")
     }
@@ -85,7 +169,8 @@ export class ConfiguserPage implements OnInit {
       component: AvatarComponent,
       cssClass: 'my-custom-class',
       componentProps: {
-        file
+        file,
+        token: this.userData.user.token
       }
     });
 

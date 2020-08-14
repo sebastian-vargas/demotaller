@@ -1,18 +1,18 @@
 
 <ion-card>
   <ion-card-header >
-    <ion-card-title>Editar taller</ion-card-title>
-    <ion-button fill="clear" color="secondary" (click)="saveUser()">
+    <ion-card-title >{{ editing ? 'Editar taller' : 'Crear taller'}}</ion-card-title>
+    <ion-button fill="clear" color="secondary" [disabled]="!workshopForm.valid" (click)="save(workshopForm.value)">
       Guardar
     </ion-button>
   </ion-card-header>
   <ion-card-content class="ion-margin-bottom">
     <form 
     [formGroup]="workshopForm"
-    (ngSubmit)="workshopData(workshopForm.value)"
+    (ngSubmit)="save(workshopForm.value)"
     >
       <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+        <ion-label position="stacked" class="titleinput">Titulo  <ion-text color="danger">*</ion-text></ion-label>
         <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
       </ion-item>
       <ng-container *ngFor="let validation of validation_messages.title">
@@ -26,7 +26,7 @@
       </ng-container>
 
       <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Descripción</ion-label>
+        <ion-label position="stacked" class="titleinput">Descripción  <ion-text color="danger">*</ion-text></ion-label>
         <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción"></ion-input>
       </ion-item>
       <ng-container *ngFor="let validation of validation_messages.description">

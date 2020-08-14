@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/shared/alert.service';
@@ -68,13 +68,25 @@ export class RegisterModalComponent implements OnInit {
         Validators.minLength(5),
       ])
       ),
-    }
+    }, {validator: this.MatchPassword}
     );
    }
 
   ngOnInit(){
 
   }
+
+  private MatchPassword(AC: AbstractControl) {
+    const password = AC.get('password').value // to get value in input tag
+    const passconfirm = AC.get('passconfirm').value // to get value in input tag
+     if(password != passconfirm) {
+         console.log('false');
+         AC.get('passconfirm').setErrors( { MatchPassword: true } )
+     } else {
+         console.log('true')
+         AC.get('passconfirm').setErrors(null);
+     }
+ }
 
    goToLogin(){
      this.action.emit(1);
@@ -86,20 +98,6 @@ export class RegisterModalComponent implements OnInit {
       this.registerForm.controls['passconfirm'].setErrors({'mismatchedPasswords': true});
     }
    }
-
-   matchingPassword(passwordKey: string, confirmPasswordKey: string){
-    return (group: FormGroup): {[key: string]: any} => {
-      let password = group.controls[passwordKey];
-      let confirmPassword = group.controls[confirmPasswordKey];
-
-      if (password.value === confirmPassword.value) {
-        
-        return {
-          mismatchedPasswords: true
-        };
-      }
-    }
-  }
 
   registerUser(register){
     this.authS.register(register).subscribe(response => {

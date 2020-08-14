@@ -18,17 +18,26 @@
     <ion-card-content class="ion-margin-bottom">
       <div class="avatar-container">
         <ion-avatar (click)="choose()">
-          <!--<img [src]="user.avatar" />-->
-          <div class="img" style="background-image: url({{userData.user.avatar}});"></div>
+          <ion-img #avatar [src]="userData.user.avatar"></ion-img>
+          <!--div class="img" style="background-image: url({{userData.user.avatar}});"></div-->
           <ion-badge ><ion-icon name="camera"></ion-icon></ion-badge>
         </ion-avatar>
         <ion-label (click)="choose()">Cambiar avatar</ion-label>
       </div> 
       <form [formGroup]="userForm">
-        <div class="input-container">
+        <ion-item class="input-container">
           <ion-label  position="floating">Tu nombre <ion-text color="danger">*</ion-text></ion-label>
           <ion-input formControlName="full_name" type="text" placeholder="Ingresa tu nombre"></ion-input>
-        </div>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.full_name">
+          <div class="validation"
+            *ngIf="userForm.get('full_name').hasError(validation.type) && 
+                      (userForm.get('full_name').dirty ||
+                      userForm.get('full_name').touched)"
+          >
+            {{ validation.message}}
+          </div>
+        </ng-container>
         <div class="input-container">
           <ion-label  position="floating">Email</ion-label>
           <ion-input formControlName="email" type="text" readonly placeholder="Email"></ion-input>
@@ -41,26 +50,38 @@
   <ion-card class="ion-margin-top">
     <ion-card-header>
       <ion-card-title >Cambiar contraseña</ion-card-title>
-      <ion-button fill="clear" color="secondary">
+      <ion-button fill="clear" color="secondary" [disabled]="!passwordForm.valid">
         Guardar
       </ion-button>
     </ion-card-header>
     <ion-card-content class="ion-margin-bottom">
       <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-        <div class="input-container">
+        <ion-item class="input-container">
           <ion-label  position="floating">Contraseña actual</ion-label>
           <ion-input formControlName="current_password"  type="password" placeholder="Contraseña actual"></ion-input>
-        </div>
+        </ion-item>
       
-        <div class="input-container">
+        <ion-item class="input-container">
           <ion-label  position="floating">Nueva contraseña</ion-label>
           <ion-input formControlName="new_password" type="password" placeholder="Nueva contraseña"></ion-input>
-        </div>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="validation"
+            *ngIf="passwordForm.get('new_password').hasError(validation.type) && 
+                       (passwordForm.get('new_password').dirty ||
+                       passwordForm.get('new_password').touched)"
+          >
+            {{ validation.message}}
+          </div>
+        </ng-container>
 
-        <div class="input-container">
+        <ion-item class="input-container">
           <ion-label  position="floating">Confirmar contraseña</ion-label>
-          <ion-input formControlName="confirm_password" type="password" placeholder="Confirmar contraseña"></ion-input>
-        </div>
+          <ion-input formControlName="confirm_password" id="confirm_password" type="password" placeholder="Confirmar contraseña"></ion-input>
+        </ion-item>
+        <ion-label *ngIf="passwordForm.controls['confirm_password'].errors?.MatchPassword" style="color: red">
+          La nueva contraseña y la confirmacion no coinciden
+        </ion-label>
       </form>
     </ion-card-content>
   </ion-card>

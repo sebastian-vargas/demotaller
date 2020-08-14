@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { AdminwsPageRoutingModule } from './adminws-routing.module';
 
 import { AdminwsPage } from './adminws.page';
+import { EditComponent } from './edit/edit.component';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,8 +16,7 @@ import { AdminwsPage } from './adminws.page';
     FormsModule,
     IonicModule,
     AdminwsPageRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
+    SharedModule
   ],
   declarations: [AdminwsPage]
 })

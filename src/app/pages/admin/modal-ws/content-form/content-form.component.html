@@ -1,0 +1,63 @@
+
+
+<ion-card>
+  <ion-card-header >
+    <ion-card-title >{{ editing ? 'Editar Contenido' : 'Crear Contenido'}}</ion-card-title>
+    <ion-button fill="clear" color="secondary" [disabled]="!contentForm.valid" (click)="save(workshopForm.value)">
+      Guardar
+    </ion-button>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-label>Tipo de contenido</ion-label>
+    <ion-select  [disabled]="editing" [(ngModel)]= "content.type" okText="Aceptar" cancelText="Cancelar">
+      <ion-select-option value="1">Video</ion-select-option>
+      <ion-select-option value="2">Audio</ion-select-option>
+      <ion-select-option value="3">PDF</ion-select-option>
+    </ion-select>
+    <form
+        [formGroup]="contentForm"
+        (ngSubmit)="contentData(contentForm.value)"
+      >
+        <ion-item class="ion-no-padding">
+          <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+          <ion-input
+            formControlName="title"
+            type="text"
+            placeholder="Ingresa un titulo"
+          ></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.title">
+          <div
+            class="validation"
+            *ngIf="contentForm.get('title').hasError(validation.type) && 
+                      (contentForm.get('title').dirty ||
+                      contentForm.get('title').touched)"
+          >
+            {{ validation.message}}
+          </div>
+        </ng-container>
+        <ion-item class="ion-no-padding" *ngIf="content.type == '1'">
+          <ion-label position="stacked" class="titleinput">url</ion-label>
+          <ion-input
+            formControlName="url"
+            type="text"
+            placeholder="Ingresa una url"
+          ></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.url">
+          <div
+            class="validation"
+            *ngIf="content.type == '1' && contentForm.get('url').hasError(validation.type) && 
+                      (contentForm.get('url').dirty ||
+                      contentForm.get('url').touched)"
+          >
+            {{ validation.message}}
+          </div>
+        </ng-container>
+      </form>
+  </ion-card-content>
+
+
+</ion-card>
+
+

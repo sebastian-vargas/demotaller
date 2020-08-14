@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar style="padding-right : 0">
-    <ion-title>{{nombre}} {{apellido}}</ion-title>
+    <ion-title>{{user.full_name}}</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="closeModal()">
           <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-list>
+  <ion-card>
     <ion-item>
       <ion-label>Nombre: {{user.full_name}}</ion-label>
     </ion-item>
@@ -19,10 +19,24 @@
     <ion-item>
       <ion-label>Rol: {{user.role}}</ion-label>
     </ion-item>
-  </ion-list>
-<ion-item>
-  <ion-label>Hacer Usuario Administrador</ion-label>
+    <ion-item>
+      <ion-label>Hacer Usuario Administrador</ion-label>
+      <ion-toggle (click)="message()" #rol checked="{{user.role == '1' ? true:false}}"></ion-toggle>
+    </ion-item>
+  </ion-card>
+  <list-title>Talleres suscritos</list-title>
+    <ion-list class="ion-no-padding content">
+      <ion-virtual-scroll [items]="workshopsUser" approxItemHeight="70px" >
+        <ion-card *virtualItem="let workshopsUser; let i = index"
+          class="ion-activatable ripple-parent ion-no-margin" >
+          <ion-card-content>
+            <div class="left">
+              <ion-card-title class="list-title">{{workshopsUser.title}}
+              </ion-card-title>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-virtual-scroll>
+    </ion-list>
 
-  <ion-toggle (click)="message()" #rol checked="{{user.role == '1' ? true:false}}"></ion-toggle>
-</ion-item>
 </ion-content>

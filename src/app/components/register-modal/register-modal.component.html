@@ -51,28 +51,13 @@
       <ion-label position="stacked" class="titleinput"
         >Confirmar Contraseña</ion-label
       >
-      <ion-input class="input-transparent" type="password" formControlName="passconfirm" (input)="onPassConfirmChange($event.target.value)"></ion-input>
+      <ion-input class="input-transparent" id="passconfirm" type="password" formControlName="passconfirm"></ion-input>
     </ion-item>
-    <div class="validation-errors">
-      <ion-container *ngFor="let validation of validation_messages.passconfirm">
-        <div class="validation"
-          *ngIf="registerForm.get('passconfirm').hasError(validation.type) &&
-                   (registerForm.get('passconfirm').dirty ||
-                    registerForm.get('passconfirm').touched)"
-        >
-          {{validation.message}}
-        </div>
-      </ion-container>
-      <div class="validation"
-        *ngIf="registerForm.get('password').valid &&
-                    registerForm.hasError('mismatchedPasswords') &&
-                  ( registerForm.get('passconfirm').dirty ||
-                    registerForm.get('passconfirm').touched)"
-      >
-        Contraseña de confirmación incorrecto
+    <ng-container>
+      <div class="validation" *ngIf="registerForm.controls['passconfirm'].errors?.MatchPassword">
+        Las contraseñas no coinciden
       </div>
-    </div>
-    {{errorMessage}}
+    </ng-container>
     <ion-button
       class="btn-submit"
       expand="full"

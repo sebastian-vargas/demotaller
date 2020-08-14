@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ModalWsPage } from '../../modal-ws/modal-ws.page';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActionSheetController, NavController, ModalController } from '@ionic/angular';
@@ -53,23 +53,51 @@ export class LessonsComponent implements OnInit {
     });
    }
 
-  workshopId = this.route.snapshot.parent.paramMap.get("id");
-  workshop: any = {}
-  lessonModal: any = {}
-  
+
+   @Input()lesson :any;
+   @Input()editing :boolean;
+ 
+   @Output()saveLesson = new EventEmitter<{}>();
+     
 
   ngOnInit() {
-    this.workshopS.getWorkshop(this.workshopId).subscribe((res:any) =>{
-      this.workshop = res.workshop;
-    })
+    if(this.editing){
+      this.lessonForm.patchValue({
+        title: this.lesson.title,
+        description: this.lesson.description
+      });
+    }else {
+      
+    }
   }
 
-  getLesson(lesson){
-    this.lessonService.getLessons(lesson.id_lesson).subscribe((response: any) => {
-      this.lessonModal = response.lesson;
-      this.editLS(this.lessonModal);
-      console.log(this.lessonModal.contents);
-    });
+  save(form){
+    if(this.editing){
+      if(form.title != this.lesson.title || form.decription != this.lesson.decription){
+     
+        this.saveLesson.emit(form);
+      }
+      else {
+        
+        this.saveLesson.emit({
+          error: true,
+          message: "Todos los campos son requeridos."
+        });
+      }
+    }
+    else {
+      if(this.lessonForm.valid){
+        this.saveLesson.emit(form);
+        this.lessonForm.reset();
+      }
+      else {
+        this.saveLesson.emit({
+          error: true,
+          message: "Todos los campos son requeridos."
+        });
+      }
+    }
+    
   }
 
   async editLS(lessonModal){
@@ -84,5 +112,5 @@ export class LessonsComponent implements OnInit {
       }
     });
     return await modal.present();
-    }
+  }
 }

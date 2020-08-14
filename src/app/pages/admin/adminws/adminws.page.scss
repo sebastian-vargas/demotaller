@@ -14,18 +14,41 @@ ion-list {
   }
 }
 
-ion-card {
-  position: relative;
-  border-radius: 0;
-  box-shadow: none;
+.content {
 
+  ion-card {
+    position: relative;
+    border-radius: 0;
+    box-shadow: none;
+  
+    ion-card-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .left {
+        width: 90%;
+        
+        .list-title {
+          color: var(--ion-color-secondary);
+        }
+      }
+  
+      .right {
+        width: 10%;
+        font-size: 24px;
+        display: flex; 
+        align-items: center; 
+        justify-content: flex-end;
+        
+        color: var(--ion-color-secondary);
+      }
+    }
+  }
 }
 
-ion-card-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
+
 
 ion-card-title {
   font-size: 16px;

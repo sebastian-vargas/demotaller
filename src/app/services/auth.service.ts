@@ -48,10 +48,11 @@ export class AuthService {
                     full_name: res.data.full_name,
                     email: res.data.email,
                     role: res.data.role,
-                    avatar: res.data.avatar || "assets/avatar.jpg",
+                    avatar: res.data.avatar + '?' + new Date().getTime() || "assets/avatar.jpg",
                     token: token
                   },
                 };
+
                 this.userData.next(user);
                 resolve(true);
               } else {
@@ -101,16 +102,37 @@ export class AuthService {
       headers: new HttpHeaders(),
     });
   }
+
+  changeAvatar(token, avatar){
+    let form = new FormData();
+
+    form.append("token", token);
+    form.append("avatar", avatar);
+
+    return this.http.post(`${this.API_URL}change-avatar`,form, {
+      headers: new HttpHeaders(),
+    });
+  }
+
+  editSelf(token, full_name){
+    let form = new FormData();
+
+    form.append("token", token);
+    form.append("full_name", full_name);
+
+    return this.http.post(`${this.API_URL}edit-self`,form, {
+      headers: new HttpHeaders(),
+    });
+  }
+
+
   modal;
 
   getUsers(token){
     let formToken = new FormData();
     formToken.append("token", token.toString());
-    return this.http
-      .post(`${this.API_URL}list`, formToken, {
-        headers: new HttpHeaders(),
-      });
-        }
+    return this.http.post(`${this.API_URL}list`, formToken, {headers: new HttpHeaders(),});
+  }
 
   editRole(id_user,token){
     let formData = new FormData();

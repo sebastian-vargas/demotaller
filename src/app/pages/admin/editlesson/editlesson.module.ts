@@ -8,9 +8,8 @@ import { EditlessonPageRoutingModule } from './editlesson-routing.module';
 
 import { EditlessonPage } from './editlesson.page';
 import { MainPipeModule } from 'src/app/modules/main-pipe/main-pipe.module';
-import { EditComponent } from '../adminws/edit/edit.component';
-import { LessonsComponent } from '../adminws/lessons/lessons.component';
 import { UsersComponent } from '../adminws/users/users.component';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -19,8 +18,9 @@ import { UsersComponent } from '../adminws/users/users.component';
     IonicModule,
     EditlessonPageRoutingModule,
     ReactiveFormsModule,
-    MainPipeModule
+    MainPipeModule,
+    SharedModule
   ],
-  declarations: [EditlessonPage,EditComponent,LessonsComponent,UsersComponent]
+  declarations: [EditlessonPage,UsersComponent]
 })
 export class EditlessonPageModule {}

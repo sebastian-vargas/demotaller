@@ -1,14 +1,14 @@
 <ion-card>
   <ion-card-header >
-    <ion-card-title>Agregar Lección</ion-card-title>
-    <ion-button fill="clear" color="secondary" (click)="saveUser()">
-      Agregar
+    <ion-card-title>{{ editing ? 'Editar Lección' : 'Agregar Lección'}}</ion-card-title>
+    <ion-button fill="clear" color="secondary" [disabled]="!lessonForm.valid" (click)="save(lessonForm.value)">
+      Guardar
     </ion-button>
   </ion-card-header>
   <ion-card-content class="ion-margin-bottom">
     <form
     [formGroup]="lessonForm"
-    (ngSubmit)="lessonData(lessonForm.value)"
+    (ngSubmit)="save(lessonForm.value)"
     >
       <ion-item class="ion-no-padding">
         <ion-label position="stacked" class="titleinput">Titulo</ion-label>
@@ -39,14 +39,6 @@
     </form>
   </ion-card-content>
 </ion-card>
-<ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
-class="ion-activatable ripple-parent " 
-(click)="getLesson(lesson)">
-  <ion-card-content class="ion-no-padding ion-margin-start" >
-    <ion-card-title  class="lesson-title">{{ lesson.title }}</ion-card-title>   
-    <div class="icon-container">
-      <ion-icon name="create-outline" class="ion-margin"></ion-icon>
-    </div>       
-  </ion-card-content>
-  <ion-ripple-effect></ion-ripple-effect>
-</ion-card>
+
+
+

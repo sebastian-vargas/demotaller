@@ -3,6 +3,7 @@ import { ModalController, LoadingController, Platform } from "@ionic/angular";
 import { NgxImageCompressService } from "ngx-image-compress";
 import { ChooserResult } from '@ionic-native/chooser/ngx';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: "app-avatar",
@@ -11,11 +12,14 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 })
 export class AvatarComponent implements OnInit {
   constructor(
+    private authS: AuthService,
     public modalCtrl: ModalController,
     private imageCompress: NgxImageCompressService,
     public loadingController: LoadingController,
     private platform: Platform
   ) {
+    this.presentLoading();
+    
     this.platform.backButton.subscribe(() => {
       this.closeModal();
     });
@@ -28,6 +32,7 @@ export class AvatarComponent implements OnInit {
   changed = false;
   imgResult: string;
   @Input() file: ChooserResult;
+  @Input() token: string;
   loading = null;
   croppedImage: string;
   compressedImage: string;
@@ -45,11 +50,21 @@ export class AvatarComponent implements OnInit {
     );
 
     this.imageCompress
-        .compressFile(this.croppedImage, orientation, 50, 80)
+        .compressFile(this.croppedImage, orientation, 50, 90)
         .then((result) => {
           this.compressedImage = result;
           let blob = this.DataURIToBlob(result);
           console.log(blob);
+          this.authS.changeAvatar(this.token, blob).subscribe((res: any) => {
+            if(res.status == 200){
+              this.authS.loadUser().then(r => {
+                this.changed = true;
+                this.closeModal();
+              });
+
+            }
+          })
+
         });
   }
 
