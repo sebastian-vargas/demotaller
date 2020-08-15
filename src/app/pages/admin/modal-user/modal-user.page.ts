@@ -44,6 +44,7 @@ export class ModalUserPage implements OnInit {
   getUser(){
     this.authS.getUserbyId(this.id_user).subscribe((res:any) =>{
       this.user = res.data;
+      
       this.workshopsByUser(this.user.id_user,this.userData.user.token)//mostrando talleres por usuario
     })
   }

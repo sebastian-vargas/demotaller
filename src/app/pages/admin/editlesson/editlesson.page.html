@@ -70,7 +70,34 @@
           </ion-virtual-scroll>
         </ion-list>
       </ng-container>
-      <app-users *ngSwitchCase="'users'"></app-users>
+
+      <ng-container *ngSwitchCase="'users'">
+        <ion-list class="users ion-no-padding">
+          <ion-virtual-scroll [items]="users" approxItemHeight="70px" >
+
+            <ion-card *virtualItem="let user; let i = index"
+              >      
+             
+              <ion-card-content class="ion-padding ">
+                <div class="left">
+                  <ion-avatar >
+                    <img [src]="user.avatar || 'assets/avatar.jpg'" />
+                  </ion-avatar>
+                  <div class="text">
+                  <ion-card-title >{{ user.full_name }}</ion-card-title>
+                  <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+                  </div>
+                </div>
+
+                <ion-badge *ngIf="user.role == '1'" color="primary">Admin</ion-badge>
+                <ion-badge *ngIf="user.role == '3'" color="secondary">Usuario</ion-badge>
+
+              </ion-card-content>
+              
+            </ion-card>
+          </ion-virtual-scroll>
+        </ion-list>
+      </ng-container>
     </div>
   </ng-container>
 </ion-content>

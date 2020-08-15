@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, ActionSheetController, NavController } from '@ionic/angular';
+import { ModalController, ActionSheetController, NavController, Platform } from '@ionic/angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { WorkshopService } from 'src/app/services/workshop.service';
@@ -42,8 +42,14 @@ export class ModalWsPage implements OnInit {
     private lessonService: LessonService,
     private alertService: AlertService,
     private auths: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    
+    private platform: Platform,
   ) { 
+    this.platform.backButton.subscribe(() => {
+      
+      this.closeModal()
+    });
 
     this.contentForm = this.formBuilder.group({
       title: new FormControl(
@@ -63,20 +69,24 @@ export class ModalWsPage implements OnInit {
   }
 
   segmentValue = "edit";
-
+  edited = false;
   ngOnInit() {
-    this.loadLesson();
 
+  }
+  ionViewWillEnter(){
+    this.userSubscription = this.auths.userData.subscribe((userData) => {
+      this.userData = userData;
+      this.loadLesson();
+    });
   }
 
   ionViewWillLeave() {
     if(this.lessonSubscription) this.lessonSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    if(this.userSubscription) this.userSubscription.unsubscribe();
   }
 
   segmentChanged(ev: any) {
     this.segmentValue = ev.detail.value;
-    console.log(this.segmentValue);
     //this.navCtrl.navigateForward(`menu/admin/adminws/${workshop.id_workshop}`);
     //console.log("Segment changed", ev);
   }
@@ -105,21 +115,17 @@ export class ModalWsPage implements OnInit {
   saveLesson(event){
     if(!event.error){
       let lesson = {
-        id_workshop: this.lesson.id_workshop,
+        id_lesson: this.lesson.id_lesson,
         title: event.title,
         description: event.description
       }
-      this.lessonService.editLesson(lesson, this.userData.user.token)
-      /*
-      this.workShopService.addWorkshop(workshop, this.userData.user.token).subscribe((res: any) => {
-        if(res.status == 200){
-          
-          this.alertService.presentToast("El taller ha sido guardado correctamente.", 3000);
-          this.reset();
-          this.loadWorkshops();
 
-        } 
-      });*/
+      this.lessonService.editLesson(lesson, this.userData.user.token).subscribe((res : any) => {
+        if(res.status == 200) {
+          this.edited = true;
+          this.loadLesson();
+        }
+      });
     }
     else {
       this.alertService.presentToast(event.message, 3000) 
@@ -129,7 +135,8 @@ export class ModalWsPage implements OnInit {
 
 
   async closeModal(){
-    await this.modalController.dismiss();
+    await this.modalController.dismiss({
+      'edited': this.edited
+    });
   }
-
 }

@@ -73,7 +73,7 @@ export class LessonsComponent implements OnInit {
 
   save(form){
     if(this.editing){
-      if(form.title != this.lesson.title || form.decription != this.lesson.decription){
+      if(form.title != this.lesson.title || form.description != this.lesson.description){
      
         this.saveLesson.emit(form);
       }

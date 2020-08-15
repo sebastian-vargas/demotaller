@@ -25,7 +25,7 @@
         <ion-label (click)="choose()">Cambiar avatar</ion-label>
       </div> 
       <form [formGroup]="userForm">
-        <ion-item class="input-container">
+        <ion-item class="input-container ion-no-padding">
           <ion-label  position="floating">Tu nombre <ion-text color="danger">*</ion-text></ion-label>
           <ion-input formControlName="full_name" type="text" placeholder="Ingresa tu nombre"></ion-input>
         </ion-item>
@@ -50,18 +50,18 @@
   <ion-card class="ion-margin-top">
     <ion-card-header>
       <ion-card-title >Cambiar contraseña</ion-card-title>
-      <ion-button fill="clear" color="secondary" [disabled]="!passwordForm.valid">
+      <ion-button class="btn-submit" fill="clear" color="secondary" [disabled]="!passwordForm.valid" (click)=changePassword()>
         Guardar
       </ion-button>
     </ion-card-header>
     <ion-card-content class="ion-margin-bottom">
       <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-        <ion-item class="input-container">
+        <ion-item class="input-container ion-no-padding">
           <ion-label  position="floating">Contraseña actual</ion-label>
           <ion-input formControlName="current_password"  type="password" placeholder="Contraseña actual"></ion-input>
         </ion-item>
       
-        <ion-item class="input-container">
+        <ion-item class="input-container ion-no-padding">
           <ion-label  position="floating">Nueva contraseña</ion-label>
           <ion-input formControlName="new_password" type="password" placeholder="Nueva contraseña"></ion-input>
         </ion-item>
@@ -75,7 +75,7 @@
           </div>
         </ng-container>
 
-        <ion-item class="input-container">
+        <ion-item class="input-container ion-no-padding">
           <ion-label  position="floating">Confirmar contraseña</ion-label>
           <ion-input formControlName="confirm_password" id="confirm_password" type="password" placeholder="Confirmar contraseña"></ion-input>
         </ion-item>

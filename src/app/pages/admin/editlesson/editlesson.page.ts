@@ -27,6 +27,8 @@ export class EditlessonPage implements OnInit {
   workshop: any = {}; //no borrar
   segmentValue = "edit";
   userSubscription: Subscription;
+
+  users: any = [];
   loading = true;
   userData: any = {
     isLoggedIn: false,
@@ -48,8 +50,13 @@ export class EditlessonPage implements OnInit {
     this.loading = true;
     this.workshopS.getWorkshop(id_workshop).subscribe((res:any) =>{
       this.workshop = res.workshop;
-      console.log(this.workshop);
-      this.loading = false;
+
+      this.workshopS.getUsers(this.workshop.id_workshop, this.userData.user.token).subscribe((res: any)=>{
+        if(res.status == 200){
+          this.users = res.users;
+          this.loading = false;
+        }
+      })
     })
   }
   ngOnInit() {}
@@ -68,6 +75,13 @@ export class EditlessonPage implements OnInit {
         'id_lesson': lessonModal.id_lesson,
       }
     });
+
+    modal.onDidDismiss().then(data => {
+      if(data.data.edited){
+        this.getWorkshop(this.workshop.id_workshop);
+      }
+    })
+
     return await modal.present();
   }
   saveWorkshop(event){
@@ -75,10 +89,10 @@ export class EditlessonPage implements OnInit {
       this.loading = true;
 
       let workshop = {
+        id_workshop: this.workshop.id_workshop,
         title: event.title,
         description: event.description
       }
-
 
       this.workshopS.editWorkshop(workshop, this.userData.user.token).subscribe((res: any) => {
         if(res.status == 200){

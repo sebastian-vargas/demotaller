@@ -9,6 +9,8 @@ import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { AlertService } from 'src/app/services/shared/alert.service';
+
 
 @Component({
   selector: "app-login-modal",
@@ -38,7 +40,8 @@ export class LoginModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
     private storage: Storage,
-    private authS: AuthService
+    private authS: AuthService,
+    public alertService: AlertService
   ) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
@@ -70,13 +73,15 @@ export class LoginModalComponent implements OnInit {
             role: res.user.role,
             avatar: res.user.avatar || "assets/avatar.jpg",
             token: res.user.token,
-          },
+          }, 
         };
+        this.alertService.presentToast(res.message,1000);
         this.storage.set("token", res.user.token);
         this.authS.userData.next(u);
         this.action.emit(3);
       } else {
         console.log(res.message);
+        this.alertService.presentToast(res.message,4000);
       }
     });
   }

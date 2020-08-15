@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 
 import { Chooser, ChooserResult } from '@ionic-native/chooser/ngx';
 import { AvatarComponent } from './avatar/avatar.component';
+import { AlertService } from 'src/app/services/shared/alert.service';
 @Component({
   selector: 'app-configuser',
   templateUrl: './configuser.page.html',
@@ -36,24 +37,12 @@ export class ConfiguserPage implements OnInit {
   };
 
   public imagePath;
-
-  /*userForm = new FormGroup({
-    full_name: new FormControl(''),
-    email: new FormControl(''),
-    avatar: new FormControl('')
-  })*/
-
-  /*passwordForm = new FormGroup({
-    current_password: new FormControl(''),
-    new_password: new FormControl(''),
-    confirm_password: new FormControl('')
-  });*/
-
   constructor(private storage: Storage, 
     public modalController: ModalController,
     private formBuilder:FormBuilder,
     private authS: AuthService,
     private chooser: Chooser,
+    public alertService: AlertService
     ) { 
       this.userForm = this.formBuilder.group({
         full_name: new FormControl(
@@ -124,10 +113,25 @@ export class ConfiguserPage implements OnInit {
         email: this.userData.user.email
       });
     })
+   // console.log(this.passwordForm.value.current_password);
     }
   
   changePassword(){
-    console.log(this.passwordForm.value);
+    
+    console.log(this.passwordForm.value.current_password);
+    this.authS.changePassword(
+      this.userData.user.token,
+      this.passwordForm.value.current_password,
+      this.passwordForm.value.new_password).subscribe((res:any) =>{
+        if(res.status == 200){
+          this.alertService.presentToast(res.massage,4000);
+          this.passwordForm.reset();
+          this.saveUser();
+        }
+        else{
+          this.alertService.presentToast(res.message,4000);
+        }
+    })
   }
 
   saveUser() {

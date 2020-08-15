@@ -70,24 +70,18 @@
           slot="start"></ion-icon>
           Iniciar sesión
         </ion-item>
-      </ion-list>
+      </ion-list>  
     </ion-content>
 
     <ion-footer>
       <ion-label>Redes sociales</ion-label>
-      <div class="menu-footer">
-        <ion-button color="dark"  expand="block" fill="clear">
-          <ion-icon name="logo-facebook"></ion-icon>
-        </ion-button>
-  
-        <ion-button color="dark"  expand="block" fill="clear">
-          <ion-icon name="logo-instagram"></ion-icon>
-        </ion-button>
-  
-        <ion-button color="dark"  expand="block" fill="clear">
-          <ion-icon name="logo-whatsapp"></ion-icon>
-        </ion-button>
-      </div>      
+      <share-buttons [theme]="'circles-light'"
+        [include]="['whatsapp','messenger','copy','facebook']"
+        [show]="3"
+        [size]="-2"
+        [url]="'https://es.wikipedia.org/wiki/Wikipedia:Portada'"
+        [autoSetMeta]="false"
+      ></share-buttons> 
     </ion-footer>
 
   </ion-menu>

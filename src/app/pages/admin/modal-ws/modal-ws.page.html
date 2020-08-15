@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar style="padding-right: 0; padding-left: 52px;">
-    <ion-title>{{title}}</ion-title>
+    <ion-title>{{lesson.title || 'Lección'}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">
         <ion-icon slot="icon-only" name="close"></ion-icon>

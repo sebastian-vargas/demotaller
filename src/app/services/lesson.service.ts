@@ -60,14 +60,15 @@ export class LessonService {
     return this.http.post(`${this.API_URL}admin/add-lesson`, formData, {headers: new HttpHeaders()});
   }
 
-  editLesson(lesson,  token){
+  editLesson(lesson, token){
     let formData = new FormData();
 
-    formData.append('id_workshop', lesson.id_workshop);
+    formData.append('id_lesson', lesson.id_lesson);
     formData.append('description', lesson.description);
     formData.append('title', lesson.title);
     formData.append('token', token);
 
     return this.http.post(`${this.API_URL}admin/edit-lesson`, formData, {headers: new HttpHeaders()});
   }
+
 }
