@@ -74,11 +74,11 @@
     </ion-content>
 
     <ion-footer>
-      <ion-label>Redes sociales</ion-label>
-      <div class="menu-footer">
-        <ion-button color="primary" (click)="ShareFacebook()"><ion-icon name="logo-facebook"></ion-icon></ion-button>
-        <ion-button color="success" (click)="ShareWhatsapp()"><ion-icon name="logo-whatsapp"></ion-icon></ion-button>
-        <ion-button color="light" (click)="ShareGeneric('text')"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+      <ion-label>Compartir</ion-label>
+      <div class="menu-footer">      
+        <ion-button color="primary" (click)="ShareGeneric('text')"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+      <!-- <ion-button class="fb" (click)="ShareFacebook()"><ion-icon name="logo-facebook"></ion-icon></ion-button>
+        <ion-button color="success" (click)="ShareWhatsapp()"><ion-icon name="logo-whatsapp"></ion-icon></ion-button>-->
       </div> 
       
     <!--<share-buttons [theme]="'material-dark'"

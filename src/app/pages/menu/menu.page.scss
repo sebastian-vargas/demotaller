@@ -2,6 +2,10 @@ ion-menu {
     --background: #f2f2f2;
 }
 
+.fb {
+    --background: var(--facebook-bg);
+  }
+
 .avatar-container {
     background: rgb(246,123,40);
     background: radial-gradient(circle, rgba(246,123,40,1) 0%, rgba(255,193,7,1) 80%);
