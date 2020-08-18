@@ -25,7 +25,7 @@
 
   
   
-  <ion-list class="ion-no-padding" *ngIf="loading && firstLoad" >
+  <ion-list class="ion-no-padding" *ngIf="loading" >
     <ion-card *ngFor="let i of ' '.repeat(5).split('')" style="transition: all .3s ease;">
       <ion-card-content>
         <ion-card-title ><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-card-title>
@@ -36,6 +36,12 @@
 
 
   <ion-list class="ion-no-padding content">
+    
+    <ion-card *ngIf="workshops.length == 0 && !loading">
+      <ion-card-content style="text-align: center; display: inline;">
+        <ion-card-title >No hay talleres disponibles.</ion-card-title>
+      </ion-card-content>
+    </ion-card>
     <ion-virtual-scroll [items]="workshops" approxItemHeight="70px" >
       <ion-card *virtualItem="let workshop; let i = index"
        (click)="workshopHandleCLick(i, workshop)" 

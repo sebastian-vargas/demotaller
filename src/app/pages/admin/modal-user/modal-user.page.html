@@ -1,15 +1,36 @@
 <ion-header>
-  <ion-toolbar  style="padding-right : 0; padding-left : 52px">
-    <ion-title>{{user.full_name}}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="closeModal()">
-          <ion-icon slot="icon-only" name="close"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+  <ion-toolbar  style="padding-right : 52px; padding-left : 0px">
+    <ion-title *ngIf="user.full_name && !loading" color="secondary" style="font-weight: bold;">{{user.full_name}}</ion-title>
+    <ion-title *ngIf="!user.full_name || loading" ><ion-skeleton-text animated style="width: 50%; margin: auto;"></ion-skeleton-text></ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="secondary" (click)="closeModal()">
+        <ion-icon slot="icon-only"  name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="">
-  <ion-card>
+
+  <ion-card *ngIf="loading">
+    <ion-card-header >
+      <ion-skeleton-text class="ion-margin-vertical" animated style="width: 40%"></ion-skeleton-text>
+      <ion-skeleton-text class="ion-margin-horizontal" animated style="width: 10%"></ion-skeleton-text>
+    </ion-card-header>
+
+    <ion-card-content >
+      <div class="avatar-container">
+        <ion-avatar>
+          <ion-skeleton-text class="ion-margin-vertical" animated style="width: 100%"></ion-skeleton-text>
+        </ion-avatar>
+      </div>  
+      <ion-label ><ion-skeleton-text class="ion-margin-vertical" animated style="width: 30%; margin: auto;"></ion-skeleton-text></ion-label>
+      <ion-label ><ion-skeleton-text class="ion-margin-vertical" animated style="width: 45%; margin: auto;"></ion-skeleton-text></ion-label>
+      <ion-label ><ion-skeleton-text class="ion-margin-vertical" animated style="width: 30%; margin: auto;"></ion-skeleton-text></ion-label>
+    </ion-card-content>    
+  </ion-card>
+
+
+  <ion-card *ngIf="!loading">
     <ion-card-header>
       <ion-card-title >Administrador</ion-card-title>
       <ion-toggle (click)="message()" #rol checked="{{user.role == '1' ? true:false}}"></ion-toggle>
@@ -30,8 +51,18 @@
 
     <ion-list class="content">
       <ion-list-header>
-        <ion-label color="secondary">Talleres suscritos</ion-label>
+        <ion-label *ngIf="loading" color="secondary"><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></ion-label>
+        <ion-label *ngIf="!loading" color="secondary">Talleres suscritos</ion-label>
       </ion-list-header>
+
+      <ion-list class="ion-no-padding" *ngIf="loading" >
+        <ion-card *ngFor="let i of ' '.repeat(3).split('')" style="transition: all .3s ease;">
+          <ion-card-content>
+            <ion-card-title ><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-card-title>
+            <ion-card-subtitle><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
 
       <ion-virtual-scroll [items]="workshopsUser" approxItemHeight="70px" >
         <ion-card *virtualItem="let workshopsUser; let i = index">
@@ -40,7 +71,7 @@
         </ion-card>
       </ion-virtual-scroll>
 
-      <ion-item *ngIf="workshopsUser.length == 0">
+      <ion-item *ngIf="workshopsUser.length == 0 && !loading">
         <ion-label style="text-align: center;">No hay talleres disponibles</ion-label>
       </ion-item>
     </ion-list>

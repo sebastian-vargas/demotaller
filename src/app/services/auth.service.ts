@@ -140,9 +140,13 @@ export class AuthService {
 
   modal;
 
-  getUsers(token){
+  getUsers(token, page, limit){
     let formToken = new FormData();
+    
     formToken.append("token", token.toString());
+    
+    formToken.append("page", page.toString());
+    formToken.append("limit", limit.toString());
     
     return this.http.post(`${this.API_URL}list`, formToken, {headers: new HttpHeaders(),});
   }

@@ -25,24 +25,28 @@ export class GuestService {
     private sqlPorter: SQLitePorter,
   ) { 
     this.platform.ready().then(() => {
-      this.sqlite.create({
-        name: 'magia_de_amor.db',
-        location: 'default'
-      })
-      .then((db: SQLiteObject) => {
-          this.storage = db;
-          this.httpClient.get(
-            'assets/SQLite_database.sql', 
-            {responseType: 'text'}
-          ).subscribe(data => {
-            this.sqlPorter.importSqlToDb(this.storage, data)
-              .then(_ => {
-                this.isDbReady.next(true);
-              })
-              .catch(error => console.error(error));
-          });
-          
-      });
+      try {
+        this.sqlite.create({
+          name: 'magia_de_amor.db',
+          location: 'default'
+        })
+        .then((db: SQLiteObject) => {
+            this.storage = db;
+            this.httpClient.get(
+              'assets/SQLite_database.sql', 
+              {responseType: 'text'}
+            ).subscribe(data => {
+              this.sqlPorter.importSqlToDb(this.storage, data)
+                .then(_ => {
+                  this.isDbReady.next(true);
+                })
+                .catch(error => console.error(error));
+            });
+            
+        });
+      } catch (error) {
+        
+      }
     });
   }
 

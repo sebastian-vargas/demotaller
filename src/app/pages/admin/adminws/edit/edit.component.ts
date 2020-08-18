@@ -71,7 +71,7 @@ export class EditComponent implements OnInit {
 
   save(form){
     if(this.editing){
-      if(form.title != this.workshop.title || form.decription != this.workshop.decription){
+      if(form.title != this.workshop.title || form.description != this.workshop.description){
      
         this.saveWorkshop.emit(form);
       }

@@ -9,6 +9,9 @@ import { MenuPageRoutingModule } from './menu-routing.module';
 import { MenuPage } from './menu.page';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +19,12 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
     IonicModule,
     MenuPageRoutingModule,
     ShareButtonsModule,
-    ShareIconsModule
+    ShareIconsModule,
+    //SocialSharing
+
+  ],
+  providers: [
+    SocialSharing,
   ],
   declarations: [MenuPage]
 })

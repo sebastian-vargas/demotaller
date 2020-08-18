@@ -1,0 +1,10 @@
+<div class="player-container">
+  <div class="player-title"><ion-icon name="film"></ion-icon> {{title}}</div>
+  <div  *ngIf="url" plyr style="width: 100%;" 
+    plyrTitle="{{title}}" 
+    [plyrPlaysInline]="true"
+    [plyrSources]="videoSources" 
+    (plyrInit)="player = $event" 
+    (plyrPlay)="played($event)"
+  ></div>
+</div>

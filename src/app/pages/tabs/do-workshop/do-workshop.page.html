@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="tertiary">
-    <ion-title class="ion-no-padding" *ngIf="lesson.workshop_title">{{lesson.workshop_title || 'Magia de amor'}}</ion-title>
-    <ion-title  class="ion-no-padding" *ngIf="!lesson.workshop_title">
+    <ion-title class="ion-no-padding" *ngIf="!loading">{{lesson.workshop_title || 'Magia de amor'}}</ion-title>
+    <ion-title  class="ion-no-padding" *ngIf="loading">
       <ion-skeleton-text animated style="width: 40%; margin: auto;"></ion-skeleton-text>
     </ion-title>
     <ion-buttons slot="start" >
@@ -11,84 +11,93 @@
     </ion-buttons>
   </ion-toolbar>
 
+  
+</ion-header>
+
+<ion-content [fullscreen]="false" class="has-footer">
   <ion-card class="ion-no-padding ion-no-margin header">
     <ion-card-header>
-      <ion-card-title *ngIf="lesson.title">{{lesson.title}}</ion-card-title>
-      <ion-card-title *ngIf="!lesson.title">
+      <ion-card-title *ngIf="!loading">{{lesson.title}}</ion-card-title>
+      <ion-card-title *ngIf="loading">
       <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content *ngIf="lesson.description">
+    <ion-card-content *ngIf="!loading">
       {{lesson.description}}
     </ion-card-content>
-    <ion-card-content *ngIf="!lesson.description">
+    <ion-card-content *ngIf="loading">
       <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
       <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
     </ion-card-content>
   </ion-card>
-</ion-header>
+  
+  <ion-list-header *ngIf="lesson.contents">
+    <ion-label color="secondary">Contenidos</ion-label>
+  </ion-list-header>
 
-<ion-content [fullscreen]="false" class="has-footer">
-  <p *ngIf="lesson.contents && lesson.contents.length == 0" style="text-align: center; color: var(--ion-color-medium);" >Aún no hay contenido disponible.</p>
+  <ion-list-header *ngIf="loading">
+    <ion-label color="secondary"><ion-skeleton-text animated style="width: 35%"></ion-skeleton-text></ion-label>
+  </ion-list-header>
+  <p *ngIf="lesson.contents && lesson.contents.length == 0 && !loading" style="text-align: center; color: var(--ion-color-medium);" >Aún no hay contenido disponible.</p>
+
+  <ng-container *ngIf="loading">
+    <div class="ion-padding-horizontal " style="width: 100%; height: 180px; ">
+      <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
+    </div>
+  
+    <ion-list class="ion-no-padding" *ngIf="loading" >
+      <ion-card *ngFor="let i of ' '.repeat(5).split('')" style="transition: all .3s ease;">
+        <ion-card-content style="display: flex; justify-content: start; align-self: center;" >
+          <ion-avatar style="width: 40px; height: 40px; margin-right: 16px;">
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </ion-avatar>
+          <div class="" style="width: calc(100% - 58px);">
+            <ion-card-title ><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></ion-card-title>
+          <ion-card-subtitle><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-card-subtitle>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>  
+  </ng-container>
 
   <ion-list *ngFor="let content of lesson.contents">
+          
     <ng-container *ngIf="content.type == '1'">
-      <ion-list-header>
+      <!--ion-list-header>
         <ion-label color="secondary">Video</ion-label>
-      </ion-list-header>
-      <div class="ion-padding-horizontal ion-margin-bottom">
-        <iframe
-          width="100%"
-          height="200"
-          [src]="content.url | safe:'resourceUrl'"
-          id="video"
-          frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+      </ion-list-header-->
+
+      <div class="ion-padding-horizontal">
+        <app-video
+        title="{{content.title != null ? content.title :  lesson.title}}"
+          url="{{content.url}}"
+        ></app-video>
       </div>
     </ng-container>
     
     <ng-container *ngIf="content.type == '2'">
-      <ion-list-header>
+      <!--ion-list-header>
         <ion-label color="secondary">Audio</ion-label>
-      </ion-list-header>
-      <div class="ion-padding-horizontal ion-margin-bottom">
-        <app-audio-player
-          title="{{content.title}}"
+      </ion-list-header-->
+
+      <div class="ion-padding-horizontal">
+        <app-audio
+          title="{{content.title != null ? content.title : 'Audio'}}"
           url="{{content.url}}"
-        ></app-audio-player>
+        ></app-audio>
       </div>
     </ng-container>
     
     <ng-container *ngIf="content.type == '3'">
-      
-      <ion-list-header >
-        <ion-label color="secondary">Archivo PDF</ion-label>
-      </ion-list-header>
-      <div class="ion-padding-horizontal ion-margin-bottom">
-        <ion-card
-          class="ion-activatable ripple-parent ion-no-margin"
-          (click)="openPDF(content.url)"
-        >
-          <ion-card-content class="file">
-            <div class="icon">
-              <ion-icon name="document-outline"></ion-icon>
-            </div>
-            <div class="text">
-              <div class="title">{{ content.title }}</div>
-              <div class="pdf">Abrir pdf</div>
-            </div>
-          </ion-card-content>
-          <ion-ripple-effect></ion-ripple-effect>
-        </ion-card>
+      <div class="ion-padding-horizontal">
+        <app-pdf [content]="content"></app-pdf>
       </div>
     </ng-container>
     
   </ion-list>
 
   <ion-list >
-    <ion-list-header>
+    <ion-list-header *ngIf="!loading">
       <ion-label color="secondary">Comentarios</ion-label>
     </ion-list-header>
 
@@ -115,7 +124,7 @@
     </ion-item>
   </ion-list>
 
-  <p *ngIf="comments.length == 0" style="text-align: center; color: var(--ion-color-medium);" >Aún no hay comentarios disponibles.</p>
+  <p *ngIf="comments.length == 0 && !loading" style="text-align: center; color: var(--ion-color-medium);" >Aún no hay comentarios disponibles.</p>
 
   <ion-button *ngIf="totalComments > 5"
       class="ion-margin"

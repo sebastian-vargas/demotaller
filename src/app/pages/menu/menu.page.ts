@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @Component({
@@ -10,9 +11,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MenuPage implements OnInit {
 
+
+  text: string='Magia de Amor'
+  imgurl:string= 'https://unsplash.com/photos/8IKf54pc3qk'
+  link: string='https://ionicframework.com/docs/native/social-sharing'
+
   constructor(private menu:MenuController, 
     private navCtrl:NavController,
-    private authS: AuthService
+    private authS: AuthService,
+    private socialSharing: SocialSharing,
     ) { }
 
     userData:any = {
@@ -20,18 +27,27 @@ export class MenuPage implements OnInit {
     };
 
   ngOnInit() {
-    //this.authS.getIsLoggedIn().subscribe(isLoggedin => this.isLoggedIn = isLoggedin);
-
     this.authS.userData.subscribe(userData => {
       this.userData = userData;
       console.log(userData)
-  })
-    //this.menu.open();
-/*
-    this.authS.getUserData().subscribe(user => {
-      this.user = user;
-      this.isLoggedIn = user.isLoggedIn;
-    });*/
+    });
+  }
+  ShareGeneric(parameter){
+    const url = this.link
+    const text = parameter+'\n'
+    this.socialSharing.share(text, 'MEDIUM', null, url)
+  }
+  
+  ShareWhatsapp(){
+    this.socialSharing.shareViaWhatsApp(this.text, this.imgurl, this.link)
+  }
+
+  ShareFacebook(){
+    this.socialSharing.shareViaFacebookWithPasteMessageHint(this.text, this.imgurl, null /* url */, 'Copia Pega!')
+  }
+
+  SendEmail(){
+    this.socialSharing.shareViaEmail('text', 'subject', ['email@address.com'])
   }
 
   closeMenu(){

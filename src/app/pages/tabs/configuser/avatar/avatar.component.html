@@ -1,11 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>avatar-modal</ion-title>
+  <ion-toolbar style="padding-right: 0;">
+    <ion-buttons slot="start">
+      <ion-button color="secondary" (click)="closeModal()">
+        <ion-icon slot="icon-only"  name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" (click)="save()">
+        Guardar
+      </ion-button>
+    </ion-buttons>
+
+
+    <ion-progress-bar *ngIf="loading" color="secondary" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <image-cropper
+<ion-content class="ion-no-padding" style="min-width: 100vw;">
+  <image-cropper 
     [imageBase64]="file.dataURI ? file.dataURI : null"
     [maintainAspectRatio]="true"
     [aspectRatio]="1 / 1"
@@ -21,7 +33,5 @@
     (loadImageFailed)="loadImageFailed()"
   ></image-cropper>
 
-  <ion-button (click)="save()" expand="block" fill="clear" shape="round">
-    Save
-  </ion-button>
+  
 </ion-content>

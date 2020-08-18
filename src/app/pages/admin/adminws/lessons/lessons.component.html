@@ -11,8 +11,8 @@
     (ngSubmit)="save(lessonForm.value)"
     >
       <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
-        <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo de la lección"></ion-input>
+        <ion-label position="stacked" class="titleinput">Titulo de la lección <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
       </ion-item>
       <ng-container *ngFor="let validation of validation_messages.title">
         <div class="validation"
@@ -24,8 +24,8 @@
         </div>
       </ng-container>
       <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Descripción</ion-label>
-        <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción para la lección"></ion-input>
+        <ion-label position="stacked" class="titleinput">Descripción de la lección <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción"></ion-input>
       </ion-item>
       <ng-container *ngFor="let validation of validation_messages.description">
         <div class="validation"

@@ -1,0 +1,9 @@
+<div class="player-container">
+  <div class="player-title"><ion-icon name="headset"></ion-icon> {{title}}</div>
+  <div *ngIf="url" class="player" plyr 
+  plyrTitle="Audio" plyrType="audio" 
+  [plyrPlaysInline]="true" 
+  [plyrCrossOrigin]="false"
+  [plyrSources]="audioSources"></div>
+</div>
+

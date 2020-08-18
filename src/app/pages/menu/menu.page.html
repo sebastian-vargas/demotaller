@@ -75,14 +75,21 @@
 
     <ion-footer>
       <ion-label>Redes sociales</ion-label>
-      <share-buttons [theme]="'circles-light'"
+      <div class="menu-footer">
+        <ion-button color="primary" (click)="ShareFacebook()"><ion-icon name="logo-facebook"></ion-icon></ion-button>
+        <ion-button color="success" (click)="ShareWhatsapp()"><ion-icon name="logo-whatsapp"></ion-icon></ion-button>
+        <ion-button color="light" (click)="ShareGeneric('text')"><ion-icon name="share-social-outline"></ion-icon></ion-button>
+      </div> 
+      
+    <!--<share-buttons [theme]="'material-dark'"
         [include]="['whatsapp','messenger','copy','facebook']"
-        [show]="3"
-        [size]="-2"
+        [show]="4"
+        [size]="-3"
         [url]="'https://es.wikipedia.org/wiki/Wikipedia:Portada'"
         [autoSetMeta]="false"
-      ></share-buttons> 
-    </ion-footer>
+      ></share-buttons> -->
+    </ion-footer> 
+
 
   </ion-menu>
   <ion-router-outlet id="contentPrincipal" main></ion-router-outlet>

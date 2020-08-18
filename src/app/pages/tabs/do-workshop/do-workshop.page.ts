@@ -53,9 +53,8 @@ export class DoWorkshopPage implements OnInit {
     private authS: AuthService
   ) {}
 
-  loading: HTMLIonLoadingElement = null;
+  loading = true;
 
-  loadingVideo = true;
 
   workshopId = this.route.snapshot.parent.paramMap.get("id");
   lessonId = this.route.snapshot.paramMap.get("lesson");
@@ -75,9 +74,7 @@ export class DoWorkshopPage implements OnInit {
   totalComments = 0;
 
   ngOnInit() {
-    this.vidUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-      "https://www.youtube.com/embed/J0G5mQyHGlI"
-    );
+  
   }
 
   ionViewWillEnter() {
@@ -95,6 +92,9 @@ export class DoWorkshopPage implements OnInit {
 
           if(this.lesson.total_comments > 0){
             this.getComments();
+          }else{
+            
+            this.loading = false;
           }
         }
         else {
@@ -108,6 +108,8 @@ export class DoWorkshopPage implements OnInit {
     this.commentsSubscription = this.lessonService.getComments(this.lesson.id_lesson, 1, 5).subscribe((res:any) => {
       this.comments = res.comments;
       this.totalComments = res.total_comments;
+      
+      this.loading = false;
     });
   }
 
@@ -140,6 +142,7 @@ export class DoWorkshopPage implements OnInit {
     });
     
     modal.onDidDismiss().then(data => {
+      console.log(data)
       if(data.data.newComments){
         this.getComments();
       }

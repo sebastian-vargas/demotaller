@@ -12,7 +12,7 @@
     (ngSubmit)="save(workshopForm.value)"
     >
       <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Titulo  <ion-text color="danger">*</ion-text></ion-label>
+        <ion-label position="stacked" class="titleinput">Titulo del taller <ion-text color="danger">*</ion-text></ion-label>
         <ion-input formControlName="title" type="text" placeholder="Ingresa un titulo"></ion-input>
       </ion-item>
       <ng-container *ngFor="let validation of validation_messages.title">
@@ -26,7 +26,7 @@
       </ng-container>
 
       <ion-item class="ion-no-padding">
-        <ion-label position="stacked" class="titleinput">Descripción  <ion-text color="danger">*</ion-text></ion-label>
+        <ion-label position="stacked" class="titleinput">Descripción del taller <ion-text color="danger">*</ion-text></ion-label>
         <ion-input formControlName="description" type="text" placeholder="Ingresa una descripción"></ion-input>
       </ion-item>
       <ng-container *ngFor="let validation of validation_messages.description">

@@ -31,6 +31,9 @@ export class AudioPlayerComponent implements OnInit {
   ngOnInit() {
     this.player = new Howl({
       usingWebAudio: true,
+      format: [
+        "audio/mpeg"
+      ],
       src: [this.url],
       html5: true,
       onload: () => {
@@ -39,6 +42,7 @@ export class AudioPlayerComponent implements OnInit {
         this.player.stop(this.id);
       },
       onloaderror: (id, error) => {
+        console.log(error)
         this.error = true;  
         this.title = "Audio no disponible.";   
       },

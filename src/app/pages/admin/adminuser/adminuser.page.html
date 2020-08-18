@@ -8,19 +8,37 @@
 </ion-header>
 
 <ion-content >
-  <ion-searchbar placeholder="Buscar taller" (ionChange)="search($event.detail.value)"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar usuario" (ionChange)="search($event.detail.value)"></ion-searchbar>
 
-  <app-edit *ngIf="!searching" [editing]="false" (saveWorkshop)="saveWorkshop($event)"></app-edit>
-  
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
   </ion-refresher>
+
+  <ion-list class="ion-no-padding" *ngIf="loading" >
+    <ion-card *ngFor="let i of ' '.repeat(5).split('')" style="transition: all .3s ease;">
+      <ion-card-content >
+        <ion-avatar style="width: 40px; height: 40px;">
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </ion-avatar>
+        <div class="" style="width: calc(100% - 58px);">
+          <ion-card-title ><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></ion-card-title>
+        <ion-card-subtitle><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></ion-card-subtitle>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
   <ion-list class="users ion-no-padding">
+    <ion-card *ngIf="users.length == 0 && !loading">
+      <ion-card-content style="text-align: center; display: inline;">
+        <ion-card-title >No hay usuarios disponibles.</ion-card-title>
+      </ion-card-content>
+    </ion-card>
     <ion-virtual-scroll [items]="users" approxItemHeight="70px" >
       <div *virtualItem="let user; let i = index">
-        <ion-card  *ngIf="user.id_user != userData.user.id_user"  class="ion-activatable ripple-parent ion-no-margin" (click)="editUser(user)">      
+        <ion-card  class="ion-activatable ripple-parent ion-no-margin" (click)="editUser(user)">      
         <ion-card-content class="ion-padding ">
           <div class="left">
             <ion-avatar >
@@ -40,4 +58,7 @@
      
     </ion-virtual-scroll>
   </ion-list>
+  <ion-button *ngIf="loadMore && !searching" (click)="loadUsers()" class="ion-margin" expand="block" fill="clear" >
+    Cargar mas
+  </ion-button>
 </ion-content>

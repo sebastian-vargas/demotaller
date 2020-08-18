@@ -1,63 +1,129 @@
-
-
 <ion-card>
-  <ion-card-header >
-    <ion-card-title >{{ editing ? 'Editar Contenido' : 'Crear Contenido'}}</ion-card-title>
-    <ion-button fill="clear" color="secondary" [disabled]="!contentForm.valid" (click)="save(workshopForm.value)">
+  <ion-card-header>
+    <ion-card-title>{{
+      editing ? "Editar Contenido" : "Crear Contenido"
+    }}</ion-card-title>
+
+    <ion-button
+      *ngIf="content.type == '1'"
+      fill="clear"
+      color="secondary"
+      [disabled]="!contentForm.valid"
+      (click)="save()"
+    >
+      Guardar
+    </ion-button>
+
+    <ion-button
+      *ngIf="content.type != '1'"
+      fill="clear"
+      color="secondary"
+      [disabled]="!fileSelected && !editing"
+      (click)="save()"
+    >
       Guardar
     </ion-button>
   </ion-card-header>
   <ion-card-content>
-    <ion-label>Tipo de contenido</ion-label>
-    <ion-select  [disabled]="editing" [(ngModel)]= "content.type" okText="Aceptar" cancelText="Cancelar">
-      <ion-select-option value="1">Video</ion-select-option>
-      <ion-select-option value="2">Audio</ion-select-option>
-      <ion-select-option value="3">PDF</ion-select-option>
-    </ion-select>
-    <form
-        [formGroup]="contentForm"
-        (ngSubmit)="contentData(contentForm.value)"
+    <ion-item class="ion-no-padding">
+      <ion-label position="stacked" class="titleinput"
+        >Tipo de contenido</ion-label
       >
-        <ion-item class="ion-no-padding">
-          <ion-label position="stacked" class="titleinput">Titulo</ion-label>
-          <ion-input
-            formControlName="title"
-            type="text"
-            placeholder="Ingresa un titulo"
-          ></ion-input>
-        </ion-item>
-        <ng-container *ngFor="let validation of validation_messages.title">
-          <div
-            class="validation"
-            *ngIf="contentForm.get('title').hasError(validation.type) && 
-                      (contentForm.get('title').dirty ||
-                      contentForm.get('title').touched)"
-          >
-            {{ validation.message}}
-          </div>
-        </ng-container>
-        <ion-item class="ion-no-padding" *ngIf="content.type == '1'">
-          <ion-label position="stacked" class="titleinput">url</ion-label>
-          <ion-input
-            formControlName="url"
-            type="text"
-            placeholder="Ingresa una url"
-          ></ion-input>
-        </ion-item>
-        <ng-container *ngFor="let validation of validation_messages.url">
-          <div
-            class="validation"
-            *ngIf="content.type == '1' && contentForm.get('url').hasError(validation.type) && 
-                      (contentForm.get('url').dirty ||
-                      contentForm.get('url').touched)"
-          >
-            {{ validation.message}}
-          </div>
-        </ng-container>
-      </form>
+      <ion-select
+        (ionChange)="selectChange()"
+        [disabled]="editing"
+        [(ngModel)]="content.type"
+        interface="action-sheet"
+      >
+        <ion-select-option value="1">Video</ion-select-option>
+        <ion-select-option value="2">Audio</ion-select-option>
+        <ion-select-option value="3">PDF</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <form [formGroup]="contentForm" (ngSubmit)="contentData(contentForm.value)">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked" class="titleinput">Titulo</ion-label>
+        <ion-input
+          formControlName="title"
+          type="text"
+          placeholder="Ingresa un titulo"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-no-padding" *ngIf="content.type == '1'">
+        <ion-label position="stacked" class="titleinput"
+          >Url de Youtube <ion-text color="danger">*</ion-text></ion-label
+        >
+        <ion-input
+          formControlName="url"
+          type="text"
+          placeholder="Ingresa una url"
+        ></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let validation of validation_messages.url">
+        <div
+          class="validation"
+          *ngIf="
+            content.type == '1' &&
+            contentForm.get('url').hasError(validation.type) &&
+            (contentForm.get('url').dirty || contentForm.get('url').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </form>
+
+    <div class="ion-padding-vertical" *ngIf="content.type != '1'">
+      <ion-label
+        style="font-size: 12px; color: var(--ion-color-dark);"
+        position="stacked"
+        class="titleinput"
+        >Archivo <ion-text color="danger">*</ion-text></ion-label
+      >
+      <div
+        class="file-container ion-activatable ripple-parent"
+        (click)="file.click()"
+      >
+        <div class="icon">
+          <ion-icon name="cloud-upload"></ion-icon>
+        </div>
+
+        <input
+          #file
+          type="file"
+          (change)="fileChange($event)"
+          style="display: none;"
+          accept="{{ content.type == '2' ? 'audio/*' : 'application/pdf' }}"
+        />
+
+        <div class="text ion-no-margin">
+          <div class="title">Seleccionar archivo</div>
+          <div class="file">{{ filename || "  " }}</div>
+        </div>
+
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+    </div>
+
+    <div *ngIf="editing">
+      <ion-list-header class="ion-no-padding">
+        <ion-label color="secondary">Contenido actual</ion-label>
+      </ion-list-header>
+
+      <app-video
+        *ngIf="content.type === '1'"
+        title="{{ content.title != null ? content.title : lesson.title }}"
+        url="{{ content.url }}"
+      ></app-video>
+
+      <app-audio
+        *ngIf="content.type === '2'"
+        title="{{ content.title != null ? content.title : 'Audio' }}"
+        url="{{ content.url }}"
+      ></app-audio>
+
+      <app-pdf *ngIf="content.type === '3'" [content]="content"></app-pdf>
+    </div>
   </ion-card-content>
-
-
 </ion-card>
-
-

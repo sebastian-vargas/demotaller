@@ -57,12 +57,12 @@
     <ion-card-content class="ion-margin-bottom">
       <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
         <ion-item class="input-container ion-no-padding">
-          <ion-label  position="floating">Contraseña actual</ion-label>
+          <ion-label  position="floating">Contraseña actual <ion-text color="danger">*</ion-text></ion-label>
           <ion-input formControlName="current_password"  type="password" placeholder="Contraseña actual"></ion-input>
         </ion-item>
       
         <ion-item class="input-container ion-no-padding">
-          <ion-label  position="floating">Nueva contraseña</ion-label>
+          <ion-label  position="floating">Nueva contraseña <ion-text color="danger">*</ion-text></ion-label>
           <ion-input formControlName="new_password" type="password" placeholder="Nueva contraseña"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validation_messages.password">
@@ -76,7 +76,7 @@
         </ng-container>
 
         <ion-item class="input-container ion-no-padding">
-          <ion-label  position="floating">Confirmar contraseña</ion-label>
+          <ion-label  position="floating">Confirmar contraseña <ion-text color="danger">*</ion-text></ion-label>
           <ion-input formControlName="confirm_password" id="confirm_password" type="password" placeholder="Confirmar contraseña"></ion-input>
         </ion-item>
         <ion-label *ngIf="passwordForm.controls['confirm_password'].errors?.MatchPassword" style="color: red">

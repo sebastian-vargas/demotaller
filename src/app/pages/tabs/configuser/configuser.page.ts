@@ -118,13 +118,12 @@ export class ConfiguserPage implements OnInit {
   
   changePassword(){
     
-    console.log(this.passwordForm.value.current_password);
     this.authS.changePassword(
       this.userData.user.token,
       this.passwordForm.value.current_password,
       this.passwordForm.value.new_password).subscribe((res:any) =>{
         if(res.status == 200){
-          this.alertService.presentToast(res.massage,4000);
+          this.alertService.presentToast(res.message,4000);
           this.passwordForm.reset();
           this.saveUser();
         }
@@ -162,7 +161,7 @@ export class ConfiguserPage implements OnInit {
   choose(){
     this.chooser.getFile('image/*')
       .then((file: ChooserResult) => {
-        
+        console.log(file)
         this.processImage(file)
       })
       .catch((error: any) => console.error(error));

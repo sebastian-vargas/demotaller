@@ -50,10 +50,10 @@ export class EditlessonPage implements OnInit {
     this.loading = true;
     this.workshopS.getWorkshop(id_workshop).subscribe((res:any) =>{
       this.workshop = res.workshop;
-
-      this.workshopS.getUsers(this.workshop.id_workshop, this.userData.user.token).subscribe((res: any)=>{
-        if(res.status == 200){
-          this.users = res.users;
+      
+      this.workshopS.getUsers(res.workshop.id_workshop, this.userData.user.token).subscribe((resp: any)=>{
+        if(resp && resp.status == 200){
+          this.users = resp.users;
           this.loading = false;
         }
       })
@@ -63,9 +63,7 @@ export class EditlessonPage implements OnInit {
   
   segmentChanged(ev: any) {
     this.segmentValue = ev.detail.value;
-    console.log(this.segmentValue);
     //this.navCtrl.navigateForward(`menu/admin/adminws/${workshop.id_workshop}`);
-    console.log("Segment changed", ev);
   }
 
   async editLS(lessonModal){
@@ -96,8 +94,9 @@ export class EditlessonPage implements OnInit {
 
       this.workshopS.editWorkshop(workshop, this.userData.user.token).subscribe((res: any) => {
         if(res.status == 200){
-          this.getWorkshop(this.workshop.id_workshop);
+  
           this.alertService.presentToast("El taller ha sido actualizado correctamente.", 3000) 
+          this.getWorkshop(this.workshop.id_workshop);
         } 
       });
     }

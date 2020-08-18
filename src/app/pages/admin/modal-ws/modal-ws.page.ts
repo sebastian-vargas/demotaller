@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, ActionSheetController, NavController, Platform } from '@ionic/angular';
+import { ModalController, ActionSheetController, NavController, Platform, LoadingController } from '@ionic/angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { WorkshopService } from 'src/app/services/workshop.service';
@@ -7,6 +7,7 @@ import { LessonService } from 'src/app/services/lesson.service';
 import { AlertService } from 'src/app/services/shared/alert.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-ws',
@@ -20,6 +21,7 @@ export class ModalWsPage implements OnInit {
   userSubscription : Subscription;
   lesson: any = {};
 
+  loading = true;
   userData: any = {
     isLoggedIn: false,
   };
@@ -43,7 +45,7 @@ export class ModalWsPage implements OnInit {
     private alertService: AlertService,
     private auths: AuthService,
     private formBuilder: FormBuilder,
-    
+    private loadingController: LoadingController,    
     private platform: Platform,
   ) { 
     this.platform.backButton.subscribe(() => {
@@ -97,8 +99,7 @@ export class ModalWsPage implements OnInit {
       .subscribe((response: any) => {
         if(response && response.status == 200){
           this.lesson = response.lesson;
-
-          console.log(this.lesson)
+          this.loading = false;
           //this.totalComments = response.total_comments;
 
           if(this.lesson.total_comments > 0){
@@ -123,6 +124,7 @@ export class ModalWsPage implements OnInit {
       this.lessonService.editLesson(lesson, this.userData.user.token).subscribe((res : any) => {
         if(res.status == 200) {
           this.edited = true;
+          this.alertService.presentToast("La lección ha sido actualizada correctamente.", 3000) 
           this.loadLesson();
         }
       });
@@ -133,6 +135,35 @@ export class ModalWsPage implements OnInit {
     
   }
 
+  saveContent(event){
+    this.loading = true;
+    if(!event.error.value){
+      let content = event.content;
+      if(event.action == 1){
+        this.lessonService.addLessonContent(this.userData.user.token, this.lesson.id_lesson, content)
+        .subscribe((res: any) => {
+          console.log(res);
+          if(res && res.status == 200){
+            this.alertService.presentToast(res.message, 3000);
+            this.loadLesson();
+          }
+        })
+      }
+      else{
+        this.lessonService.editLessonContent(this.userData.user.token, content).subscribe((res: any) => {
+          console.log(res)
+          if(res && res.status == 200){
+            this.alertService.presentToast(res.message, 3000);
+            this.loadLesson();
+          }
+        })
+      }
+    }else {
+      
+      this.alertService.presentToast(event.error.message, 3000);
+    }
+    
+  }
 
   async closeModal(){
     await this.modalController.dismiss({

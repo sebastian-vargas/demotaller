@@ -32,7 +32,7 @@ export class ModalCommPage implements OnInit {
   firstLoad = true;
   newComments = false;
   page = 1;
-  limit = 5;
+  limit = 10;
 
   ngOnInit() {
    

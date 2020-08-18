@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ModalController, LoadingController, Platform } from "@ionic/angular";
+import { ModalController, LoadingController, Platform, AlertController } from "@ionic/angular";
 import { NgxImageCompressService } from "ngx-image-compress";
 import { ChooserResult } from '@ionic-native/chooser/ngx';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
@@ -15,10 +15,8 @@ export class AvatarComponent implements OnInit {
     private authS: AuthService,
     public modalCtrl: ModalController,
     private imageCompress: NgxImageCompressService,
-    public loadingController: LoadingController,
     private platform: Platform
   ) {
-    this.presentLoading();
     
     this.platform.backButton.subscribe(() => {
       this.closeModal();
@@ -28,18 +26,16 @@ export class AvatarComponent implements OnInit {
   ngOnInit() {
     
   }
-
+  loading = true;
   changed = false;
   imgResult: string;
   @Input() file: ChooserResult;
   @Input() token: string;
-  loading = null;
   croppedImage: string;
   compressedImage: string;
   
   
   ionViewWillLeave() {
-    if (this.loading != null) this.loading.dismiss();
   }
 
 
@@ -54,7 +50,6 @@ export class AvatarComponent implements OnInit {
         .then((result) => {
           this.compressedImage = result;
           let blob = this.DataURIToBlob(result);
-          console.log(blob);
           this.authS.changeAvatar(this.token, blob).subscribe((res: any) => {
             if(res.status == 200){
               this.authS.loadUser().then(r => {
@@ -85,33 +80,19 @@ export class AvatarComponent implements OnInit {
   }
 
   cropperReady() {
-    if (this.loading != null) {
-      
-      console.log(this.loading)
-      this.loading.dismiss();
-    }
+    this.loading = false;
     console.log("Ready!");
   }
   imageLoaded(){
+    
     console.log('loaded')
   }
   loadImageFailed() {
     // show message
     console.log("Error!");
   }
-
-
-  async presentLoading() {
-    this.loading = await this.loadingController.create({
-      cssClass: "my-custom-class",
-      message: "Please wait...",
-    });
-    await this.loading.present();
-
-    const { role, data } = await this.loading.onDidDismiss();
-    console.log("Loading dismissed!");
-  }
   
+
   async closeModal() {
     await this.modalCtrl.dismiss({
       changed: this.changed,

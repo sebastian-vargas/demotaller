@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Storage } from '@ionic/storage';
 import { User } from 'src/app/models/user.model';
 import { WorkshopService } from 'src/app/services/workshop.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-user',
@@ -23,6 +24,8 @@ export class ModalUserPage implements OnInit {
   ) { }
   workshopsUser:any = [];
   user:any = {};
+  loading = true;
+
   @ViewChild(IonToggle) rol : IonToggle;
   userData: any = {
     isLoggedIn: false,
@@ -44,8 +47,17 @@ export class ModalUserPage implements OnInit {
   getUser(){
     this.authS.getUserbyId(this.id_user).subscribe((res:any) =>{
       this.user = res.data;
-      
-      this.workshopsByUser(this.user.id_user,this.userData.user.token)//mostrando talleres por usuario
+
+      this.workshopService.workshopsByUser(this.user.id_user,this.userData.user.token).subscribe((response:any)=>{
+        if(response.status == 200){
+          console.log("listando", this.workshopsUser);
+          this.workshopsUser = response.workshops;
+          this.loading = false;
+        }
+        else {
+          this.closeModal();
+        }
+      })
     })
   }
   async message(){
@@ -84,12 +96,7 @@ export class ModalUserPage implements OnInit {
   }
 
   workshopsByUser(id_user, token){
-    this.workshopService.workshopsByUser(id_user,token).subscribe((response:any)=>{
-      this.workshopsUser = response.workshops;
-      if(response.status == "200"){
-        console.log("listando", this.workshopsUser);
-      }
-    })
+    
        
   }
 

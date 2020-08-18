@@ -188,6 +188,7 @@ export class AdminwsPage  implements OnInit, OnDestroy {
 
           this.loading = false;
           this.workshops = res.workshops;
+          this.virtualScroll.checkEnd();
         }
       })
     }else {
