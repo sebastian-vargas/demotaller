@@ -47,14 +47,15 @@ export class HomePage implements OnInit, OnDestroy {
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
 
   ngOnDestroy() { }
 
   ionViewWillEnter() {
     //this.guestService.DeleteWorkshopsStarted();
     //this.guestService.DeleteLessonsReaded();
-
+    //console.log("entróffffff");
     this.userSubscription = this.auths.userData.subscribe((userData) => {
       this.userData = userData;
       /*
@@ -73,11 +74,13 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   reset() {
+    this.refreshing = false;
     this.page = 1;
     this.loading = true;
     this.firstLoad = true;
     this.workshops = [];
     this.infiniteScroll.disabled = true;
+    this.virtualScroll.checkEnd();
   }
 
 
@@ -102,8 +105,8 @@ export class HomePage implements OnInit, OnDestroy {
           if (
             this.firstLoad &&
             this.infiniteScroll.disabled &&
-            workshops.length >= this.limit &&
-            this.userData.isLoggedIn
+            workshops.length >= this.limit 
+            //&& this.userData.isLoggedIn
           ) {
             this.firstLoad = false;
             this.toggleInfiniteScroll();
@@ -114,8 +117,8 @@ export class HomePage implements OnInit, OnDestroy {
             this.refreshing = false;
             if (
               this.infiniteScroll.disabled &&
-              workshops.length >= this.limit &&
-              this.userData.isLoggedIn
+              workshops.length >= this.limit
+              //&& this.userData.isLoggedIn
             ) {
               this.toggleInfiniteScroll();
             }
@@ -212,6 +215,12 @@ export class HomePage implements OnInit, OnDestroy {
     let result = await alert.onDidDismiss();
   }
   workshopHandleCLick(index, workshop) {
+    if (!workshop.readed) {
+      this.alertStart(workshop);
+    } else {
+      this.redirectToWorkshop(workshop);
+    }
+    /*
     if (index != 0 && !this.userData.isLoggedIn) {
       this.auths.presentLoginRegisterModal();
       //this.alertLogin();
@@ -221,7 +230,7 @@ export class HomePage implements OnInit, OnDestroy {
       } else {
         this.redirectToWorkshop(workshop);
       }
-    }
+    }*/
   }
 
   redirectToWorkshop(workshop) {

@@ -7,7 +7,6 @@ import {
 import { ActivatedRoute } from "@angular/router";
 
 import { switchMap, delay } from "rxjs/operators";
-import { workshops } from "../../../services/data";
 import { WorkshopService } from "src/app/services/workshop.service";
 import { Subscription } from "rxjs";
 import { Workshop } from "src/app/models/workshop.model";
@@ -116,38 +115,43 @@ export class ListWorkshopPage implements OnInit {
   }
 
 
-  startLesson(lesson) {
-    if (!lesson.disabled) {
-      if (!lesson.readed) {
-        if (this.userData.isLoggedIn) {
-          this.lessonSubscription = this.lessonService
-            .startLesson(lesson.id_lesson, this.userData.user.token)
-            .subscribe((res: any) => {
-              if (res && res.status == 200) {
+  startLesson(index, lesson) {
+
+    if (index != 0 && !this.userData.isLoggedIn) {
+      this.auths.presentLoginRegisterModal();
+    }else {
+      if (!lesson.disabled) {
+        if (!lesson.readed) {
+          if (this.userData.isLoggedIn) {
+            this.lessonSubscription = this.lessonService
+              .startLesson(lesson.id_lesson, this.userData.user.token)
+              .subscribe((res: any) => {
+                if (res && res.status == 200) {
+                  this.navigate(lesson.id_lesson);
+                } else {
+                  this.goBack();
+                }
+              });
+          } else {
+            this.guestService.startLesson(lesson.id_lesson).then(res => {
+              if(res > 0){
                 this.navigate(lesson.id_lesson);
-              } else {
+              }
+              else {              
                 this.goBack();
               }
             });
+          }
         } else {
-          this.guestService.startLesson(lesson.id_lesson).then(res => {
-            if(res > 0){
-              this.navigate(lesson.id_lesson);
-            }
-            else {              
-              this.goBack();
-            }
-          });
+          this.navigate(lesson.id_lesson);
         }
       } else {
-        this.navigate(lesson.id_lesson);
+        this.alertService.basicAlert(
+          "Las lecciones deben ser vistas en orden.",
+          ["Aceptar"],
+          "¡No es posible continuar!"
+        );
       }
-    } else {
-      this.alertService.basicAlert(
-        "Las lecciones deben ser vistas en orden.",
-        ["Aceptar"],
-        "¡No es posible continuar!"
-      );
     }
   }
 

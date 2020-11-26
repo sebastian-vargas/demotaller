@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ModalController, NavController, AlertController, IonVirtualScroll, IonInfiniteScroll } from '@ionic/angular';
 import { ModalWsPage } from '../modal-ws/modal-ws.page';
-import { workshops } from "../../../services/data";
 import { AuthService } from 'src/app/services/auth.service';
 import { WorkshopService } from 'src/app/services/workshop.service';
 import { Workshop } from 'src/app/models/workshop.model';

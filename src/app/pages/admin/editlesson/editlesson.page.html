@@ -17,6 +17,7 @@
 <ion-content>
   <ng-container *ngIf="workshop">
     <ion-segment
+      color="tertiary"
       (ionChange)="segmentChanged($event)"
       [(ngModel)]="segmentValue"
     >

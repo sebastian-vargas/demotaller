@@ -161,6 +161,16 @@ export class AuthService {
       });
   }
 
+  sendEmail(name, email, message){
+    let formData = new FormData();
+    formData.append("name", name.toString());
+    formData.append("email", email.toString());
+    formData.append("message", message.toString());
+    return this.http
+      .post(`${this.API_URL}contact`, formData, {
+        headers: new HttpHeaders(),
+      });
+  }
 
   async presentLoginRegisterModal() {
     this.modal = await this.modalController.create({
@@ -169,7 +179,6 @@ export class AuthService {
     });
     await this.modal.present();
   }
-
 
   /* VIEJO */
   /*

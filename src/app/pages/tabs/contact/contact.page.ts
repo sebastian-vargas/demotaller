@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Storage } from "@ionic/storage";
 import { AlertService } from 'src/app/services/shared/alert.service';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.page.html',
@@ -23,7 +24,7 @@ export class ContactPage implements OnInit {
     ],
     message: [
       {type:"required", message:"El mensaje es requerido"},
-      {type:"minlength", message:"El mensaje debe ser minimo de 3 palabras"}
+      {type:"minlength", message:"El mensaje debe ser minimo de una palabra"}
     ],
   };
 
@@ -43,7 +44,8 @@ export class ContactPage implements OnInit {
     private storage: Storage, 
     private authS: AuthService, 
     private alertService: AlertService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController
 
     ) {
       this.userForm = this.formBuilder.group({
@@ -65,7 +67,7 @@ export class ContactPage implements OnInit {
           "", 
           Validators.compose([
           Validators.required,
-          Validators.minLength(10)
+          Validators.minLength(3)
         ])
         ),
       });
@@ -81,10 +83,31 @@ export class ContactPage implements OnInit {
       });
     })
   }
+  
+  async send(userForm){
 
-  send(userForm){
-    console.log("enviado");
-    this.alertService.basicAlert("Tú mensaje ha sido enviado con exito", ['Aceptar'], "Mensaje enviado.");
+    this.loadingCtrl.create({
+      message: 'Procesando, por favor espere...'
+    }).then((res) => {
+      res.present();
+    });
+
+    this.authS.sendEmail(
+      this.userForm.value.full_name, 
+      this.userForm.value.email, 
+      this.userForm.value.message).subscribe((res:any) => {
+        if(res.status == "200"){
+          this.alertService.basicAlert(res.message, ['Aceptar'], "Mensaje enviado.");
+        }
+        else{
+          this.alertService.basicAlert(res.message, ['Aceptar'], "Alerta de Mensaje");
+        }
+        this.loadingCtrl.dismiss();
+        this.userForm.patchValue({
+        message: "",
+        });
+      });
+      //await loading.onDidDismiss();
   }
 
 }

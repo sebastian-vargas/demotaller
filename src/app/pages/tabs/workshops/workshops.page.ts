@@ -54,7 +54,6 @@ export class WorkshopsPage implements OnInit {
       }
       else {
         this.loadSqliteWorkshops();
-        
       }
     });
   }

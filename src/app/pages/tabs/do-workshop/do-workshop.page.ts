@@ -8,21 +8,11 @@ import {
 } from "@ionic/angular";
 import { switchMap, delay } from "rxjs/operators";
 import { LessonService } from "src/app/services/lesson.service";
-/*
-import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { File } from '@ionic-native/File/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-import { DocumentViewer, DocumentViewerOptions } 
-from '@ionic-native/document-viewer/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';*/
-import { ModalPdfPage } from "../modal-pdf/modal-pdf.page";
 import { ModalCommPage } from "../modal-comm/modal-comm.page";
 import { ActivatedRoute } from "@angular/router";
 import { WorkshopService } from "src/app/services/workshop.service";
 import { Subscription } from "rxjs";
 import { PreviewAnyFile } from "@ionic-native/preview-any-file/ngx";
-
-import { workshops } from "../../../services/data";
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({

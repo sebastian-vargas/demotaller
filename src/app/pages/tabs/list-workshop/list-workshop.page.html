@@ -53,7 +53,8 @@
       <ion-card *ngFor="let lesson of workshop.lessons; let i = index" 
       class="ion-activatable ripple-parent " 
       [ngClass]="{'unread': !lesson.readed && !lesson.disabled, 'disabled': lesson.disabled}"
-      (click)="startLesson(lesson)">
+      (click)="startLesson(i, lesson)">
+        <div *ngIf="i != 0 && !userData.isLoggedIn" class="mask"></div>
         <ion-card-content class="ion-no-padding ion-margin-start" >
           <ion-card-title  class="lesson-title">{{ lesson.title }}</ion-card-title>   
           <div class="icon-container">

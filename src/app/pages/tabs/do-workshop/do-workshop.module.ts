@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { DoWorkshopPageRoutingModule } from './do-workshop-routing.module';
 
 import { DoWorkshopPage } from './do-workshop.page';
-import { ModalPdfPage } from '../modal-pdf/modal-pdf.page';
-import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { MainPipeModule } from 'src/app/modules/main-pipe/main-pipe.module';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { AudioComponent } from 'src/app/components/audio/audio.component';
@@ -27,9 +25,8 @@ import { SharedModule } from 'src/app/modules/shared/shared.module';
     PlyrModule,
     SharedModule
   ],
-  declarations: [DoWorkshopPage, ModalPdfPage, AudioPlayerComponent, CommentFormComponent, 
+  declarations: [DoWorkshopPage, CommentFormComponent, 
     
   ],
-  entryComponents:[ModalPdfPage],
 })
 export class DoWorkshopPageModule {}

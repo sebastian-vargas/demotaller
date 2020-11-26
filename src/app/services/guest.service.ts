@@ -60,7 +60,8 @@ export class GuestService {
             started_at: res.rows.item(i).started_at
            });
         }
-      }   
+      } 
+      console.log(workshops)  
       return workshops;
     });
   }
@@ -76,6 +77,8 @@ export class GuestService {
            });
         }
       }   
+      console.log(lessons)
+
       return lessons;
     });
   }

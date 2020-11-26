@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: "http://192.168.0.105:8080/api/"
+  API_URL: "https://magiadeamor.ideasoluciones.net/api/"
 };
 
 /*

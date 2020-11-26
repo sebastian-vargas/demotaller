@@ -41,10 +41,6 @@ const routes: Routes = [
     loadChildren: () => import('./modal-ws/modal-ws.module').then( m => m.ModalWsPageModule)
   },
   {
-    path: 'addws',
-    loadChildren: () => import('./addws/addws.module').then( m => m.AddwsPageModule)
-  },
-  {
     path: 'editlesson',
     loadChildren: () => import('./editlesson/editlesson.module').then( m => m.EditlessonPageModule)
   },
